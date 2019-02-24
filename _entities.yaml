@@ -1,0 +1,15 @@
+---
+# validate with: https://www.json2yaml.com/
+
+- ticket: 
+  title: Helpdesk Tickets
+  views:
+  - myticket_status:
+    - title: open tickets assigned to user
+    
+- event: 
+    title: Calendar Events
+    views:
+  	- myevent_status:
+    	- title: meetings today
+      

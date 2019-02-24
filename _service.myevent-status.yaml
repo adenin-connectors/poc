@@ -1,0 +1,8 @@
+ServiceName: 'test'
+InterfaceName: 'items'
+Description: 'test'
+APIDoc: ''
+Interfaces: 'search,pagination'
+RequiredScopes: ''
+AdditionalParameters:
+Method: ''
