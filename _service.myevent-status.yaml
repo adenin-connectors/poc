@@ -1,8 +1,7 @@
-ServiceName: 'test'
-InterfaceName: 'items'
-Description: 'test'
+InterfaceName: 'status'
+Description: 'My Event Status'
 APIDoc: ''
-Interfaces: 'search,pagination'
+Interfaces: ''
 RequiredScopes: ''
 AdditionalParameters:
 Method: ''
