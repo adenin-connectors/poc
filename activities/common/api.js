@@ -3,6 +3,7 @@
 const got = require('got');
 const HttpAgent = require('agentkeepalive');
 const HttpsAgent = HttpAgent.HttpsAgent;
+const cfActivity = require('@adenin/cf-activity');
 
 let _activity = null;
 
@@ -57,6 +58,10 @@ api.stream = (url, opts) => got(url, Object.assign({}, opts, {
 
 api.initialize = function (activity) {
   _activity = activity;
+};
+
+api.handleError = function (activity, error) {
+  cfActivity.handleError(activity, error);
 };
 
 for (const x of helpers) {
