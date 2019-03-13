@@ -1,7 +1,7 @@
 InterfaceName: items
+Interfaces: 'search,pagination'
 Description: New Hires
 APIDoc: ''
-Interfaces: 'search,pagination'
 RequiredScopes: ''
 AdditionalParameters: 
 Method: ''
