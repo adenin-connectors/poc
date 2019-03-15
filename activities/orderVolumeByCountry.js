@@ -6,21 +6,29 @@ module.exports = async (activity) => {
   try {
     activity.Response.Data = {
       chart: {
-        dimensions: {
-          width: 600,
-          height: 400
-        },
         configuration: {
-          type: 'bar',
           data: {
             labels: ['UK', 'USA', 'Germany'],
-            datasets: [{
-              data: [1354, 3434, 2456]
-            }]
+            datasets: [
+              {
+                label: '2018',
+                data: [1354, 3434, 2456]
+              },
+              {
+                label: '2019',
+                data: [1245, 3646, 2234]
+              }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Order Volume'
+            }
           }
         },
         template: 'bar',
-        palette: 'material'
+        palette: 'office.Office6'
       }
     };
   } catch (error) {
