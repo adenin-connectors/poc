@@ -2,7 +2,8 @@
 
 const generator = require('./common/generator');
 const logger = require('@adenin/cf-logger');
-const {isResponseOk, handleError} = require('@adenin/cf-activity');
+const moment = require('moment-timezone');
+const { isResponseOk, handleError } = require('@adenin/cf-activity');
 
 module.exports = async (activity) => {
 
@@ -16,9 +17,9 @@ module.exports = async (activity) => {
 
     let nbrOfMeetings = generator.randomEntry([0, 3, 7]);
     let contact = generator.teamMember();
-    let startHour = generator.randomEntry([2,3]);
+    let startHour = generator.randomEntry([0, 2, 3]);
     let startMin = generator.randomEntry([7, 15, 23, 30]);
-    
+
     let eventStatus = {
       title: 'Events Today',
       url: generator.detailUrl(),
@@ -26,10 +27,26 @@ module.exports = async (activity) => {
     };
 
     if (nbrOfMeetings != 0) {
+      let description = `You have ${nbrOfMeetings} events scheduled today. The next meeting with ${contact.name} starts`;
 
+      if (startHour == 0) {
+        description += ` in ${startMin} minutes.`;
+      } else {
+        let tempDate = new Date();
+
+        tempDate.setHours(tempDate.getHours() + startHour);
+        tempDate.setMinutes(startMin);
+
+        let temptime = moment(tempDate)
+          .tz(activity.Context.UserTimezone)
+          .locale(activity.Context.UserLocale)
+          .format('LT');
+
+        description += `${getTimePrefix(activity,tempDate)} at ${temptime}.`;
+      }
       eventStatus = {
         ...eventStatus,
-        description: `You have ${nbrOfMeetings} events scheduled today. The next meeting with ${contact.name} starts in ${startHour} hours and ${startMin} minutes.`,
+        description: description,
         color: 'blue',
         value: nbrOfMeetings,
         actionable: true
@@ -46,7 +63,25 @@ module.exports = async (activity) => {
 
 
   } catch (error) {
-    // handle generic exception
     handleError(activity, error);
   }
 };
+
+//** returns no prefix, 'tomorrow' prefix, or date prefix */
+function getTimePrefix(activity, date) {
+  let tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  let prefix = '';
+  if (date.getDate() == tomorrow.getDate()) {
+    prefix = ' tomorrow';
+  } else if (date > tomorrow) {
+    prefix = ` on ${moment(date)
+      .tz(activity.Context.UserTimezone)
+      .locale(activity.Context.UserLocale)
+      .format('LL')
+      }`;
+  }
+
+  return prefix;
+}
