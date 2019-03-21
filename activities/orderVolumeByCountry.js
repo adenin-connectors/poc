@@ -1,8 +1,8 @@
 'use strict';
-
 const api = require('./common/api');
 
 module.exports = async (activity) => {
+  let currentYear = new Date().getFullYear();
   try {
     activity.Response.Data = {
       chart: {
@@ -11,12 +11,12 @@ module.exports = async (activity) => {
             labels: ['UK', 'USA', 'Germany'],
             datasets: [
               {
-                label: '2018',
-                data: [1354, 3434, 2456]
+                label: currentYear - 1,
+                data: [getRandomInt(100) * 100, getRandomInt(100) * 100, getRandomInt(100) * 100]
               },
               {
-                label: '2019',
-                data: [1245, 3646, 2234]
+                label: currentYear,
+                data: [getRandomInt(100) * 100, getRandomInt(100) * 100, getRandomInt(100) * 100]
               }
             ]
           },
@@ -35,3 +35,8 @@ module.exports = async (activity) => {
     api.handleError(activity, error);
   }
 };
+
+//** generates random int value */
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
