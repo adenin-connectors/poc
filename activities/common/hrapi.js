@@ -56,9 +56,6 @@ api.stream = (url, opts) => apigot(url, Object.assign({}, opts, {
 	stream: true
 }));
 
-api.initialize = function(activity) {
-	_activity = activity;
-}
 
 for (const x of helpers) {
 	const method = x.toUpperCase();

@@ -1,13 +1,9 @@
 const api = require('./common/hrapi');
-const logger = require('@adenin/cf-logger');
-const cfActivity = require('@adenin/cf-activity');
 
 module.exports = async function (activity) {
 
-    try {
-        api.initialize(activity);
-
-        var pagination = cfActivity.pagination(activity);
+    try {              
+        var pagination = Activity.pagination();        
         
         let url = "/?seed=adenin";
         url += "&page=" + pagination.page;
@@ -15,18 +11,18 @@ module.exports = async function (activity) {
         url += "&inc=name,email,location,picture"
 
         const response = await api(url);
-        if (!cfActivity.isResponseOk(activity, response)) return;
+        if (Activity.isErrorResponse(response)) return;
 
         let items = response.body.results;
 
         for (let i = 0; i < items.length; i++) {
             let item = convert_item(items[i]);
-            activity.Response.Data.items.push(item);
+            Activity.Response.Data.items.push(item);
         }
 
     } catch (error) {
         // handle generic exception
-        cfActivity.handleError(activity, error);
+        Activity.handleError(error);
     }
 
 
@@ -45,7 +41,6 @@ module.exports = async function (activity) {
         item.picture = _item.picture.large;
 
         return item;
-
     }
 
 };
