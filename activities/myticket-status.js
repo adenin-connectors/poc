@@ -9,9 +9,9 @@ module.exports = async (activity) => {
   try {
 
     let ticketStatus = {
-      title: 'Open Tickets',
-      url: generator.detailUrl(),
-      urlLabel: 'All tickets',
+      title: T('Open Tickets'),
+      link: generator.detailUrl(),
+      linkLabel: T('All tickets'),
     };
 
     let noOfTickets = generator.randomEntry([0, 3, 7]);;
@@ -19,7 +19,7 @@ module.exports = async (activity) => {
     if (noOfTickets != 0) {
       ticketStatus = {
         ...ticketStatus,
-        description: `You have ${noOfTickets} tickets assigned`,
+        description: T('You have {0} tickets assigned', noOfTickets),
         color: 'blue',
         value: noOfTickets,
         actionable: true
@@ -27,7 +27,7 @@ module.exports = async (activity) => {
     } else {
       ticketStatus = {
         ...ticketStatus,
-        description: `You have no tickets assigned`,
+        description: T('You have no tickets assigned'),
         actionable: false
       }
     }
