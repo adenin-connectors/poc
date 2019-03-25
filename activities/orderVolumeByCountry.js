@@ -1,4 +1,6 @@
 'use strict';
+
+const generator = require('./common/generator');
 const api = require('./common/api');
 
 module.exports = async (activity) => {
@@ -15,6 +17,9 @@ module.exports = async (activity) => {
 
   try {
     activity.Response.Data = {
+      title: T('Order Volume'),
+      link: generator.detailUrl(),
+      linkLabel: T('Sales Dashboard'),
       chart: {
         configuration: {
           data: {
@@ -33,7 +38,7 @@ module.exports = async (activity) => {
           options: {
             title: {
               display: true,
-              text: 'Order Volume'
+              text: T('Order Volume')
             }
           }
         },
