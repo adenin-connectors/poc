@@ -2,45 +2,42 @@ const api = require('./common/hrapi');
 
 module.exports = async function (activity) {
 
-    try {              
-        var pagination = Activity.pagination();        
-        
-        let url = "/?seed=adenin";
-        url += "&page=" + pagination.page;
-        url += "&results=" + pagination.pageSize;
-        url += "&inc=name,email,location,picture"
+  try {
+    var pagination = Activity.pagination();
 
-        const response = await api(url);
-        if (Activity.isErrorResponse(response)) return;
+    let url = "/?seed=adenin";
+    url += "&page=" + pagination.page;
+    url += "&results=" + pagination.pageSize;
+    url += "&inc=name,email,location,picture"
 
-        let items = response.body.results;
+    const response = await api(url);
+    if (Activity.isErrorResponse(response)) return;
 
-        for (let i = 0; i < items.length; i++) {
-            let item = convert_item(items[i]);
-            Activity.Response.Data.items.push(item);
-        }
+    let items = response.body.results;
 
-    } catch (error) {
-        // handle generic exception
-        Activity.handleError(error);
+    for (let i = 0; i < items.length; i++) {
+      let item = convert_item(items[i]);
+      Activity.Response.Data.items.push(item);
     }
 
+  } catch (error) {
+    // handle generic exception
+    Activity.handleError(error);
+  }
 
+  function convert_item(_item) {
 
-    function convert_item(_item) {
+    var item = {};
 
-        var item = {};
+    // *todo* convert item as needed
+    let id = _item.picture.large;
+    id = id.substring(id.lastIndexOf("/") + 1); // extract id from image name
+    item.id = id.substring(0, id.indexOf("."));
 
-        // *todo* convert item as needed
-        let id = _item.picture.large;
-        id = id.substring(id.lastIndexOf("/") + 1); // extract id from image name
-        item.id = id.substring(0, id.indexOf("."));
+    item.title = _item.name.first + " " + _item.name.last;
+    item.description = _item.email;
+    item.picture = _item.picture.large;
 
-        item.title = _item.name.first + " " + _item.name.last;
-        item.description = _item.email;
-        item.picture = _item.picture.large;
-
-        return item;
-    }
-
+    return item;
+  }
 };

@@ -1,36 +1,25 @@
 'use strict';
-
 const generator = require('./common/generator');
-const logger = require('@adenin/cf-logger');
 const moment = require('moment-timezone');
-const { isResponseOk, handleError } = require('@adenin/cf-activity');
 
 module.exports = async (activity) => {
-
   try {
-
-    let ticketStatus = {
-      title: 'Open Tickets',
-      url: generator.detailUrl(),
-      urlLabel: 'All tickets',
-    };
-
     let nbrOfMeetings = generator.randomEntry([0, 3, 7]);
     let contact = generator.teamMember();
     let startHour = generator.randomEntry([0, 2, 3]);
     let startMin = generator.randomEntry([7, 15, 23, 30]);
 
     let eventStatus = {
-      title: 'Events Today',
+      title: T('Events Today'),
       url: generator.detailUrl(),
-      urlLabel: 'All events',
+      urlLabel: T('All events'),
     };
 
     if (nbrOfMeetings != 0) {
-      let description = `You have ${nbrOfMeetings} events scheduled today. The next meeting with ${contact.name} starts`;
+      let description = T(`You have {0} events scheduled today. The next event with {1} starts`, nbrOfMeetings, contact.name);
 
       if (startHour == 0) {
-        description += ` in ${startMin} minutes.`;
+        description += T(` in {0} minutes.`, startMin);
       } else {
         let tempDate = new Date();
 
@@ -42,7 +31,7 @@ module.exports = async (activity) => {
           .locale(activity.Context.UserLocale)
           .format('LT');
 
-        description += `${getTimePrefix(activity,tempDate)} at ${temptime}.`;
+        description += getTimePrefix(activity, tempDate) + T(" at {0}.", tempDate);
       }
       eventStatus = {
         ...eventStatus,
@@ -50,20 +39,18 @@ module.exports = async (activity) => {
         color: 'blue',
         value: nbrOfMeetings,
         actionable: true
-      }
+      };
     } else {
       eventStatus = {
         ...eventStatus,
-        description: `You have no events today.`,
+        description: T(`You have no events today.`),
         actionable: false
-      }
+      };
     }
 
     activity.Response.Data = eventStatus;
-
-
   } catch (error) {
-    handleError(activity, error);
+    Activity.handleError(error);
   }
 };
 
@@ -74,13 +61,13 @@ function getTimePrefix(activity, date) {
 
   let prefix = '';
   if (date.getDate() == tomorrow.getDate()) {
-    prefix = ' tomorrow';
+    prefix = T(' tomorrow');
   } else if (date > tomorrow) {
-    prefix = ` on ${moment(date)
+    let tmpDate = moment(date)
       .tz(activity.Context.UserTimezone)
       .locale(activity.Context.UserLocale)
-      .format('LL')
-      }`;
+      .format('LL');
+    prefix = T(' on {0}.', tmpDate);
   }
 
   return prefix;

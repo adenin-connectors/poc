@@ -1,25 +1,22 @@
 'use strict';
-
 const generator = require('./common/generator');
-const logger = require('@adenin/cf-logger');
-const {isResponseOk, handleError} = require('@adenin/cf-activity');
 
 module.exports = async (activity) => {
 
   try {
 
     let ticketStatus = {
-      title: 'Open Tickets',
+      title: Text('Open Tickets'),
       url: generator.detailUrl(),
-      urlLabel: 'All tickets',
+      urlLabel: Text('All tickets'),
     };
 
-    let noOfTickets = generator.randomEntry([0, 3, 7]);;
+    let noOfTickets = generator.randomEntry([0, 3, 7]);
 
     if (noOfTickets != 0) {
       ticketStatus = {
         ...ticketStatus,
-        description: `You have ${noOfTickets} tickets assigned`,
+        description: T(`You have {0} tickets assigned`, noOfTickets),
         color: 'blue',
         value: noOfTickets,
         actionable: true
@@ -27,7 +24,7 @@ module.exports = async (activity) => {
     } else {
       ticketStatus = {
         ...ticketStatus,
-        description: `You have no tickets assigned`,
+        description: T(`You have no tickets assigned`),
         actionable: false
       }
     }
@@ -38,6 +35,6 @@ module.exports = async (activity) => {
 
   } catch (error) {
     // handle generic exception
-    handleError(activity, error);
+    Activity.handleError(error);
   }
 };

@@ -47,7 +47,7 @@ module.exports = async (activity) => {
       }
     };
   } catch (error) {
-    api.handleError(activity, error);
+    Activity.handleError(error);
   }
 };
 

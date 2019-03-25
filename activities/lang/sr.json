@@ -1,0 +1,17 @@
+{
+  "My name is {0} and I am from {1}.": "Moje ime je {0} i ja sam iz {1}.",
+  "Open Tickets": "Otvoreni Tiketi",
+  "All tickets": "Svi Tiketi",
+  "You have {0} tickets assigned": "Imate {0} dodeljena Tiketa",
+  "You have no tickets assigned": "Nemate dodeljene Tikete",
+  "Order Volume": "Poručena Količina",
+  "Sales Dashboard": "Kontrola Prodaje",
+  "Events Today": "Događaji Danas",
+  "All events": "Svi Događaji",
+  "You have {0} events scheduled today. The next event with {1} starts": "Imate {0} događaja danas. Sledeci događaj sa {1} počinje",
+  " in {0} minutes.": " za {0} minuta.",
+  " at {0}.": " u {0}",
+  " tomorrow": " sutra",
+  "on {0}": "",
+  "You have no events today.": "Nemate ni jedan događaj danas."
+}

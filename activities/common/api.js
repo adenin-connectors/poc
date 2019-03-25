@@ -60,14 +60,10 @@ api.initialize = function (activity) {
   _activity = activity;
 };
 
-api.handleError = function (activity, error) {
-  cfActivity.handleError(activity, error);
-};
-
 for (const x of helpers) {
   const method = x.toUpperCase();
-  api[x] = (url, opts) => api(url, Object.assign({}, opts, {method}));
-  api.stream[x] = (url, opts) => api.stream(url, Object.assign({}, opts, {method}));
+  api[x] = (url, opts) => api(url, Object.assign({}, opts, { method }));
+  api.stream[x] = (url, opts) => api.stream(url, Object.assign({}, opts, { method }));
 }
 
 module.exports = api;

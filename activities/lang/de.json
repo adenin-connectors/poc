@@ -1,9 +1,9 @@
-{    
-    "My name is {0} and I am from {1}.": "Mein Name ist {0} und ich bin aus {1}.",
-    "Open Tickets": "Offene Tickets",
-    "All tickets": "Alle Tickets",
-    "You have {0} tickets assigned": "Es sind {0} Tickets zugewiesen",
-    "You have no tickets assigned": "Es sind keine Tickets zugewiesen",
-    "Order Volume": "Auftragseingang",
-    "Sales Dashboard": "Vertriebs-Statistiken"
+{
+  "My name is {0} and I am from {1}.": "Mein Name ist {0} und ich bin aus {1}.",
+  "Open Tickets": "Offene Tickets",
+  "All tickets": "Alle Tickets",
+  "You have {0} tickets assigned": "Es sind {0} Tickets zugewiesen",
+  "You have no tickets assigned": "Es sind keine Tickets zugewiesen",
+  "Order Volume": "Auftragseingang",
+  "Sales Dashboard": "Vertriebs-Statistiken"
 }
