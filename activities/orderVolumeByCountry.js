@@ -1,5 +1,4 @@
 'use strict';
-
 const generator = require('./common/generator');
 
 module.exports = async () => {

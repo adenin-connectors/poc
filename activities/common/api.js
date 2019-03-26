@@ -1,10 +1,7 @@
 'use strict';
-
 const got = require('got');
 const HttpAgent = require('agentkeepalive');
 const HttpsAgent = HttpAgent.HttpsAgent;
-
-let _activity = null;
 
 function api(path, opts) {
   if (typeof path !== 'string') {
@@ -13,8 +10,8 @@ function api(path, opts) {
 
   opts = Object.assign({
     json: true,
-    token: _activity.Context.connector.token,
-    endpoint: _activity.Context.connector.endpoint,
+    token: Activity.Context.connector.token,
+    endpoint: Activity.Context.connector.endpoint,
     agent: {
       http: new HttpAgent(),
       https: new HttpsAgent()
@@ -54,10 +51,6 @@ api.stream = (url, opts) => got(url, Object.assign({}, opts, {
   json: false,
   stream: true
 }));
-
-api.initialize = function (activity) {
-  _activity = activity;
-};
 
 for (const x of helpers) {
   const method = x.toUpperCase();
