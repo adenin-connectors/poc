@@ -7,7 +7,6 @@ const fs = require('fs');
 module.exports = async (activity) => {
 
   try {
-    api.initialize(activity);
     var data = {};
 
     // extract _action from Request

@@ -4,7 +4,7 @@ const moment = require('moment-timezone');
 
 module.exports = async (activity) => {
   try {
-    let nbrOfMeetings = generator.randomEntry([0, 3, 7]);
+    let nbrOfMeetings = generator.randomEntry([0, 1, 7]);
     let contact = generator.teamMember();
     let startHour = generator.randomEntry([0, 2, 3]);
     let startMin = generator.randomEntry([7, 15, 23, 30]);
@@ -16,23 +16,10 @@ module.exports = async (activity) => {
     };
 
     if (nbrOfMeetings != 0) {
-      let description = T(`You have {0} events scheduled today. The next event with {1} starts`, nbrOfMeetings, contact.name);
+      let eventFormatedTime = getEventStartTime(startHour, startMin);
+      let eventPluralorNot = nbrOfMeetings > 1 ? T("events scheduled") : T("event scheduled");
+      let description = T(`You have {0} {1} today. The next event with {2} starts {3}`, nbrOfMeetings, eventPluralorNot, contact.name, eventFormatedTime);
 
-      if (startHour == 0) {
-        description += T(` in {0} minutes.`, startMin);
-      } else {
-        let tempDate = new Date();
-
-        tempDate.setHours(tempDate.getHours() + startHour);
-        tempDate.setMinutes(startMin);
-
-        let temptime = moment(tempDate)
-          .tz(activity.Context.UserTimezone)
-          .locale(activity.Context.UserLocale)
-          .format('LT');
-
-        description += getTimePrefix(activity, tempDate) + T(" at {0}.", tempDate);
-      }
       eventStatus = {
         ...eventStatus,
         description: description,
@@ -53,7 +40,18 @@ module.exports = async (activity) => {
     Activity.handleError(error);
   }
 };
-
+//** function that generates date for testing based on provided hours and minutes */
+function getEventStartTime(startHour, startMin) {
+  let tempDate = new Date();
+  if (startHour == 0) {
+    //events that start in less then 1 hour
+    return T(`in {0} minutes.`, startMin);
+  } else {
+    tempDate.setHours(tempDate.getHours() + startHour);
+    tempDate.setMinutes(startMin);
+    return getTimePrefix(Activity, tempDate);
+  }
+}
 //** returns no prefix, 'tomorrow' prefix, or date prefix */
 function getTimePrefix(activity, date) {
   let tomorrow = new Date();
@@ -61,13 +59,26 @@ function getTimePrefix(activity, date) {
 
   let prefix = '';
   if (date.getDate() == tomorrow.getDate()) {
-    prefix = T(' tomorrow');
+    //events tomorrow
+    let temptime = moment(date)
+      .tz(Activity.Context.UserTimezone)
+      .locale(Activity.Context.UserLocale)
+      .format('LT');
+    prefix = T('tomorrow at {0}.', temptime);
   } else if (date > tomorrow) {
+    //events after tommorrow
     let tmpDate = moment(date)
-      .tz(activity.Context.UserTimezone)
-      .locale(activity.Context.UserLocale)
+      .tz(Activity.Context.UserTimezone)
+      .locale(Activity.Context.UserLocale)
       .format('LL');
-    prefix = T(' on {0}.', tmpDate);
+    prefix = T('on {0}.', tmpDate);
+  } else if (date) {
+    //event is today
+    let temptime = moment(date)
+      .tz(Activity.Context.UserTimezone)
+      .locale(Activity.Context.UserLocale)
+      .format('LT');
+    prefix = T('at {0}.', temptime);
   }
 
   return prefix;

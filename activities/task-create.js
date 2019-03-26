@@ -4,7 +4,6 @@ const api = require('./common/api');
 module.exports = async (activity) => {
 
   try {
-    api.initialize(activity);
     var data = {};
 
     // extract _action from Request

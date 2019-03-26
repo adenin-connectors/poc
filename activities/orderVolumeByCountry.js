@@ -1,7 +1,5 @@
 'use strict';
-
 const generator = require('./common/generator');
-const api = require('./common/api');
 
 module.exports = async (activity) => {
   let currentYear = new Date().getFullYear();
