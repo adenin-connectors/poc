@@ -54,8 +54,8 @@ api.stream = (url, opts) => got(url, Object.assign({}, opts, {
 
 for (const x of helpers) {
   const method = x.toUpperCase();
-  api[x] = (url, opts) => api(url, Object.assign({}, opts, { method }));
-  api.stream[x] = (url, opts) => api.stream(url, Object.assign({}, opts, { method }));
+  api[x] = (url, opts) => api(url, Object.assign({}, opts, {method}));
+  api.stream[x] = (url, opts) => api.stream(url, Object.assign({}, opts, {method}));
 }
 
 module.exports = api;

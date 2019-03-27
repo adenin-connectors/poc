@@ -4,5 +4,7 @@
         "editor.autoIndent": true,
         "editor.tabSize": 2,
         "editor.detectIndentation": false
-    }
+    },
+    "azureFunctions.projectLanguage": "JavaScript",
+    "azureFunctions.projectRuntime": "~2"
 }

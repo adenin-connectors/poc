@@ -1,12 +1,12 @@
 'use strict';
 const generator = require('./common/generator');
 
-module.exports = async (activity) => {
-  let currentYear = new Date().getFullYear();
+module.exports = async () => {
+  const currentYear = new Date().getFullYear();
 
-  let maxVal = 99 * 100;
-  let randomData0 = [];
-  let randomData1 = [];
+  const maxVal = 99 * 100;
+  const randomData0 = [];
+  const randomData1 = [];
 
   for (let i = 0; i < 3; i++) {
     randomData0.push(getRandomInt(maxVal));
@@ -14,7 +14,7 @@ module.exports = async (activity) => {
   }
 
   try {
-    activity.Response.Data = {
+    Activity.Response.Data = {
       title: T('Order Volume'),
       link: generator.detailUrl(),
       linkLabel: T('Sales Dashboard'),
