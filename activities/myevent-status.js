@@ -11,12 +11,12 @@ module.exports = async (activity) => {
 
     let eventStatus = {
       title: T('Events Today'),
-      url: generator.detailUrl(),
-      urlLabel: T('All events'),
+      link: generator.detailUrl(),
+      linkLabel: T('All events')
     };
 
     if (nbrOfMeetings != 0) {
-      let eventFormatedTime = getEventStartTime(startHour, startMin);
+      let eventFormatedTime = getEventFormatedTimeAsString(startHour, startMin);
       let eventPluralorNot = nbrOfMeetings > 1 ? T("events scheduled") : T("event scheduled");
       let description = T(`You have {0} {1} today. The next event with {2} starts {3}`, nbrOfMeetings, eventPluralorNot, contact.name, eventFormatedTime);
 
@@ -40,46 +40,39 @@ module.exports = async (activity) => {
     Activity.handleError(error);
   }
 };
-//** function that generates date for testing based on provided hours and minutes */
-function getEventStartTime(startHour, startMin) {
-  let tempDate = new Date();
-  if (startHour == 0) {
+
+//** checks if event is in less then hour, today or tomorrow and returns formated string accordingly */
+function getEventFormatedTimeAsString(startHour, startMin) {
+  let eventTime = new Date();
+  eventTime.setHours(eventTime.getHours() + startHour);
+  eventTime.setMinutes(eventTime.getMinutes()+startMin);
+  eventTime = moment(eventTime)
+    .tz(Activity.Context.UserTimezone)
+    .locale(Activity.Context.UserLocale);
+
+  let timeNow = moment( new Date());
+
+  let diffInHrs = eventTime.diff(timeNow, 'hours');
+
+  if (diffInHrs == 0) {
     //events that start in less then 1 hour
-    return T(`in {0} minutes.`, startMin);
+    let diffInMins = eventTime.diff(timeNow, 'minutes');
+    return T(`in {0} minutes.`, diffInMins);
   } else {
-    tempDate.setHours(tempDate.getHours() + startHour);
-    tempDate.setMinutes(startMin);
-    return getTimePrefix(Activity, tempDate);
-  }
-}
-//** returns no prefix, 'tomorrow' prefix, or date prefix */
-function getTimePrefix(activity, date) {
-  let tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
+    //events that start in more than 1 hour
+    let diffInDays = eventTime.diff(timeNow, 'days');
 
-  let prefix = '';
-  if (date.getDate() == tomorrow.getDate()) {
-    //events tomorrow
-    let temptime = moment(date)
-      .tz(Activity.Context.UserTimezone)
-      .locale(Activity.Context.UserLocale)
-      .format('LT');
-    prefix = T('tomorrow at {0}.', temptime);
-  } else if (date > tomorrow) {
-    //events after tommorrow
-    let tmpDate = moment(date)
-      .tz(Activity.Context.UserTimezone)
-      .locale(Activity.Context.UserLocale)
-      .format('LL');
-    prefix = T('on {0}.', tmpDate);
-  } else if (date) {
-    //event is today
-    let temptime = moment(date)
-      .tz(Activity.Context.UserTimezone)
-      .locale(Activity.Context.UserLocale)
-      .format('LT');
-    prefix = T('at {0}.', temptime);
-  }
+    let datePrefix = '';
+    let momentDate = '';
+    if (diffInDays == 1) {
+      //events that start tomorrow
+      datePrefix = 'tomorrow ';
+    } else if (diffInDays > 1) {
+      //events that start day after tomorrow and later
+      datePrefix = 'on ';
+      momentDate = eventTime.format('LL') + " ";
+    }
 
-  return prefix;
+    return T(`{0}{1}{2}{3}.`, T(datePrefix), momentDate, T("at "), eventTime.format('LT'));
+  }
 }

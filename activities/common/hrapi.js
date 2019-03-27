@@ -1,16 +1,12 @@
 'use strict';
 const got = require('got');
-const isPlainObj = require('is-plain-obj');
 const HttpAgent = require('agentkeepalive');
 const HttpsAgent = HttpAgent.HttpsAgent;
-
-let _activity = null;
 
 function api(path, opts) {
   if (typeof path !== 'string') {
     return Promise.reject(new TypeError(`Expected \`path\` to be a string, got ${typeof path}`));
   }
-
 
   opts = Object.assign({
     json: true,

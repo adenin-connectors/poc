@@ -5,8 +5,8 @@ module.exports = async (activity) => {
   try {
     let ticketStatus = {
       title: T('Open Tickets'),
-      url: generator.detailUrl(),
-      urlLabel: T('All tickets'),
+      link: generator.detailUrl(),
+      linkLabel: T('All tickets')
     };
 
     let noOfTickets = generator.randomEntry([0, 3, 7]);
