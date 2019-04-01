@@ -1,0 +1,7 @@
+InterfaceName: 'create'
+Description: 'Create Helpdesk Ticket'
+APIDoc: ''
+Interfaces: ''
+RequiredScopes: ''
+AdditionalParameters:
+Method: ''
