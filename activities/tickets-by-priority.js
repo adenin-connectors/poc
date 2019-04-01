@@ -33,7 +33,8 @@ module.exports = async () => {
             }
           }
         },
-        template: 'pie'
+        template: 'pie',
+        palette: 'adenin.PriorityRedOrangeBlue'
       }
     };
   } catch (error) {
