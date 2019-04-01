@@ -43,6 +43,7 @@ module.exports = async (activity) => {
         var schema = yaml.safeLoad(fs.readFileSync(fname, 'utf8'));
 
         // return form schema
+        data.title = T("Create Ticket");
         data.formSchema = schema;
 
         // initialize form subject with query parameter (if provided)
