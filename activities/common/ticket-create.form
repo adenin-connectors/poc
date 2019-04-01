@@ -16,16 +16,6 @@ rules:
     rule:
       conditions:
         kind: all
-        conditions:
-          - name: auto
-            operator: equalTo
-            compareTo: text
-            value: !!bool true
-      actions:
-        - actionName: setFieldState
-          fieldName: daterange
-          state: required
-        - actionName: setFieldState
-          fieldName: starttime
-          state: hidden
+        conditions: []
+      actions: []
 $meta: {}
