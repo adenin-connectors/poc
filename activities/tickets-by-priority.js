@@ -15,9 +15,9 @@ module.exports = async () => {
 
   try {
     Activity.Response.Data = {
-      title: T('Order Volume'),
+      title: T('Tickets By Priority'),
       link: generator.detailUrl(),
-      linkLabel: T('Sales Dashboard'),
+      linkLabel: T('Open Dashboard'),
       chart: {
         configuration: {
           data: {
