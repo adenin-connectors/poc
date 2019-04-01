@@ -2,15 +2,11 @@
 const generator = require('./common/generator');
 
 module.exports = async () => {
-  const currentYear = new Date().getFullYear();
-
-  const maxVal = 99 * 100;
-  const randomData0 = [];
-  const randomData1 = [];
+  const maxVal = 99;
+  const randomData = [];
 
   for (let i = 0; i < 3; i++) {
-    randomData0.push(getRandomInt(maxVal));
-    randomData1.push(getRandomInt(maxVal));
+    randomData.push(getRandomInt(maxVal));
   }
 
   try {
@@ -21,27 +17,19 @@ module.exports = async () => {
       chart: {
         configuration: {
           data: {
-            labels: ['UK', 'USA', 'Germany'],
-            datasets: [
-              {
-                label: currentYear - 1,
-                data: randomData0
-              },
-              {
-                label: currentYear,
-                data: randomData1
-              }
-            ]
+            labels: ['High', 'Medium', 'Low'],
+            datasets: [{
+              data: randomData
+            }]
           },
           options: {
             title: {
               display: true,
-              text: T('Order Volume')
+              text: T('Tickets By Priority')
             }
           }
         },
-        template: 'bar',
-        palette: 'office.Office6'
+        template: 'pie'
       }
     };
   } catch (error) {
