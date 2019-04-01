@@ -17,7 +17,11 @@ module.exports = async () => {
       chart: {
         configuration: {
           data: {
-            labels: ['High', 'Medium', 'Low'],
+            labels: [
+              T('High'),
+              T('Medium'),
+              T('Low')
+            ],
             datasets: [{
               data: randomData
             }]
