@@ -1,7 +1,7 @@
 'use strict';
 const generator = require('./common/generator');
 
-module.exports = async () => {
+module.exports = async (activity) => {
   const maxVal = 99;
   const randomData = [];
 
@@ -10,17 +10,17 @@ module.exports = async () => {
   }
 
   try {
-    Activity.Response.Data = {
-      title: T('Tickets By Priority'),
+    activity.Response.Data = {
+      title: T(activity, 'Tickets By Priority'),
       link: generator.detailUrl(),
-      linkLabel: T('Open Dashboard'),
+      linkLabel: T(activity, 'Open Dashboard'),
       chart: {
         configuration: {
           data: {
             labels: [
-              T('High'),
-              T('Medium'),
-              T('Low')
+              T(activity, 'High'),
+              T(activity, 'Medium'),
+              T(activity, 'Low')
             ],
             datasets: [{
               data: randomData
@@ -29,7 +29,7 @@ module.exports = async () => {
           options: {
             title: {
               display: true,
-              text: T('Tickets By Priority')
+              text: T(activity, 'Tickets By Priority')
             }
           }
         },
@@ -38,7 +38,7 @@ module.exports = async () => {
       }
     };
   } catch (error) {
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 };
 

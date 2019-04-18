@@ -1,12 +1,12 @@
 'use strict';
 
-module.exports = async () => {
+module.exports = async (activity) => {
   try {
-    Activity.Response.ErrorCode = 500;
-    Activity.Response.Data = {
+    activity.Response.ErrorCode = 500;
+    activity.Response.Data = {
       ErrorText: 'Request intentionally failed'
     };
   } catch (error) {
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 };

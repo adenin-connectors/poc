@@ -9,6 +9,8 @@ module.exports = async (activity) => {
   try {
     var data = {};
 
+    api.initialize(activity);
+
     // extract _action from Request
     var _action = getObjPath(activity.Request, "Data.model._action");
     if (_action) {
@@ -156,7 +158,7 @@ module.exports = async (activity) => {
     activity.Response.Data = data;
   } catch (error) {
     // handle generic exception
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 
   function getObjPath(obj, path) {

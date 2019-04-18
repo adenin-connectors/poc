@@ -1,7 +1,8 @@
 'use strict';
+
 const generator = require('./common/generator');
 
-module.exports = async () => {
+module.exports = async (activity) => {
   const currentYear = new Date().getFullYear();
 
   const maxVal = 99 * 100;
@@ -14,10 +15,10 @@ module.exports = async () => {
   }
 
   try {
-    Activity.Response.Data = {
-      title: T('Order Volume'),
+    activity.Response.Data = {
+      title: T(activity, 'Order Volume'),
       link: generator.detailUrl(),
-      linkLabel: T('Sales Dashboard'),
+      linkLabel: T(activity, 'Sales Dashboard'),
       chart: {
         configuration: {
           data: {
@@ -36,7 +37,7 @@ module.exports = async () => {
           options: {
             title: {
               display: true,
-              text: T('Order Volume')
+              text: T(activity, 'Order Volume')
             }
           }
         },
@@ -45,7 +46,7 @@ module.exports = async () => {
       }
     };
   } catch (error) {
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 };
 

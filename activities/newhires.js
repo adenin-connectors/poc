@@ -2,29 +2,31 @@
 
 const api = require('./common/hrapi');
 
-module.exports = async () => {
+module.exports = async (activity) => {
   try {
-    const pagination = Activity.pagination();
+    const pagination = $.pagination(activity);
 
     let url = '/?seed=adenin';
     url += '&page=' + pagination.page;
     url += '&results=' + pagination.pageSize;
     url += '&inc=name,email,location,picture';
 
+    api.initialize(activity);
+
     const response = await api(url);
 
-    if (Activity.isErrorResponse(response)) return;
+    if ($.isErrorResponse(activity, response)) return;
 
     const items = response.body.results;
 
     for (let i = 0; i < items.length; i++) {
       const item = convertItem(items[i]);
 
-      Activity.Response.Data.items.push(item);
+      activity.Response.Data.items.push(item);
     }
   } catch (error) {
     // handle generic exception
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 
   function convertItem(_item) {

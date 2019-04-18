@@ -6,9 +6,9 @@ module.exports = async (activity) => {
   try {
 
     let ticketStatus = {
-      title: T('Open Tickets'),
+      title: T(activity, 'Open Tickets'),
       link: generator.detailUrl(),
-      linkLabel: T('All tickets')
+      linkLabel: T(activity, 'All tickets')
     };
 
     let noOfTickets = generator.randomEntry([0, 3, 7]);
@@ -16,7 +16,7 @@ module.exports = async (activity) => {
     if (noOfTickets != 0) {
       ticketStatus = {
         ...ticketStatus,
-        description: T(`You have {0} tickets assigned`, noOfTickets),
+        description: T(activity, `You have {0} tickets assigned`, noOfTickets),
         color: 'blue',
         value: noOfTickets,
         actionable: true
@@ -24,7 +24,7 @@ module.exports = async (activity) => {
     } else {
       ticketStatus = {
         ...ticketStatus,
-        description: T(`You have no tickets assigned`),
+        description: T(activity, `You have no tickets assigned`),
         actionable: false
       }
     }
@@ -35,6 +35,6 @@ module.exports = async (activity) => {
 
   } catch (error) {
     // handle generic exception
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 };

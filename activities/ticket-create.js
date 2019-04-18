@@ -25,7 +25,7 @@ module.exports = async (activity) => {
         // ** api should be called here to create ticket **
 
         // return success status                
-        var comment = T("Ticket created");
+        var comment = T(activity, "Ticket created");
         data = getObjPath(activity.Request, "Data.model");
         data._action = {
           response: {
@@ -43,7 +43,7 @@ module.exports = async (activity) => {
         var schema = yaml.safeLoad(fs.readFileSync(fname, 'utf8'));
 
         // return card & form configuration
-        data.title = T("Create Ticket");
+        data.title = T(activity, "Create Ticket");
         data.formSchema = schema;
 
         // initialize form subject with query parameter (if provided)
@@ -54,7 +54,7 @@ module.exports = async (activity) => {
         // initialize action to submit form                 
         data._actionList = [{
           id: "create",
-          label: T("Create Ticket"),
+          label: T(activity, "Create Ticket"),
           settings: {
             actionType: "a"
           }
@@ -68,7 +68,7 @@ module.exports = async (activity) => {
 
   } catch (error) {
     // handle generic exception
-    Activity.handleError(error);
+    $.handleError(activity, error);
   }
 
   function getObjPath(obj, path) {
