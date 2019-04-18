@@ -1,0 +1,8 @@
+ServiceName: 'recent-documents'
+InterfaceName: 'items'
+Description: 'Recent Documents'
+APIDoc: ''
+Interfaces: ''
+RequiredScopes: ''
+AdditionalParameters:
+Method: ''
