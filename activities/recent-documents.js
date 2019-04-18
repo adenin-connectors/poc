@@ -2,7 +2,7 @@
 const generator = require('./common/generator');
 const api = require('./common/api');
 
-module.exports = async () => {
+module.exports = async (activity) => {
   try {
 
     let d = new Date();
@@ -45,11 +45,11 @@ module.exports = async () => {
       }
     ];
 
-    Activity.Response.Data = items;
-    Activity.Response.Data.title = T('Recent Documents');
-    Activity.Response.Data.link = generator.detailUrl();
-    Activity.Response.Data.linkLabel = T('Open Documents');
+    activity.Response.Data = items;
+    activity.Response.Data.title = T(activity, 'Recent Documents');
+    activity.Response.Data.link = generator.detailUrl();
+    activity.Response.Data.linkLabel = T(activity, 'Open Documents');
   } catch (error) {
-    api.handleError(Activity, error);
+    $.handleError(activity, error);
   }
 };
