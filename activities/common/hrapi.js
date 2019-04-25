@@ -4,6 +4,8 @@ const got = require('got');
 const HttpAgent = require('agentkeepalive');
 const HttpsAgent = HttpAgent.HttpsAgent;
 
+let _activity = null;
+
 function api(path, opts) {
   if (typeof path !== 'string') {
     return Promise.reject(new TypeError(`Expected \`path\` to be a string, got ${typeof path}`));
@@ -57,5 +59,9 @@ for (const x of helpers) {
   api[x] = (url, opts) => api(url, Object.assign({}, opts, {method}));
   api.stream[x] = (url, opts) => api.stream(url, Object.assign({}, opts, {method}));
 }
+
+api.initialize = (activity) => {
+  _activity = activity;
+};
 
 module.exports = api;
