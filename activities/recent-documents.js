@@ -1,6 +1,5 @@
 'use strict';
 const generator = require('./common/generator');
-const api = require('./common/api');
 
 module.exports = async (activity) => {
   try {
@@ -45,7 +44,7 @@ module.exports = async (activity) => {
       }
     ];
 
-    activity.Response.Data = items;
+    activity.Response.Data.items = items;
     activity.Response.Data.title = T(activity, 'Recent Documents');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'Open Documents');

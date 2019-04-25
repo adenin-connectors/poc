@@ -18,5 +18,16 @@
   "on ": "na ",
   "at ": "u ",
   "Recent Documents" : "Nedavni dokumenti",
-  "Open Documents" : "Otvoreni dokumenti"
+  "Open Documents" : "Otvoreni dokumenti",
+  "Leads" : "Kontakti",
+  "All Leads" : "Svi Kontakti",
+  "Issue {0} created" : "Problem {0} je kreiran",
+  "Create Issue" : "Kreiraj Problem",
+  "Number Of Issues": "Broj Problema",
+  "Issue Metrics By Priority": "Broj Problema Po Prioritetu",
+  "New Issues" :"Novi Problemi",
+  "Open Issues by Priority" : "Otvoreni Problemi po Prioritetu.",
+  "Go to Issues": "Otvorite Aritable Probleme",
+  "Issues" : "Problemi",
+  "All Issues" : "Svi Problemi"
 }
