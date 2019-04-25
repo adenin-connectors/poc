@@ -4,15 +4,20 @@ const generator = require('./common/generator');
 
 module.exports = async function (activity) {
   try {
-    let items = [];
-    let conunt = Math.floor(Math.random() * 10); 
+    var pagination = $.pagination(activity);
+    let pageSize = parseInt(pagination.pageSize);
 
-    for (let i = 0; i < conunt; i++) {
+    let items = [];
+
+    for (let i = 0; i < pageSize; i++) {
+      let d = new Date();
+      d.setMinutes(d.getMinutes() + (i+1)*25);
       const item = {
-        id: i,
+        id: i.toString(),
         title: faker.name.findName(),
         description: faker.company.companyName(),
         link: generator.detailUrl(),
+        date: d.toISOString()
       };
       items.push(item);
     }
