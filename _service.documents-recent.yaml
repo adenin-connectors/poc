@@ -1,4 +1,3 @@
-ServiceName: 'recent-documents'
 InterfaceName: 'items'
 Description: 'Recent Documents'
 APIDoc: ''
