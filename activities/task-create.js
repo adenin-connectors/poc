@@ -1,5 +1,8 @@
 'use strict';
-const api = require('./common/api');
+const faker = require('faker');
+const path = require('path');
+const yaml = require('js-yaml');
+const fs = require('fs');
 
 module.exports = async (activity) => {
 
@@ -18,9 +21,8 @@ module.exports = async (activity) => {
 
       case "create":
       case "submit":
-        const form = _action.form;
-
-        var comment = "Task created";
+        let randomId = faker.random.uuid();
+        var comment = T(activity, "Task {0} created.", randomId);
         data = getObjPath(activity.Request, "Data.model");
         data._action = {
           response: {
@@ -31,9 +33,11 @@ module.exports = async (activity) => {
         break;
 
       default:
-        data._card = {
-          type: "wip-test"
-        };
+        var fname = __dirname + path.sep + "common" + path.sep + "task-create.form";
+        var schema = yaml.safeLoad(fs.readFileSync(fname, 'utf8'));
+
+        data.title = T(activity, "Create Task");
+        data.formSchema = schema;
 
         // initialize form subject with query parameter (if provided)
         if (activity.Request.Query && activity.Request.Query.query) {
@@ -41,6 +45,13 @@ module.exports = async (activity) => {
             subject: activity.Request.Query.query
           }
         }
+        data._actionList = [{
+          id: "create",
+          label: T(activity, "Create Task"),
+          settings: {
+            actionType: "a"
+          }
+        }];
         break;
 
     }

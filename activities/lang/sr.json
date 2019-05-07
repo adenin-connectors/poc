@@ -29,5 +29,7 @@
   "Open Issues by Priority" : "Otvoreni Problemi po Prioritetu.",
   "Go to Issues": "Otvorite Aritable Probleme",
   "Issues" : "Problemi",
-  "All Issues" : "Svi Problemi"
+  "All Issues" : "Svi Problemi",
+  "Create Task" : "Kreirajte Zadatak",
+  "Task {0} created." : "Zadatak {0} je kreiran."
 }
