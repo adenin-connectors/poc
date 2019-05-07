@@ -1,6 +1,6 @@
 ServiceName: 'task-create'
 InterfaceName: 'create'
-Description: 'Create Outlook Task'
+Description: 'Create Task'
 APIDoc: ''
 Interfaces: ''
 RequiredScopes: ''
