@@ -35,5 +35,8 @@
   "News Feed": "Novosti",
   "All News": "Sve Novosti",
   "You have {0} news.": "Imate {0} novosti.",
-  "You have 1 news.": "Imate jednu novost"
+  "You have 1 news.": "Imate jednu novost",
+  "My Events" : "Moji Događaji",
+  "You have {0} events." : "Imate {0} događaja.",
+  "You have 1 event." : "Imate 1 događaj."
 }

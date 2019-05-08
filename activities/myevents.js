@@ -43,13 +43,13 @@ module.exports = async (activity) => {
 
     activity.Response.Data.items = paginatedItems;
     let value = activity.Response.Data.items.length;
-    activity.Response.Data.title = T(activity, 'News Feed');
+    activity.Response.Data.title = T(activity, 'My Events');
     activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'All News');
+    activity.Response.Data.linkLabel = T(activity, 'All Events');
     activity.Response.Data.actionable = true;
     activity.Response.Data.value = value;
     activity.Response.Data.color = 'blue';
-    activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news.", value) : T(activity, "You have 1 news.");
+    activity.Response.Data.description = value > 1 ? T(activity, "You have {0} events.", value) : T(activity, "You have 1 event.");
   } catch (error) {
     $.handleError(activity, error);
   }
