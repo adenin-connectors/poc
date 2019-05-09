@@ -1,0 +1,7 @@
+InterfaceName: 'items'
+Description: 'My Approvals'
+APIDoc: ''
+Interfaces: 'pagination,daterange,status'
+RequiredScopes: ''
+AdditionalParameters:
+Method: ''

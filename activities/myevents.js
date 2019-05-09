@@ -1,7 +1,9 @@
 'use strict';
 const generator = require('./common/generator');
 const moment = require('moment-timezone');
-const faker = require('faker')
+const faker = require('faker');
+const shared = require('./common/shared');
+
 const d = new Date();
 module.exports = async (activity) => {
   try {
@@ -33,13 +35,13 @@ module.exports = async (activity) => {
       }
     ];
 
-    let sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
+    let sortedItems = sortItemsBasedOnDayOfTheYear(activity, items);
 
     var dateRange = $.dateRange(activity, "today");
-    let filteredItems = filterItemsByDateRange(sortedItems, dateRange);
+    let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
 
     const pagination = $.pagination(activity);
-    let paginatedItems = paginateItems(filteredItems, pagination);
+    let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     activity.Response.Data.items = paginatedItems;
     let value = activity.Response.Data.items.length;
@@ -54,21 +56,23 @@ module.exports = async (activity) => {
     $.handleError(activity, error);
   }
 };
-function getRandomMinutes() {
-  return (Math.floor(Math.random() * 60) + 1);
-}
+
 //** returns new item[] reordered based on day of the year */
-function getItemsBasedOnDayOfTheYear(activity, items) {
-  let timeslot1 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 10, 0, 0);
-  let timeslot2 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 14, 0, 0);
-  let userLocalTime = moment(d).tz(activity.Context.UserTimezone);
+function sortItemsBasedOnDayOfTheYear(activity, items) {
+  let morningHour = 10;
+  let afternoonHour = 14;
+  let timeslot1 = new Date();
+  timeslot1.setHours(morningHour);
+  let timeslot2 = new Date();
+  timeslot2.setHours(afternoonHour);
 
   let daysOffset = 0; //number of days to offset current date (now - daysOffset)
   let isTimeslot2 = null; // keeps track of which time to assign next (timeslot1 or timeslot2)
+  let userLocalTime = moment(d).tz(activity.Context.UserTimezone);
 
-  if (userLocalTime.hours() >= 10 && userLocalTime.hours() < 14) {
+  if (userLocalTime.hours() >= morningHour && userLocalTime.hours() < afternoonHour) {
     isTimeslot2 = true;
-  } else if (userLocalTime.hours() >= 14) {
+  } else if (userLocalTime.hours() >= afternoonHour) {
     isTimeslot2 = false;
     daysOffset = 1;
   } else {
@@ -98,46 +102,15 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
     }
 
     timeToAssign.setDate(timeToAssign.getDate() + daysOffset);
-    timeToAssign.setMinutes(getRandomMinutes());
+    timeToAssign.setMinutes(shared.getRandomInt(60));
     isTimeslot2 = !isTimeslot2; // switch time to assign
 
-    let newsDate = moment(timeToAssign).tz(activity.Context.UserTimezone);
+    let itemDate = moment(timeToAssign).tz(activity.Context.UserTimezone);
 
-    items[startIndex].date = newsDate.toLocaleString();
+    items[startIndex].date = itemDate.toISOString();
     sortedItems.push(items[startIndex]);
     startIndex++;
   }
 
   return sortedItems;
-}
-//** filters provided items[] based on provided daterange */
-function filterItemsByDateRange(items, daterange) {
-  let filteredItems = [];
-  let start = new Date(daterange.startDate).valueOf();
-  let end = new Date(daterange.endDate).valueOf();
-
-  for (let i = 0; i < items.length; i++) {
-    let tmpDate = new Date(items[i].date).valueOf();
-    if (start < tmpDate && tmpDate < end) {
-      filteredItems.push(items[i]);
-    }
-  }
-
-  return filteredItems;
-}
-//** paginate items[] based on provided pagination */
-function paginateItems(items, pagination) {
-  let pagiantedItems = [];
-  const pageSize = parseInt(pagination.pageSize);
-  const offset = (parseInt(pagination.page) - 1) * pageSize;
-
-  if (offset > items.length) return pagiantedItems;
-
-  for (let i = offset; i < offset + pageSize; i++) {
-    if (i >= items.length) {
-      break;
-    }
-    pagiantedItems.push(items[i]);
-  }
-  return pagiantedItems;
 }
