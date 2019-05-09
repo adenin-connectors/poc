@@ -57,19 +57,23 @@ module.exports = async (activity) => {
 
     var dateRange = $.dateRange(activity, "today");
     let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
+    let value = filteredItems.length;
 
     const pagination = $.pagination(activity);
     let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     activity.Response.Data.items = paginatedItems;
-    let value = activity.Response.Data.items.length;
-    activity.Response.Data.title = T(activity, 'News Feed');
+    activity.Response.Data.title = T(activity, 'Open Tickets');
     activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'All News');
-    activity.Response.Data.actionable = true;
-    activity.Response.Data.value = value;
-    activity.Response.Data.color = 'blue';
-    activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news.", value) : T(activity, "You have 1 news.");
+    activity.Response.Data.linkLabel = T(activity, 'Svi Tiketi');
+    activity.Response.Data.actionable = value > 0;
+    if (value > 0) {
+      activity.Response.Data.value = value;
+      activity.Response.Data.color = 'blue';
+      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} tickets assigned.", value) : T(activity, "You have 1 ticket assigned.");
+    } else {
+      activity.Response.Data.description = T(activity, `You have no tickets assigned.`);
+    }
   } catch (error) {
     $.handleError(activity, error);
   }

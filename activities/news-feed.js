@@ -1,6 +1,7 @@
 'use strict';
 const generator = require('./common/generator');
 const moment = require('moment-timezone');
+const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
@@ -35,32 +36,39 @@ module.exports = async (activity) => {
     let sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
 
     var dateRange = $.dateRange(activity, "today");
-    let filteredItems = filterItemsByDateRange(sortedItems, dateRange);
+    let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
+    let value = filteredItems.length;
 
     const pagination = $.pagination(activity);
-    let paginatedItems = paginateItems(filteredItems, pagination);
+    let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     activity.Response.Data.items = paginatedItems;
-    let value = activity.Response.Data.items.length;
+
     activity.Response.Data.title = T(activity, 'News Feed');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All News');
-    activity.Response.Data.actionable = true;
-    activity.Response.Data.value = value;
-    activity.Response.Data.color = 'blue';
-    activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news.", value) : T(activity, "You have 1 news.");
+    activity.Response.Data.actionable = value > 0;
+    if (value > 0) {
+      activity.Response.Data.value = value;
+      activity.Response.Data.color = 'blue';
+      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news.", value) : T(activity, "You have 1 news.");
+    } else {
+      activity.Response.Data.description = T(activity, `You have no news.`);
+    }
   } catch (error) {
     $.handleError(activity, error);
   }
 };
-function getRandomMinutes() {
-  return (Math.floor(Math.random() * 60) + 1);
-}
 //** returns new item[] reordered based on day of the year */
 function getItemsBasedOnDayOfTheYear(activity, items) {
-  let d = new Date();
-  let timeslot1 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 8, 0, 0);
-  let timeslot2 = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 14, 0, 0);
+  let morningHour = 8;
+  let afternoonHour = 14;
+  let timeslot1 = new Date();
+  timeslot1.setHours(morningHour);
+  let timeslot2 = new Date();
+  timeslot2.setHours(afternoonHour);
+
+  const d = new Date();
   let userLocalTime = moment(d).tz(activity.Context.UserTimezone);
 
   let daysOffset = 0; //number of days to offset current date (now - daysOffset)
@@ -98,7 +106,7 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
     }
 
     timeToAssign.setDate(timeToAssign.getDate() + daysOffset);
-    timeToAssign.setMinutes(getRandomMinutes());
+    timeToAssign.setMinutes(shared.getRandomInt(60));
     isTimeslot2 = !isTimeslot2; // switch time to assign
 
     let newsDate = moment(timeToAssign).tz(activity.Context.UserTimezone);
@@ -109,35 +117,4 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
   }
 
   return sortedItems;
-}
-//** filters provided items[] based on provided daterange */
-function filterItemsByDateRange(items, daterange) {
-  let filteredItems = [];
-  let start = new Date(daterange.startDate).valueOf();
-  let end = new Date(daterange.endDate).valueOf();
-
-  for (let i = 0; i < items.length; i++) {
-    let tmpDate = new Date(items[i].date).valueOf();
-    if (start < tmpDate && tmpDate < end) {
-      filteredItems.push(items[i]);
-    }
-  }
-
-  return filteredItems;
-}
-//** paginate items[] based on provided pagination */
-function paginateItems(items, pagination) {
-  let pagiantedItems = [];
-  const pageSize = parseInt(pagination.pageSize);
-  const offset = (parseInt(pagination.page) - 1) * pageSize;
-
-  if (offset > items.length) return pagiantedItems;
-
-  for (let i = offset; i < offset + pageSize; i++) {
-    if (i >= items.length) {
-      break;
-    }
-    pagiantedItems.push(items[i]);
-  }
-  return pagiantedItems;
 }
