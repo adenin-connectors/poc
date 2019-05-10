@@ -38,40 +38,27 @@ module.exports = {
   },
   //** returns new item[] reordered based on UTC hour of the day */
   getItemsBasedOnHour: function (activity, items) {
-    let morningHour = 7;
-    let afternoonHour = 17;
-    let timeslot1 = new Date();
-    timeslot1.setHours(morningHour);
-    let timeslot2 = new Date();
-    timeslot2.setHours(afternoonHour);
+    let timeslot1 = moment().tz(activity.Context.UserTimezone);
+    timeslot1.set({ hour: 9 });
+    let timeslot2 = moment().tz(activity.Context.UserTimezone);
+    timeslot2.set({ hour: 17 });
 
-    let startIndex = Math.floor((new Date().getUTCHours() % 12) / 2);
-
-    let daysOffset = 0;
     let minsDiff = -90;
     let sortedItems = [];
 
-    let date = new Date();
+    let startIndex = Math.floor((new Date().getUTCHours() % 12) / 2);
+    let date = moment().tz(activity.Context.UserTimezone);
 
     for (let i = 0; i < items.length; i++) {
-      if (startIndex >= items.length) {
-        startIndex = 0;
-      }
-      // first is now - 0 to 45 min, second now -90 mins - 0 to 45 mins, third now -180 - 0 to 45 mins 
-      date.setMinutes(date.getMinutes() + (i == 0 ? 0 : minsDiff) + this.getRandomInt(minsDiff / 2));
+      if (startIndex >= items.length) startIndex = 0;
 
-      if (date.getHours() < 9) {
-        daysOffset--;
-        date.setDate(date.getDate() + daysOffset);
-        date.setHours(timeslot2.getHours() - (timeslot1.getHours() - date.getHours()));
-        if (date.getHours() >= 17) {
-          date.setHours(16);
-        }
-      }
+      if (date.hours() >= timeslot2.hours()) date.set({ hour: timeslot2.hours(), minute: 0 });
+      
+      date.set({ minute: (date.minutes() + (i == 0 ? 0 : minsDiff) + this.getRandomInt(minsDiff / 2)) });
 
-      let itemDate = moment(date).tz(activity.Context.UserTimezone);
+      if (date.hours() < timeslot1.hours())date.set({ date: date.date() - 1, hour: timeslot2.hours(), minute: this.getRandomInt(minsDiff / 2)});
 
-      items[startIndex].date = itemDate.toISOString();
+      items[startIndex].date = date.toISOString();
       sortedItems.push(items[startIndex]);
       startIndex++;
     }
