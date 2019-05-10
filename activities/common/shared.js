@@ -45,24 +45,28 @@ module.exports = {
     let timeslot2 = new Date();
     timeslot2.setHours(afternoonHour);
 
-
     let startIndex = Math.floor((new Date().getUTCHours() % 12) / 2);
 
     let daysOffset = 0;
-    let minsMultiplier = -90;
+    let minsDiff = -90;
     let sortedItems = [];
+
+    let date = new Date();
 
     for (let i = 0; i < items.length; i++) {
       if (startIndex >= items.length) {
         startIndex = 0;
       }
-      let date = new Date();
-      date.setMinutes(date.getMinutes() + (i * minsMultiplier) + this.getRandomInt(minsMultiplier / 2));
+      // first is now - 0 to 45 min, second now -90 mins - 0 to 45 mins, third now -180 - 0 to 45 mins 
+      date.setMinutes(date.getMinutes() + (i == 0 ? 0 : minsDiff) + this.getRandomInt(minsDiff / 2));
 
-      if (date.getHours() < morningHour) {
+      if (date.getHours() < 9) {
         daysOffset--;
         date.setDate(date.getDate() + daysOffset);
         date.setHours(timeslot2.getHours() - (timeslot1.getHours() - date.getHours()));
+        if (date.getHours() >= 17) {
+          date.setHours(16);
+        }
       }
 
       let itemDate = moment(date).tz(activity.Context.UserTimezone);
