@@ -65,7 +65,7 @@ module.exports = async (activity) => {
     activity.Response.Data.items = paginatedItems;
     activity.Response.Data.title = T(activity, 'Open Tickets');
     activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'Svi Tiketi');
+    activity.Response.Data.linkLabel = T(activity, 'All tickets');
     activity.Response.Data.actionable = value > 0;
     if (value > 0) {
       activity.Response.Data.value = value;
