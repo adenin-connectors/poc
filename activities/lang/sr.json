@@ -58,5 +58,10 @@
   "There are no open issues." : "Nemate otvorenih problema.",
   "There are {0} issues." : "Ima {0} problema.",
   "There is 1 issue." : "Ima 1 problem.",
-  "There are no issues." : "Nema problema."
+  "There are no issues." : "Nema problema.",
+  "Servers Down": "Serveri Koji Ne Rade",
+  "All Servers That Are Down": "Svi Serveri Koji Ne Rade",
+  "{0} servers are currently down.": "{0} servera trenutno ne radi.",
+  "1 server is currently down.": "1 server trenutno ne radi.",
+  "All servers are running.": "Svi serveri rade."
 }
