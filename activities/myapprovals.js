@@ -4,7 +4,7 @@ const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
-    const action = $.getObjPath(activity.Request, 'Query.action');
+    const action = $.getObjPath(activity.Request, 'Path');
 
     if (action === 'approve' || action === 'decline') {
       activity.Response.Data = {
@@ -18,11 +18,13 @@ module.exports = async (activity) => {
       {
         id: "1054889",
         title: `PTO Request`,
+        description: "James Cook, 8 hours",
         link: generator.detailUrl()
       },
       {
         id: "1054891",
         title: `Purchase Request`,
+        description: "Apple MacBook Pro 15, US$ 2.400",
         link: generator.detailUrl()
       },
       {
@@ -33,6 +35,7 @@ module.exports = async (activity) => {
       {
         id: "1054880",
         title: `Requirement to hire`,
+        description: "Key Account Manager  for region: east 2",
         link: generator.detailUrl()
       }
     ];
