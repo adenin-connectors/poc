@@ -4,6 +4,16 @@ const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
+    const action = $.getObjPath(activity.Request, 'Query.action');
+
+    if (action === 'approve' || action === 'decline') {
+      activity.Response.Data = {
+        success: true
+      };
+
+      return;
+    }
+
     let items = [
       {
         id: "1054889",
