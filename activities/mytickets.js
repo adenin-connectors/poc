@@ -67,8 +67,10 @@ module.exports = async (activity) => {
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All tickets');
     activity.Response.Data.actionable = value > 0;
+    
     if (value > 0) {
       activity.Response.Data.value = value;
+      activity.Response.Data.date = shared.getHighestDate(paginatedItems);
       activity.Response.Data.color = 'blue';
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} tickets assigned.", value) : T(activity, "You have 1 ticket assigned.");
     } else {

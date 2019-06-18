@@ -1,5 +1,4 @@
 'use strict';
-
 const api = require('./common/hrapi');
 
 module.exports = async (activity) => {

@@ -1,7 +1,7 @@
-InterfaceName: 'items'
+InterfaceName: 'status'
 Description: 'Recent Documents'
 APIDoc: ''
-Interfaces: ''
+Interfaces: 'items,daterange,pagination'
 RequiredScopes: ''
 AdditionalParameters:
 Method: ''

@@ -45,16 +45,19 @@ module.exports = async (activity) => {
     let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     activity.Response.Data.items = paginatedItems;
-    activity.Response.Data.title = T(activity, 'My Events');
+    activity.Response.Data.title = T(activity, 'My Tasks');
     activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'All Events');
+    activity.Response.Data.linkLabel = T(activity, 'All Tasks');
     activity.Response.Data.actionable = value > 0;
+
     if (value > 0) {
       activity.Response.Data.value = value;
+      activity.Response.Data.date = shared.getHighestDate(paginatedItems);
       activity.Response.Data.color = 'blue';
-      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} events.", value) : T(activity, "You have 1 event.");
+      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} tasks.", value) :
+        T(activity, "You have 1 task.");
     } else {
-      activity.Response.Data.description = T(activity, `You have no events.`);
+      activity.Response.Data.description = T(activity, `You have no tasks.`);
     }
   } catch (error) {
     $.handleError(activity, error);
@@ -119,13 +122,13 @@ function sortItemsBasedOnDayOfTheYear(activity, items) {
   return sortedItems;
 }
 
-function roundMinutes(minutes){
+function roundMinutes(minutes) {
   let roundMinutes = 0;
-  if(minutes>7 && minutes<=22){
+  if (minutes > 7 && minutes <= 22) {
     roundMinutes = 15;
-  }else if(minutes>22 && minutes<=37){
+  } else if (minutes > 22 && minutes <= 37) {
     minutes = 30;
-  }else if(minutes>37 && minutes<=52){
+  } else if (minutes > 37 && minutes <= 52) {
     minutes = 45;
   }
   return roundMinutes;

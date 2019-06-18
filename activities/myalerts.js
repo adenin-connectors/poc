@@ -29,6 +29,7 @@ module.exports = async (activity) => {
     activity.Response.Data.actionable = value>0;
     if(value>0){
       activity.Response.Data.value = value;
+      activity.Response.Data.date = shared.getHighestDate(paginatedItems);
       activity.Response.Data.color = 'blue';
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} alerts.", value) : T(activity, "You have 1 alert.");
     }else {

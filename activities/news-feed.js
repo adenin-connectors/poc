@@ -50,6 +50,7 @@ module.exports = async (activity) => {
     activity.Response.Data.actionable = value > 0;
     if (value > 0) {
       activity.Response.Data.value = value;
+      activity.Response.Data.date = paginatedItems[0].date; // items are alrady sorted ascending
       activity.Response.Data.color = 'blue';
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news.", value) : T(activity, "You have 1 news.");
     } else {

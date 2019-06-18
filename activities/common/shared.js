@@ -53,10 +53,10 @@ module.exports = {
       if (startIndex >= items.length) startIndex = 0;
 
       if (date.hours() >= timeslot2.hours()) date.set({ hour: timeslot2.hours(), minute: 0 });
-      
+
       date.set({ minute: (date.minutes() + (i == 0 ? 0 : minsDiff) + this.getRandomInt(minsDiff / 2)) });
 
-      if (date.hours() < timeslot1.hours())date.set({ date: date.date() - 1, hour: timeslot2.hours(), minute: this.getRandomInt(minsDiff / 2)});
+      if (date.hours() < timeslot1.hours()) date.set({ date: date.date() - 1, hour: timeslot2.hours(), minute: this.getRandomInt(minsDiff / 2) });
 
       items[startIndex].date = date.toISOString();
       sortedItems.push(items[startIndex]);
@@ -64,6 +64,20 @@ module.exports = {
     }
 
     return sortedItems;
+  },
+  //** get higest date */
+  getHighestDate: function (items) {
+    let highestDate = 0;
+
+    for (let i = 0; i < items.length; i++) {
+      let nextDate = Date.parse(items[i].date);
+
+      if (nextDate > highestDate) {
+        highestDate = nextDate;
+      }
+    }
+
+    return new Date(highestDate).toISOString();
   }
 };
 

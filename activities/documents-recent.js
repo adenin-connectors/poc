@@ -1,5 +1,6 @@
 'use strict';
 const generator = require('./common/generator');
+const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
@@ -44,10 +45,30 @@ module.exports = async (activity) => {
       }
     ];
 
+    
+    var dateRange = $.dateRange(activity, "today");
+    items = shared.filterItemsByDateRange(items, dateRange);
+    let value = items.length;
+
+    const pagination = $.pagination(activity);
+    items = shared.paginateItems(items, pagination);
+
     activity.Response.Data.items = items;
-    activity.Response.Data.title = T(activity, 'Recent Documents');
+    activity.Response.Data.title = T(activity, 'Documents');
     activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'Open Documents');
+    activity.Response.Data.linkLabel = T(activity, 'All Documents');
+
+    activity.Response.Data.actionable = value > 0;
+
+    if (value > 0) {
+      activity.Response.Data.value = value;
+      activity.Response.Data.date = shared.getHighestDate(items);
+      activity.Response.Data.color = 'blue';
+      activity.Response.Data.description = value > 1 ? T(activity, "There are {0} documents.", value)
+        : T(activity, "There is 1 document.");
+    } else {
+      activity.Response.Data.description = T(activity, 'There are no documents.');
+    }
   } catch (error) {
     $.handleError(activity, error);
   }

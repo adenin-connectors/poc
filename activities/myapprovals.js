@@ -45,7 +45,7 @@ module.exports = async (activity) => {
     var dateRange = $.dateRange(activity, "today");
     let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
     let value = filteredItems.length;
-    
+
     const pagination = $.pagination(activity);
     let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
@@ -53,12 +53,15 @@ module.exports = async (activity) => {
     activity.Response.Data.title = T(activity, 'My Approvals');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Approvals');
-    activity.Response.Data.actionable = value>0;
-    if(value>0){
+    activity.Response.Data.actionable = value > 0;
+
+    if (value > 0) {
       activity.Response.Data.value = value;
+      activity.Response.Data.date = shared.getHighestDate(paginatedItems);
       activity.Response.Data.color = 'blue';
-      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} approvals.", value) : T(activity, "You have 1 approval.");
-    }else {
+      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} approvals.", value) :
+        T(activity, "You have 1 approval.");
+    } else {
       activity.Response.Data.description = T(activity, `You have no approvals.`);
     }
 

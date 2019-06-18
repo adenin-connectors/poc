@@ -1,6 +1,7 @@
 'use strict';
 const generator = require('./common/generator');
 const faker = require('faker');
+const shared = require('./common/shared');
 
 module.exports = async function (activity) {
   try {
@@ -48,6 +49,7 @@ module.exports = async function (activity) {
 
     if (value > 0) {
       activity.Response.Data.value = value;
+      activity.Response.Data.date = shared.getHighestDate(serversDown);
       activity.Response.Data.color = 'blue';
       activity.Response.Data.description = value > 1 ? T(activity, "{0} servers are currently down.", value)
         : T(activity, "1 server is currently down.");
