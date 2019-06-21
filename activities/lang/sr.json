@@ -74,5 +74,10 @@
   "All Tasks" : "Svi Zadaci",
   "You have {0} tasks." : "Imate {0} zadatka.",
   "You have 1 task." : "Imate 1 zadatak.",
-  "You have no tasks." : "Nemate zadatke"
+  "You have no tasks." : "Nemate zadatke",
+  "PTO Status" : "PTO Status",
+  "Request PTO" : "Zahtevaj PTO",
+  "Your current PTO balance is {0} hours." : "Vaše trenutno PTO stanje je {0} sata.",
+  "Your current PTO balance is 1 hour." : "Vaše trenutno PTO stanje je 1 sat.",
+  "You don't have PTO balance." : "Nemate PTO stanje."
 }
