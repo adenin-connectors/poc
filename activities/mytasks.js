@@ -37,7 +37,7 @@ module.exports = async (activity) => {
 
     let sortedItems = sortItemsBasedOnDayOfTheYear(activity, items);
 
-    var dateRange = $.dateRange(activity, "today");
+    var dateRange = $.dateRange(activity);
     let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
     let value = filteredItems.length;
 
