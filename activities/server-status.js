@@ -1,58 +1,57 @@
 'use strict';
-const generator = require('./common/generator');
+
 const faker = require('faker');
+const generator = require('./common/generator');
 const shared = require('./common/shared');
 
 module.exports = async function (activity) {
   try {
-    let servers = [
+    const servers = [
       {
-        _type: "server-status",
+        _type: 'server-status',
         id: faker.random.uuid(),
-        title: `Mars`,
-        description: 'Down',
+        title: 'Mars',
+        description: faker.random.boolean() ? 'Down.' : 'Up.',
         date: new Date().toISOString(),
         link: generator.detailUrl()
       },
       {
-        _type: "server-status",
+        _type: 'server-status',
         id: faker.random.uuid(),
-        title: `Jupiter`,
-        description: 'Down',
+        title: 'Jupiter',
+        description: faker.random.boolean() ? 'Down.' : 'Up.',
         date: new Date().toISOString(),
         link: generator.detailUrl()
       },
       {
-        _type: "server-status",
+        _type: 'server-status',
         id: faker.random.uuid(),
-        title: `Saturn`,
-        description: 'Down',
+        title: 'Saturn',
+        description: faker.random.boolean() ? 'Down.' : 'Up.',
         date: new Date().toISOString(),
         link: generator.detailUrl()
       }
     ];
 
-    let serverIndex = new Date().getHours() % 4;
+    let downCount = 0;
 
-    let serversDown = [];
-    if (serverIndex < servers.length) {
-      serversDown.push(servers[serverIndex]);
+    for (let i = 0; i < servers.length; i++) {
+      if (servers[i].description === 'Down.') downCount++;
     }
 
-    let value = serversDown.length;
-
-    activity.Response.Data.items = serversDown;
-    activity.Response.Data.title = T(activity, 'Servers Down');
+    activity.Response.Data.items = servers;
+    activity.Response.Data.title = T(activity, 'Server Status');
     activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'All Servers That Are Down');
-    activity.Response.Data.actionable = value > 0;
+    activity.Response.Data.linkLabel = T(activity, 'All server statuses');
+    activity.Response.Data.actionable = downCount > 0;
 
-    if (value > 0) {
-      activity.Response.Data.value = value;
-      activity.Response.Data.date = shared.getHighestDate(serversDown);
+    if (downCount > 0) {
+      activity.Response.Data.value = downCount;
+      activity.Response.Data.date = shared.getHighestDate(servers);
       activity.Response.Data.color = 'blue';
-      activity.Response.Data.description = value > 1 ? T(activity, "{0} servers are currently down.", value)
-        : T(activity, "1 server is currently down.");
+      activity.Response.Data.description = downCount > 1 ?
+        T(activity, '{0} servers are currently down.', downCount) :
+        T(activity, '1 server is currently down.');
     } else {
       activity.Response.Data.description = T(activity, 'All servers are running.');
     }
