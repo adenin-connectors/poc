@@ -15,7 +15,7 @@ ServiceUrlHint: ''
 XML2JSON: hide
 ImpersonateOAuth: hide
 Interface: hide
-Custom1: optional
+Custom1: hide
 Custom1Label: Webhook Secret
 Custom1Hint: ''
 Custom2: hide
