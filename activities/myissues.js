@@ -55,7 +55,7 @@ module.exports = async (activity) => {
 
     let sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
 
-    var dateRange = $.dateRange(activity, "today");
+    var dateRange = $.dateRange(activity);
     let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
     let value = filteredItems.length;
 
@@ -67,6 +67,7 @@ module.exports = async (activity) => {
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Issues');
     activity.Response.Data.actionable = value > 0;
+
     if (value > 0) {
       activity.Response.Data.value = value;
       activity.Response.Data.date = shared.getHighestDate(paginatedItems);
@@ -80,6 +81,7 @@ module.exports = async (activity) => {
     $.handleError(activity, error);
   }
 };
+
 //** returns new item[] reordered based on day of the year */
 function getItemsBasedOnDayOfTheYear(activity, items) {
   let morningHour = 10;

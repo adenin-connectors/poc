@@ -28,7 +28,7 @@ module.exports = async (activity) => {
     items = assingDates(activity, items);
     console.log(items);
 
-    var dateRange = $.dateRange(activity, "today");
+    var dateRange = $.dateRange(activity);
     let filteredItems = shared.filterItemsByDateRange(items, dateRange);
     let value = filteredItems.length;
 
