@@ -35,6 +35,15 @@ function generateChartData(activity) {
           title: {
             display: true,
             text: T(activity, 'Issue Metrics By Priority')
+          },
+          plugins: {
+            datalabels: {
+              display: true,
+              color: 'white',
+              font: {
+                weight: 'bold'
+              }
+            }
           }
         }
       },

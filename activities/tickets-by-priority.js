@@ -33,7 +33,7 @@ module.exports = async (activity) => {
             }
           }
         },
-        template: 'pie',
+        template: 'pie-labels',
         palette: 'adenin.PriorityRedOrangeBlue'
       }
     };
