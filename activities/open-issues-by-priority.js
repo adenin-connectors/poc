@@ -38,7 +38,9 @@ function generateChartData(activity) {
           },
           plugins: {
             datalabels: {
+              // 'display: true' MUST be added for datalabels to show, as default is false in our bundle
               display: true,
+              // all other datalabels options can now be used, except those that take functions
               color: 'white',
               font: {
                 weight: 'bold'
