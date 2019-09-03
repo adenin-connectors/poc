@@ -1,0 +1,40 @@
+$type: form
+properties:
+  string1:
+    type: string
+    title: Destination
+  date2:
+    type: string
+    title: Start Date
+    xtype: date
+  date3:
+    type: string
+    title: End Date
+    xtype: date
+  toggle4:
+    type: boolean
+    title: Activate Out of Office in that time
+    xtype: toggle
+  radio6:
+    type: string
+    title: Purpose
+    xtype: radio
+    xvaluelist:
+      - value: 5
+        title: Sales Visit
+      - value: 1
+        title: Internal Meeting
+      - value: 2
+        title: Company Training
+      - value: 3
+        title: Client Visit
+      - value: 4
+        title: Partner Visit
+      - value: 5
+        title: Other (Please comment...)
+  textarea7:
+    type: string
+    title: Comment
+    xtype: textarea
+rules: []
+$meta: {}
