@@ -1,0 +1,8 @@
+ServiceName: 'order-catering'
+InterfaceName: 'items'
+Description: 'order-catering'
+APIDoc: ''
+Interfaces: ''
+RequiredScopes: ''
+AdditionalParameters:
+Method: ''

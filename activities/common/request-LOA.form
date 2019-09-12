@@ -1,0 +1,34 @@
+$type: form
+properties:
+  string1:
+    type: string
+    title: Purpose for leave
+  date2:
+    type: string
+    title: Start Date
+    xtype: date
+  date3:
+    type: string
+    title: End Date
+    xtype: date
+  radio6:
+    type: string
+    title: Type of leave
+    xtype: radio
+    xvaluelist:
+      - value: 1
+        title: Sick Leave
+      - value: 2
+        title: Compassionate Leave
+      - value: 3
+        title: Compensatory Time Off
+      - value: 4
+        title: Unpaid Absence
+      - value: 5
+        title: Other (Please comment...)
+  textarea7:
+    type: string
+    title: Comment
+    xtype: textarea
+rules: []
+$meta: {}

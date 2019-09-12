@@ -1,0 +1,187 @@
+$type: form
+properties:
+  string1:
+    type: string
+    title: Deliver to
+  date2:
+    type: string
+    title: Delivery on
+    xtype: date
+  view9:
+    type: element
+    title: Liquid View 9
+    xtype: at-core-view
+    view: |-
+      <div class="font-caption font-bolder">Number of attendants</div>
+      <div class="plusminus horiz">
+        <button></button>
+        <input type="number" name="productQty" value="1" min="1" max="10">
+        <button></button> 
+      </div>
+      <style>
+
+      .plusminus {
+        display: inline-block;
+        position: relative;
+        font-size: 0;
+        overflow: hidden;
+        border-radius: 3px;
+        width: 44px;
+        height: 132px;
+      }
+      .plusminus button {
+        display: block;
+        width: 44px;
+        height: 44px;
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: #000;
+        color: #fff;
+        font-size: 30.8px;
+        line-height: 1;
+        font-family: bonds, sans-serif;
+        cursor: pointer;
+        -moz-transition: color 200ms;
+        -o-transition: color 200ms;
+        -webkit-transition: color 200ms;
+        transition: color 200ms;
+      }
+      .plusminus button:focus {
+        outline: none;
+        color: #2bebaf;
+      }
+      .plusminus button:disabled {
+        background: #999;
+        color: #ccc;
+        cursor: default;
+      }
+      .plusminus button:first-child {
+        bottom: 0;
+      }
+      .plusminus button:first-child:before {
+        content: "-";
+      }
+      .plusminus button:last-child {
+        top: 0;
+      }
+      .plusminus button:last-child:before {
+        content: "+";
+      }
+      .plusminus button:last-child:focus {
+        color: #ff6367;
+      }
+      .plusminus input[type="number"] {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        top: 44px;
+        margin: 0;
+        padding: 0 0 16.92308px;
+        border: 0;
+        font-size: 17.6px;
+        font-weight: bold;
+        text-align: center;
+        -moz-appearance: textfield;
+      }
+      .plusminus input[type="number"]::-webkit-outer-spin-button, .plusminus input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      .plusminus:after {
+        content: "QTY";
+        position: absolute;
+        font-size: 9.68px;
+        left: 0;
+        right: 0;
+        line-height: 1;
+        padding: 3.52px 0 3.52px 0;
+        width: 44px;
+        margin: 0 auto;
+        border-top: 1px solid #ccc;
+        color: #888;
+        text-align: center;
+        bottom: 34%;
+      }
+      .plusminus.horiz {
+        width: 132px;
+        height: 44px;
+      }
+      .plusminus.horiz button:first-child {
+        left: 0;
+      }
+      .plusminus.horiz button:last-child {
+        right: 0;
+      }
+      .plusminus.horiz:after {
+        bottom: 0;
+      }
+      .plusminus.horiz input[type="number"] {
+        position: absolute;
+        top: 0;
+        left: 44px;
+      }
+      .plusminus.stacked {
+        width: 88px;
+        height: 88px;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+      .plusminus.stacked:after {
+        width: 100%;
+        bottom: 50%;
+      }
+      .plusminus.stacked button {
+        float: none;
+        top: auto;
+        bottom: 0;
+      }
+      .plusminus.stacked button:first-child {
+        left: 0;
+      }
+      .plusminus.stacked button:last-child {
+        right: 0;
+      }
+      .plusminus.stacked input[type="number"] {
+        top: 0;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #eee;
+        width: 100%;
+      }
+      .plusminus.stacked input[type="number"]:after {
+        width: 100%;
+      }
+      </style>
+  list10:
+    type: string
+    title: Ordering
+    xtype: at-form-checkbox-list
+    xvaluelist:
+      - value: tea
+        title: Tea
+        disabled: !!bool false
+      - value: coffee
+        title: Coffee
+        disabled: !!bool false
+      - value: beverages
+        title: Cold drinks
+        disabled: !!bool false
+      - value: biscuit
+        title: Biscuits
+        disabled: !!bool false
+      - value: pastry
+        title: Pastries
+        disabled: !!bool false
+      - value: sandwhich
+        title: Sandwhiches
+        disabled: !!bool false
+      - value: lunch
+        title: Full lunch
+        disabled: !!bool false
+      - value: vegetarian
+        title: Vegetarian Option
+        disabled: !!bool false
+rules: []
+$meta: {}
