@@ -53,8 +53,8 @@ module.exports = async (activity) => {
       }
     ];
 
+    let response = activity.Response.Data;
     let sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
-
     var dateRange = $.dateRange(activity);
     let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
     let value = filteredItems.length;
@@ -62,19 +62,20 @@ module.exports = async (activity) => {
     const pagination = $.pagination(activity);
     let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
-    activity.Response.Data.items = paginatedItems;
-    activity.Response.Data.title = T(activity, 'Open Tickets');
-    activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'All tickets');
-    activity.Response.Data.actionable = value > 0;
-    
+    response.items = paginatedItems;
+    response.title = T(activity, 'Open Tickets');
+    response.link = generator.detailUrl();
+    response.linkLabel = T(activity, 'All tickets');
+    response.actionable = value > 0;
+
     if (value > 0) {
-      activity.Response.Data.value = value;
-      activity.Response.Data.date = shared.getHighestDate(paginatedItems);
-      activity.Response.Data.color = 'blue';
-      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} tickets assigned.", value) : T(activity, "You have 1 ticket assigned.");
+      response.value = value;
+      response.date = shared.getHighestDate(paginatedItems);
+      response.description = value > 1 ? T(activity, "You have {0} tickets assigned.", value) : T(activity, "You have 1 ticket assigned.");
+      response.description += " The latest is <b>" + items[0].title + "</b>."
+      response.thumbnail = "https://www.adenin.com/assets/images/wp-images/GitHub.svg"; // activity.Context.connector.host.connectorLogoUrl;
     } else {
-      activity.Response.Data.description = T(activity, `You have no tickets assigned.`);
+      response.description = T(activity, `You have no tickets assigned.`);
     }
   } catch (error) {
     $.handleError(activity, error);
