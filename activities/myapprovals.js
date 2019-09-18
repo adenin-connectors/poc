@@ -55,12 +55,15 @@ module.exports = async (activity) => {
     activity.Response.Data.linkLabel = T(activity, 'All Approvals');
     activity.Response.Data.actionable = value > 0;
 
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/sap.svg";
+
     if (value > 0) {
       activity.Response.Data.value = value;
       activity.Response.Data.date = shared.getHighestDate(paginatedItems);
       activity.Response.Data.color = 'blue';
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} approvals.", value) :
         T(activity, "You have 1 approval.");
+      activity.Response.Data.description += " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
     } else {
       activity.Response.Data.description = T(activity, `You have no approvals.`);
     }

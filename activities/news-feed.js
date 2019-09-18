@@ -48,11 +48,15 @@ module.exports = async (activity) => {
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All News');
     activity.Response.Data.actionable = value > 0;
+
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/sharepoint-online.svg";
+
     if (value > 0) {
       activity.Response.Data.value = value;
       activity.Response.Data.date = paginatedItems[0].date; // items are alrady sorted ascending
       activity.Response.Data.color = 'blue';
-      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news.", value) : T(activity, "You have 1 news.");
+      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news items.", value) : T(activity, "You have 1 news item.");
+      activity.Response.Data.description += " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
     } else {
       activity.Response.Data.description = T(activity, `You have no news.`);
     }

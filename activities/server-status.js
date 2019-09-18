@@ -45,13 +45,15 @@ module.exports = async function (activity) {
     activity.Response.Data.linkLabel = T(activity, 'All server statuses');
     activity.Response.Data.actionable = downCount > 0;
 
+    activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/freshping.svg';
+
     if (downCount > 0) {
       activity.Response.Data.value = downCount;
       activity.Response.Data.date = shared.getHighestDate(servers);
       activity.Response.Data.color = 'blue';
       activity.Response.Data.description = downCount > 1 ?
-        T(activity, '{0} servers are currently down.', downCount) :
-        T(activity, '1 server is currently down.');
+        T(activity, `Server <b>'${activity.Response.Data.items[0]}'</b> and <b>${downCount - 1}</b> more are currently down.`) :
+        T(activity, `Server <b>'${activity.Response.Data.items[0]}'</b> is currently down.`);
     } else {
       activity.Response.Data.description = T(activity, 'All servers are running.');
     }

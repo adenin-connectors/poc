@@ -37,11 +37,14 @@ module.exports = async function (activity) {
     activity.Response.Data.actionable = value > 0;
     activity.Response.Data.value = value;
 
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/salesforce.svg";
+
     if (value > 0) {
       activity.Response.Data.color = 'blue';
       activity.Response.Data.date = shared.getHighestDate(items);
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} leads.", value) :
         T(activity, "You have 1 lead.");
+      activity.Response.Data.description += " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
     } else {
       activity.Response.Data.description = T(activity, `You have no leads.`);
     }

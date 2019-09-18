@@ -68,12 +68,13 @@ module.exports = async (activity) => {
     response.linkLabel = T(activity, 'All tickets');
     response.actionable = value > 0;
 
+    response.thumbnail = "https://www.adenin.com/assets/images/wp-images/freshdesk.svg"; // activity.Context.connector.host.connectorLogoUrl;
+
     if (value > 0) {
       response.value = value;
       response.date = shared.getHighestDate(paginatedItems);
       response.description = value > 1 ? T(activity, "You have {0} tickets assigned.", value) : T(activity, "You have 1 ticket assigned.");
       response.description += " The latest is <b>" + response.items[0].title + "</b>.";
-      response.thumbnail = "https://www.adenin.com/assets/images/wp-images/GitHub.svg"; // activity.Context.connector.host.connectorLogoUrl;
     } else {
       response.description = T(activity, `You have no tickets assigned.`);
     }

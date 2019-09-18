@@ -35,6 +35,8 @@ module.exports = async (activity) => {
     const pagination = $.pagination(activity);
     let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/sharepoint-online.svg";
+
     activity.Response.Data.items = paginatedItems;
     if (pagination.page == "1") {
       activity.Response.Data.title = T(activity, 'My Alerts');
@@ -46,6 +48,7 @@ module.exports = async (activity) => {
         activity.Response.Data.date = activity.Response.Data.items[0].date;
         activity.Response.Data.color = 'blue';
         activity.Response.Data.description = value > 1 ? T(activity, "You have {0} alerts.", value) : T(activity, "You have 1 alert.");
+        activity.Response.Data.description += " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
       } else {
         activity.Response.Data.description = T(activity, `You have no alerts.`);
       }
