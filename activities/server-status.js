@@ -52,8 +52,8 @@ module.exports = async function (activity) {
       activity.Response.Data.date = shared.getHighestDate(servers);
       activity.Response.Data.color = 'red';
       activity.Response.Data.description = downCount > 1 ?
-        T(activity, `Server <b>'${activity.Response.Data.items[0].title}'</b> and <b>${downCount - 1}</b> more are currently down.`) :
-        T(activity, `Server <b>'${activity.Response.Data.items[0].title}'</b> is currently down.`);
+        T(activity, `Server <b>${activity.Response.Data.items[0].title}</b> and <b>${downCount - 1}</b> more are currently down.`) :
+        T(activity, `Server <b>${activity.Response.Data.items[0].title}</b> is currently down.`);
     } else {
       activity.Response.Data.description = T(activity, 'All servers are running.');
     }

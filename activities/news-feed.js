@@ -1,4 +1,5 @@
 'use strict';
+
 const generator = require('./common/generator');
 const moment = require('moment-timezone');
 const shared = require('./common/shared');
