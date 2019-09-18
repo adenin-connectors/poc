@@ -40,7 +40,6 @@ module.exports = async function (activity) {
 
     if (value > 0) {
       activity.Response.Data.value = value;
-      activity.Response.Data.color = 'blue';
       activity.Response.Data.date = shared.getHighestDate(items);
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} leads.", value) :
         T(activity, "You have 1 lead.");

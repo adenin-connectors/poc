@@ -54,7 +54,6 @@ module.exports = async (activity) => {
     if (value > 0) {
       activity.Response.Data.value = value;
       activity.Response.Data.date = paginatedItems[0].date; // items are alrady sorted ascending
-      activity.Response.Data.color = 'blue';
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} news items.", value) : T(activity, "You have 1 news item.");
       activity.Response.Data.description += " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
     } else {

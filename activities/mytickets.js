@@ -8,47 +8,47 @@ module.exports = async (activity) => {
     let items = [
       {
         id: "1054889",
-        title: `cannot reach printer P123123`,
+        title: `Damaged product, could I have a refund?`,
         link: generator.detailUrl()
       },
       {
         id: "1054891",
-        title: `Outlook crashes with error 0x43a4b227fd21`,
+        title: `When will I receive my order?`,
         link: generator.detailUrl()
       },
       {
         id: "1054878",
-        title: `cannot open VPN connection`,
+        title: `Cannot finish checkout process`,
         link: generator.detailUrl()
       },
       {
         id: "1054880",
-        title: `need password reset`,
+        title: `Locked out of my account, no access to email`,
         link: generator.detailUrl()
       },
       {
         id: "1054893",
-        title: `cannot turn on monitor M31123`,
+        title: `Request product exchange`,
         link: generator.detailUrl()
       },
       {
         id: "1054874",
-        title: `urgent: my iPhone was stolen`,
+        title: `Card has been charged twice`,
         link: generator.detailUrl()
       },
       {
         id: "1054875",
-        title: `cannot open internet`,
+        title: `My coupon does not work`,
         link: generator.detailUrl()
       },
       {
         id: "1054876",
-        title: `login to SAP fails after 8pm`,
+        title: `Account is suspended?`,
         link: generator.detailUrl()
       },
       {
         id: "1054877",
-        title: `can I request a new laptop?`,
+        title: `Want more info about this product`,
         link: generator.detailUrl()
       }
     ];
