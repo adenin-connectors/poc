@@ -45,7 +45,7 @@ module.exports = async function (activity) {
     activity.Response.Data.linkLabel = T(activity, 'All server statuses');
     activity.Response.Data.actionable = downCount > 0;
 
-    activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/freshping.svg';
+    activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshping.svg';
 
     if (downCount > 0) {
       activity.Response.Data.value = downCount;

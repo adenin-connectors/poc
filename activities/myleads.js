@@ -35,11 +35,11 @@ module.exports = async function (activity) {
     activity.Response.Data.linkLabel = T(activity, 'All Leads');
 
     activity.Response.Data.actionable = value > 0;
-    activity.Response.Data.value = value;
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/salesforce.svg";
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg";
 
     if (value > 0) {
+      activity.Response.Data.value = value;
       activity.Response.Data.color = 'blue';
       activity.Response.Data.date = shared.getHighestDate(items);
       activity.Response.Data.description = value > 1 ? T(activity, "You have {0} leads.", value) :

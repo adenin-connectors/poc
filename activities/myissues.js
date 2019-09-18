@@ -68,7 +68,7 @@ module.exports = async (activity) => {
     activity.Response.Data.linkLabel = T(activity, 'All Issues');
     activity.Response.Data.actionable = value > 0;
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/github.svg";
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/github.svg";
 
     if (value > 0) {
       activity.Response.Data.value = value;

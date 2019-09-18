@@ -55,7 +55,7 @@ module.exports = async (activity) => {
     activity.Response.Data.linkLabel = T(activity, 'All Approvals');
     activity.Response.Data.actionable = value > 0;
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/sap.svg";
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/sap.svg";
 
     if (value > 0) {
       activity.Response.Data.value = value;

@@ -35,7 +35,7 @@ module.exports = async (activity) => {
     const pagination = $.pagination(activity);
     let paginatedItems = shared.paginateItems(filteredItems, pagination);
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/sharepoint-online.svg";
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg";
 
     activity.Response.Data.items = paginatedItems;
     if (pagination.page == "1") {

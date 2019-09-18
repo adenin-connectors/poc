@@ -68,7 +68,7 @@ module.exports = async (activity) => {
     response.linkLabel = T(activity, 'All tickets');
     response.actionable = value > 0;
 
-    response.thumbnail = "https://www.adenin.com/assets/images/wp-images/freshdesk.svg"; // activity.Context.connector.host.connectorLogoUrl;
+    response.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/freshdesk.svg"; // activity.Context.connector.host.connectorLogoUrl;
 
     if (value > 0) {
       response.value = value;

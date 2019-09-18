@@ -49,7 +49,7 @@ module.exports = async (activity) => {
     activity.Response.Data.linkLabel = T(activity, 'All News');
     activity.Response.Data.actionable = value > 0;
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/sharepoint-online.svg";
+    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg";
 
     if (value > 0) {
       activity.Response.Data.value = value;
