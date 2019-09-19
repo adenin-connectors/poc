@@ -12,7 +12,7 @@ module.exports = async function (activity) {
 
     for (let i = 0; i < numberToGenerate; i++) {
       let d = new Date();
-      d.setMinutes(d.getMinutes() + (i+1)*25);
+      d.setMinutes(d.getMinutes() - (i+1)*25);
       const item = {
         id: i.toString(),
         title: faker.name.findName(),
