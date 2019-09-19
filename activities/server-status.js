@@ -39,23 +39,33 @@ module.exports = async function (activity) {
       if (servers[i].description === 'Down.') downCount++;
     }
 
-    activity.Response.Data.items = servers;
-    activity.Response.Data.title = T(activity, 'Server Status');
-    activity.Response.Data.link = generator.detailUrl();
-    activity.Response.Data.linkLabel = T(activity, 'All server statuses');
-    activity.Response.Data.actionable = downCount > 0;
+    const response = activity.Response.Data;
 
-    activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshping.svg';
+    response.items = servers;
+    response.title = T(activity, 'Server Status');
+    response.link = generator.detailUrl();
+    response.linkLabel = T(activity, 'All server statuses');
+    response.actionable = downCount > 0;
+
+    response.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshping.svg';
 
     if (downCount > 0) {
-      activity.Response.Data.value = downCount;
-      activity.Response.Data.date = shared.getHighestDate(servers);
-      activity.Response.Data.color = 'red';
-      activity.Response.Data.description = downCount > 1 ?
-        T(activity, `Server <b>${activity.Response.Data.items[0].title}</b> and <b>${downCount - 1}</b> more are currently down.`) :
-        T(activity, `Server <b>${activity.Response.Data.items[0].title}</b> is currently down.`);
+      response.value = downCount;
+      response.date = shared.getHighestDate(servers);
+      response.color = 'red';
+
+      switch (downCount) {
+      case 1:
+        response.description = T(activity, `Server <b>${response.items[0].title}</b> is currently down.`);
+        break;
+      case 2:
+        response.description = T(activity, `Server <b>${response.items[0].title}</b> and <b>${downCount - 1}</b> more are currently down.`);
+        break;
+      default:
+        response.description = T(activity, `Server <b>${response.items[0].title}</b>, <b>${response.items[1].title}</b> and <b>${downCount - 2}</b> more are currently down.`);
+      }
     } else {
-      activity.Response.Data.description = T(activity, 'All servers are running.');
+      response.description = T(activity, 'All servers are running.');
     }
   } catch (error) {
     $.handleError(activity, error);
