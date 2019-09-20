@@ -1,0 +1,7 @@
+InterfaceName: 'items'
+Description: 'Current Time'
+APIDoc: ''
+Interfaces: 'pagination,daterange,status'
+RequiredScopes: ''
+AdditionalParameters:
+Method: ''
