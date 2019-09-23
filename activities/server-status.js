@@ -50,19 +50,22 @@ module.exports = async function (activity) {
     response.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshping.svg';
 
     if (downCount > 0) {
+
+      response.description = downCount > 1 ? T(activity, '{0} servers are currently down.', downCount) : T(activity, '1 server is currently down.');
+
       response.value = downCount;
       response.date = shared.getHighestDate(servers);
       response.color = 'red';
 
       switch (downCount) {
-      case 1:
-        response.description = T(activity, `Server <b>${response.items[0].title}</b> is currently down.`);
-        break;
-      case 2:
-        response.description = T(activity, `Server <b>${response.items[0].title}</b> and <b>${downCount - 1}</b> more are currently down.`);
-        break;
-      default:
-        response.description = T(activity, `Server <b>${response.items[0].title}</b>, <b>${response.items[1].title}</b> and <b>${downCount - 2}</b> more are currently down.`);
+        case 1:
+          response.briefing = T(activity, `Server <b>${response.items[0].title}</b> is currently down.`);
+          break;
+        case 2:
+          response.briefing = T(activity, `Server <b>${response.items[0].title}</b> and <b>${downCount - 1}</b> more are currently down.`);
+          break;
+        default:
+          response.briefing = T(activity, `Server <b>${response.items[0].title}</b>, <b>${response.items[1].title}</b> and <b>${downCount - 2}</b> more are currently down.`);
       }
     } else {
       response.description = T(activity, 'All servers are running.');

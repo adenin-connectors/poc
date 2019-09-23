@@ -74,7 +74,7 @@ module.exports = async (activity) => {
       response.value = value;
       response.date = shared.getHighestDate(paginatedItems);
       response.description = value > 1 ? T(activity, "You have {0} tickets assigned.", value) : T(activity, "You have 1 ticket assigned.");
-      response.description += " The latest is <b>" + response.items[0].title + "</b>.";
+      response.briefing =  response.description + " The latest is <b>" + response.items[0].title + "</b>.";
     } else {
       response.description = T(activity, `You have no tickets assigned.`);
     }
