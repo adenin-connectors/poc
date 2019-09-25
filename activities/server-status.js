@@ -6,28 +6,31 @@ const shared = require('./common/shared');
 
 module.exports = async function (activity) {
   try {
+
+    var down = [ faker.random.boolean(), faker.random.boolean(), faker.random.boolean() ]
+
     const servers = [
       {
         _type: 'server-status',
         id: faker.random.uuid(),
-        title: 'Mars',
-        description: faker.random.boolean() ? 'Down.' : 'Up.',
+        title: 'Mars: '+ (down[0] ? 'down' : 'up'),   
+        color: down[0] ? 'red' : 'green',     
         date: new Date().toISOString(),
         link: generator.detailUrl()
       },
       {
         _type: 'server-status',
         id: faker.random.uuid(),
-        title: 'Jupiter',
-        description: faker.random.boolean() ? 'Down.' : 'Up.',
+        title: 'Jupiter: ' +  (down[1] ? 'down' : 'up'),   
+        color: down[1] ? 'red' : 'green',     
         date: new Date().toISOString(),
         link: generator.detailUrl()
       },
       {
         _type: 'server-status',
         id: faker.random.uuid(),
-        title: 'Saturn',
-        description: faker.random.boolean() ? 'Down.' : 'Up.',
+        title: 'Saturn: ' +  (down[2] ? 'down' : 'up'), 
+        color: down[2] ? 'red' : 'green',     
         date: new Date().toISOString(),
         link: generator.detailUrl()
       }
@@ -36,7 +39,7 @@ module.exports = async function (activity) {
     let downCount = 0;
 
     for (let i = 0; i < servers.length; i++) {
-      if (servers[i].description === 'Down.') downCount++;
+      if (down[i]) downCount++;
     }
 
     const response = activity.Response.Data;
