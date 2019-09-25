@@ -1,37 +1,46 @@
 'use strict';
 
-const generator = require('./common/generator');
-const moment = require('moment-timezone');
-const shared = require('./common/shared');
+const generator = require("./common/generator");
+const moment = require("moment-timezone");
+const shared = require("./common/shared");
 
 module.exports = async (activity) => {
   try {
     let items = [
       {
         id: "1054889",
-        title: `Grand Opening of a New Plant in China`,
-        link: generator.detailUrl()
+        title: "Grand Opening of a New Plant in China",
+        link: generator.detailUrl(),
+        thumbnail: "https://my.digitalassistant.app/rimage/demo.adenin.com/images/t0001054889/tp1000126.jpeg?format=jpeg&width=150&height=150&mode=crop&quality=98",
+        description: "On Monday, the new plant of Toaster Inc. was officially opened at Chuansha, Shanghai. "
       },
       {
         id: "1054891",
-        title: `Opening of new logistics and distribution center`,
-        link: generator.detailUrl()
+        title: "Opening of new logistics and distribution center",
+        link: generator.detailUrl(),
+        description: "The new 10,000 square meter distribution centre in Edison, New Jersey will offer a wide range of logistics services. Together the two Toaster warehouse facilities reinforce the company’s existing network of 19 locations in the USA.",
+        thumbnail: "https://my.digitalassistant.app/rimage/demo.adenin.com/images/t0001054891/tp1000126.jpeg?format=jpeg&width=150&height=150&mode=crop&quality=98"        
       },
       {
         id: "1054878",
-        title: `New Wi-Fi enabled product line`,
-        link: generator.detailUrl()
-      },
+        title: "New Wi-Fi enabled product line",
+        link: generator.detailUrl(),
+        description: "We called our new series “Toasti-Fi” because consumers should have access to their home appliances everywhere and anytime. With “Toasti-Fi” we help our customers to stay connected to their home, no matter where they are.Working intensively with consumers we learned what functionalities and features the future of home appliances should offer",
+        thumbnail: "https://my.digitalassistant.app/rimage/demo.adenin.com/images/t0001054878/tp1000126.png?format=jpeg&width=150&height=150&mode=crop&quality=98"        
+      }
+      /*,
       {
         id: "1054880",
-        title: `Leading with passion, mistakes and simplicity`,
-        link: generator.detailUrl()
+        title: "Leading with passion, mistakes and simplicity",
+        link: generator.detailUrl(),
+        thumbnail: "https://my.digitalassistant.app/rimage/demo.adenin.com/images/t0001054880/tp1000126.jpeg?format=jpeg&width=150&height=150&mode=crop&quality=98"        
       },
       {
         id: "1054893",
-        title: `Multi-Year Agreement signed`,
-        link: generator.detailUrl()
-      }
+        title: "Multi-Year Agreement signed",
+        link: generator.detailUrl(),
+        thumbnail: "https://my.digitalassistant.app/rimage/demo.adenin.com/images/t0001054893/tp1000126.jpeg?format=jpeg&width=150&height=150&mode=crop&quality=98"        
+      }*/
     ];
 
     let sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
