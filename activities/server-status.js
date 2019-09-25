@@ -12,7 +12,7 @@ module.exports = async function (activity) {
     const servers = [
       {
         _type: 'server-status',
-        id: faker.random.uuid(),
+        id: 'Mars',        
         title: 'Mars: '+ (down[0] ? 'down' : 'up'),   
         color: down[0] ? 'red' : 'green',     
         date: new Date().toISOString(),
@@ -20,7 +20,7 @@ module.exports = async function (activity) {
       },
       {
         _type: 'server-status',
-        id: faker.random.uuid(),
+        id: 'Jupiter',
         title: 'Jupiter: ' +  (down[1] ? 'down' : 'up'),   
         color: down[1] ? 'red' : 'green',     
         date: new Date().toISOString(),
@@ -28,7 +28,7 @@ module.exports = async function (activity) {
       },
       {
         _type: 'server-status',
-        id: faker.random.uuid(),
+        id: 'Saturn',
         title: 'Saturn: ' +  (down[2] ? 'down' : 'up'), 
         color: down[2] ? 'red' : 'green',     
         date: new Date().toISOString(),
@@ -62,13 +62,13 @@ module.exports = async function (activity) {
 
       switch (downCount) {
         case 1:
-          response.briefing = T(activity, `Server <b>${response.items[0].title}</b> is currently down.`);
+          response.briefing = T(activity, `Server <b>${response.items[0].id}</b> is currently down.`);
           break;
         case 2:
-          response.briefing = T(activity, `Server <b>${response.items[0].title}</b> and <b>${downCount - 1}</b> more are currently down.`);
+          response.briefing = T(activity, `Server <b>${response.items[0].id}</b> and <b>${downCount - 1}</b> more are currently down.`);
           break;
         default:
-          response.briefing = T(activity, `Server <b>${response.items[0].title}</b>, <b>${response.items[1].title}</b> and <b>${downCount - 2}</b> more are currently down.`);
+          response.briefing = T(activity, `Server <b>${response.items[0].id}</b>, <b>${response.items[1].title}</b> and <b>${downCount - 2}</b> more are currently down.`);
       }
     } else {
       response.description = T(activity, 'All servers are running.');
