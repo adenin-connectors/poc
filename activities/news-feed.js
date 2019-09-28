@@ -25,7 +25,7 @@ module.exports = async (activity) => {
         id: "1054878",
         title: "New Wi-Fi enabled product line",
         link: generator.detailUrl(),
-        description: "We called our new series “Toasti-Fi” because consumers should have access to their home appliances everywhere and anytime. With “Toasti-Fi” we help our customers to stay connected to their home, no matter where they are.Working intensively with consumers we learned what functionalities and features the future of home appliances should offer",
+        description: "We called our new series “Toasti-Fi” because consumers should have access to their home appliances everywhere and anytime. With “Toasti-Fi” we help our customers to stay connected to their home, no matter where they are.",
         thumbnail: "https://my.digitalassistant.app/rimage/demo.adenin.com/images/t0001054878/tp1000126.png?format=jpeg&width=150&height=150&mode=crop&quality=98"        
       }
       /*,
