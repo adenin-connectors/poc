@@ -46,7 +46,7 @@ module.exports = async function (activity) {
     response.items = servers;
     response.title = T(activity, 'Server Status');
     response.link = generator.detailUrl();
-    response.linkLabel = T(activity, 'All server statuses');
+    response.linkLabel = T(activity, 'DevOps Dashboard');
     response.actionable = downCount > 0;
 
     response.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshping.svg';
