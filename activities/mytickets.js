@@ -18,27 +18,27 @@ module.exports = async (activity) => {
       },
       {
         id: "1054878",
-        title: `Cannot finish checkout process`,
+        title: `Cannot finish checkout process.`,
         link: generator.detailUrl()
       },
       {
         id: "1054880",
-        title: `Locked out of my account, no access to email`,
+        title: `Locked out of my account, no access to email.`,
         link: generator.detailUrl()
       },
       {
         id: "1054893",
-        title: `Request product exchange`,
+        title: `Request product exchange.`,
         link: generator.detailUrl()
       },
       {
         id: "1054874",
-        title: `Card has been charged twice`,
+        title: `Card has been charged twice.`,
         link: generator.detailUrl()
       },
       {
         id: "1054875",
-        title: `My coupon does not work`,
+        title: `My coupon does not work.`,
         link: generator.detailUrl()
       },
       {
@@ -48,7 +48,7 @@ module.exports = async (activity) => {
       },
       {
         id: "1054877",
-        title: `Want more info about this product`,
+        title: `Want more info about this product.`,
         link: generator.detailUrl()
       }
     ];
