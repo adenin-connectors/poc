@@ -62,13 +62,13 @@ module.exports = async function (activity) {
 
       switch (downCount) {
       case 1:
-        response.briefing = T(activity, `Down: <b>${serversDown[0].id}</b>.`);
+        response.briefing = T(activity, `Server <b>${serversDown[0].id}</b> is currently down.`);
         break;
       case 2:
-        response.briefing = T(activity, `Down: <b>${serversDown[0].id}</b> and <b>${serversDown[1].id}</b>.`);
+        response.briefing = T(activity, `Servers <b>${serversDown[0].id}</b> and <b>${serversDown[1].id}</b> are currently down.`);
         break;
       default:
-        response.briefing = T(activity, `Down: <b>${serversDown[0].id}</b> and <b>${downCount - 1}</b> more.`);
+        response.briefing = T(activity, `Server <b>${serversDown[0].id}</b> and <b>${downCount - 1}</b> more are currently down.`);
       }
     } else {
       response.description = T(activity, 'All servers are running.');
