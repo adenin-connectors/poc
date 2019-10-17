@@ -6,7 +6,8 @@
       "request": "launch",
       "name": "debug localhost:4000",
       "env": {
-        "NODE_ENV": "development"
+        "NODE_ENV": "development",
+        "API_KEYS": "secret"
       },
       "program": "${workspaceFolder}\\app.js"
     },
