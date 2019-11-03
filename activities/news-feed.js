@@ -123,9 +123,15 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
     timeToAssign.setMinutes(shared.getRandomInt(60));
     isTimeslot2 = !isTimeslot2; // switch time to assign
 
+    // the following code has two bugs
+    // a) date is always stored in UTC, and either as Date or JSON string
+    // b) time adjustment should happen so that morningHour/afternoonHour is in the users timezone and not UTC
+    //    so 8am in EST is 1300 in UTC
     let newsDate = moment(timeToAssign).tz(activity.Context.UserTimezone);
-
     items[startIndex].date = newsDate.toLocaleString();
+
+    items[startIndex].date = timeToAssign;
+
     sortedItems.push(items[startIndex]);
     startIndex++;
   }
