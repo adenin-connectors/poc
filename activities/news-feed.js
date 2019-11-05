@@ -73,17 +73,16 @@ module.exports = async (activity) => {
     $.handleError(activity, error);
   }
 };
+
+const morningHour = 8;
+const afternoonHour = 14;
+
 //** returns new item[] reordered based on day of the year */
 function getItemsBasedOnDayOfTheYear(activity, items) {
-  let morningHour = 8;
-  let afternoonHour = 14;
-  let timeslot1 = new Date();
-  timeslot1.setHours(morningHour);
-  let timeslot2 = new Date();
-  timeslot2.setHours(afternoonHour);
+  const timeslot1 = moment().tz(activity.Context.UserTimezone).hours(morningHour);
+  const timeslot2 = moment().tz(activity.Context.UserTimezone).hours(afternoonHour);
 
-  const d = new Date();
-  let userLocalTime = moment(d).tz(activity.Context.UserTimezone);
+  const userLocalTime = moment().tz(activity.Context.UserTimezone);
 
   let daysOffset = 0; //number of days to offset current date (now - daysOffset)
   let isTimeslot2 = null; // keeps track of which time to assign to news next (timeslot1 or timeslot2)
@@ -97,40 +96,39 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
     isTimeslot2 = true;
   }
 
+  const d = new Date();
+
   let zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
   let startIndex = zeroBasedDayInYear % items.length;
 
-  let sortedItems = [];
+  const sortedItems = [];
   let newsCounter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
+
   for (let i = 0; i < items.length; i++) {
-    if (startIndex >= items.length) {
-      startIndex = 0;
-    }
+    if (startIndex >= items.length) startIndex = 0;
 
     let timeToAssign = null;
     newsCounter++;
+
     if (isTimeslot2) {
-      timeToAssign = new Date(timeslot2);
+      timeToAssign = timeslot2.clone();
+
       if (newsCounter >= 2) { // keeps track of number of news and increases days offset when needed
         newsCounter = 0;
         daysOffset--;
       }
     } else {
-      timeToAssign = new Date(timeslot1);
+      timeToAssign = timeslot1.clone();
     }
 
-    timeToAssign.setDate(timeToAssign.getDate() + daysOffset);
-    timeToAssign.setMinutes(shared.getRandomInt(60));
+    timeToAssign.date(timeToAssign.date() + daysOffset);
+    timeToAssign.startOf('hour');
+
     isTimeslot2 = !isTimeslot2; // switch time to assign
 
-    // the following code has two bugs
-    // a) date is always stored in UTC, and either as Date or JSON string
-    // b) time adjustment should happen so that morningHour/afternoonHour is in the users timezone and not UTC
-    //    so 8am in EST is 1300 in UTC
-    let newsDate = moment(timeToAssign).tz(activity.Context.UserTimezone);
-    items[startIndex].date = newsDate.toLocaleString();
+    const newsDate = timeToAssign.clone().utc();
 
-    items[startIndex].date = timeToAssign;
+    items[startIndex].date = newsDate.toISOString();
 
     sortedItems.push(items[startIndex]);
     startIndex++;
