@@ -25,20 +25,16 @@ module.exports = async function (activity) {
 
     // N = 3 servers
     const N = servers.length;
-    // d = 60 seconds (60000ms)
-    const d = 60000;
+    // d = 4 minutes (240000ms)
+    const d = 240000;
     // interval for t0 change (2^N)*d
     const interval = (Math.pow(2, N)) * d;
-
     // current ms since epoch
     const now = new Date().getTime();
-
     // t0
     const t0 = now - (now % interval);
-
     // mins since t0
     const diff = new Date(now - t0);
-
     // minutes since t0 as N-character binary string e.g. 2 mins -> '010'
     const statuses = (diff.getUTCMinutes() >>> 0).toString(2).padStart(N, '0');
     // store down servers here for count and description
@@ -74,10 +70,7 @@ module.exports = async function (activity) {
     response.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshping.svg';
 
     if (serversDown.length > 0) {
-      response.description = serversDown.length > 1 ?
-        T(activity, '{0} servers are currently down.', serversDown.length) :
-        T(activity, '1 server is currently down.');
-
+      response.description = serversDown.length > 1 ? T(activity, '{0} servers are currently down.', serversDown.length) : T(activity, '1 server is currently down.');
       response.value = serversDown.length;
       response.date = shared.getHighestDate(servers);
       response.color = 'red';
