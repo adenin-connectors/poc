@@ -5,10 +5,9 @@ const moment = require('moment-timezone');
 const generator = require('./common/generator');
 const shared = require('./common/shared');
 
-const d = new Date();
-
 module.exports = async (activity) => {
   try {
+    const d = new Date();
     const items = [
       {
         id: '1054889',
@@ -87,6 +86,8 @@ function sortItemsBasedOnDayOfTheYear(activity, items) {
   } else {
     isTimeslot2 = false;
   }
+
+  const d = new Date();
 
   const zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
   let startIndex = zeroBasedDayInYear % items.length;

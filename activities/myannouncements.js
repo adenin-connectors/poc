@@ -1,55 +1,51 @@
 'use strict';
-const generator = require('./common/generator');
+
 const moment = require('moment-timezone');
+
+const generator = require('./common/generator');
 const shared = require('./common/shared');
-const faker = require('faker');
 
 module.exports = async (activity) => {
   try {
-
-
     let items = [
       {
-        id: "1054889",
-        title: `Parking B closed tomorrow`,
+        id: '1054889',
+        title: 'Parking B closed tomorrow',
         link: generator.detailUrl()
       },
       {
-        id: "1054878",
-        title: (90 - new Date().getDate()) + " days until end of quarter",
-        link: generator.detailUrl()
-      },
-      {
-        id: "1054878",
-        title: `blood donation in lobby next Monday`,
+        id: '1054878',
+        title: 'blood donation in lobby next Monday',
         link: generator.detailUrl()
       }
     ];
-    items = assingDates(activity, items);
-    console.log(items);
 
-    var dateRange = $.dateRange(activity);
-    let filteredItems = shared.filterItemsByDateRange(items, dateRange);
-    let value = filteredItems.length;
+    items = sortItemsBasedOnDayOfTheYear(activity, items);
+
+    const dateRange = $.dateRange(activity);
+    const filteredItems = shared.filterItemsByDateRange(items, dateRange);
+    const value = filteredItems.length;
 
     const pagination = $.pagination(activity);
-    let paginatedItems = shared.paginateItems(filteredItems, pagination);
+    const paginatedItems = shared.paginateItems(filteredItems, pagination);
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg";
+    activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg';
 
     activity.Response.Data.items = paginatedItems;
-    if (pagination.page == "1") {
-      activity.Response.Data.title = T(activity, 'My Alerts');
+
+    if (pagination.page === '1') {
+      activity.Response.Data.title = T(activity, 'My Announcements');
       activity.Response.Data.link = generator.detailUrl();
-      activity.Response.Data.linkLabel = T(activity, 'All Alerts');
+      activity.Response.Data.linkLabel = T(activity, 'All Announcements');
       activity.Response.Data.actionable = value > 0;
+
       if (value > 0) {
         activity.Response.Data.value = value;
         activity.Response.Data.date = activity.Response.Data.items[0].date;
-        activity.Response.Data.description = value > 1 ? T(activity, "You have {0} alerts.", value) : T(activity, "You have 1 alert.");
-        activity.Response.Data.briefing = activity.Response.Data.description + " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
+        activity.Response.Data.description = value > 1 ? T(activity, 'You have {0} announcements.', value) : T(activity, 'You have 1 announcement.');
+        activity.Response.Data.briefing = activity.Response.Data.description + ' The latest is <b>' + activity.Response.Data.items[0].title + '</b>.';
       } else {
-        activity.Response.Data.description = T(activity, `You have no alerts.`);
+        activity.Response.Data.description = T(activity, 'You have no announcements.');
       }
     }
   } catch (error) {
@@ -57,42 +53,69 @@ module.exports = async (activity) => {
   }
 };
 
-function assingDates(activity, items) {
-  let d = new Date();
-  let dayOfTheYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000);
-  let userLocalTime = moment(d).tz(activity.Context.UserTimezone);
+const morningHour = 11;
+const morningMinutes = 52;
+const afternoonHour = 16;
+const afternoonMinutes = 12;
 
-  let isEvenDay = false;
-  let date = moment(userLocalTime);
-  if (dayOfTheYear % 2 == 0) {
-    isEvenDay = true;
+//** returns new item[] reordered based on day of the year */
+function sortItemsBasedOnDayOfTheYear(activity, items) {
+  const timeslot1 = moment().tz(activity.Context.UserTimezone).hours(morningHour).minutes(morningMinutes);
+  const timeslot2 = moment().tz(activity.Context.UserTimezone).hours(afternoonHour).minutes(afternoonMinutes);
+
+  const userLocalTime = moment().tz(activity.Context.UserTimezone);
+
+  let daysOffset = 0; //number of days to offset current date (now - daysOffset)
+  let isTimeslot2 = null; // keeps track of which time to assign next (timeslot1 or timeslot2)
+
+  if (userLocalTime.isAfter(timeslot1) && userLocalTime.isBefore(timeslot2)) {
+    isTimeslot2 = true;
+  } else if (userLocalTime.isAfter(timeslot2)) {
+    isTimeslot2 = false;
+    daysOffset = 1;
+  } else {
+    isTimeslot2 = false;
   }
-  let counter = 0;
-  let itemsProcessed = 0;
-  while (itemsProcessed < items.length) {
 
-    // if its before 8:39 we skip today
-    // (date.date() == userLocalTime.date()) ensures that only today is skipped
-    if ((userLocalTime.minutes() < 39 && userLocalTime.hours() < 8) && (date.date() == userLocalTime.date())) {
-      date.add(1, 'day'); // we skip today
-      isEvenDay = !isEvenDay; // since we are adding just one day we switch values
-    } else if (!isEvenDay) {
-      date.add(1, 'day'); // if its not odd day we skip it
-      isEvenDay = true; // since we are adding 1 day, day becomes odd
-    } else {
-      let d = date.date();
-      date.set('hour', 9);
-      date.set('minute', d);
-      items[itemsProcessed].date = date.toISOString();
-      date.add(2, 'day'); // we are using only odd days so we add 2 to get next odd
-      itemsProcessed++;
-    }
+  const d = new Date();
 
+  const zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
+  let startIndex = zeroBasedDayInYear % items.length;
+
+  if (isTimeslot2) startIndex++;
+
+  const sortedItems = [];
+  let counter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
+
+  for (let i = 0; i < items.length; i++) {
+    if (startIndex >= items.length) startIndex = 0;
+
+    let timeToAssign = null;
     counter++;
-    if (counter > 10) {
-      break;
+
+    if (isTimeslot2) {
+      timeToAssign = timeslot2.clone();
+    } else {
+      timeToAssign = timeslot1.clone();
+
+      if (counter >= 2) { // keeps track of number of news and increases days offset when needed
+        counter = 0;
+        daysOffset++;
+      }
     }
+
+    timeToAssign.date(timeToAssign.date() + daysOffset);
+    timeToAssign.startOf('minutes');
+
+    isTimeslot2 = !isTimeslot2; // switch time to assign
+
+    const date = timeToAssign.clone().utc();
+
+    items[startIndex].date = date.toISOString();
+
+    sortedItems.push(items[startIndex]);
+    startIndex++;
   }
 
-  return items;
+  return sortedItems;
 }
