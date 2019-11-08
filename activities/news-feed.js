@@ -103,6 +103,8 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
   const zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
   let startIndex = zeroBasedDayInYear % items.length;
 
+  if (isTimeslot2) startIndex--;
+
   const sortedItems = [];
   let counter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
 
