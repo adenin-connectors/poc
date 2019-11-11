@@ -88,7 +88,7 @@ function sortItemsBasedOnDayOfTheYear(activity, items) {
   let counter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
 
   for (let i = 0; i < items.length; i++) {
-    if (startIndex >= items.length) startIndex = 0;
+    if (startIndex >= items.length || startIndex < 0) startIndex = 0;
 
     let timeToAssign = null;
     counter++;
