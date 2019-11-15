@@ -43,7 +43,7 @@ module.exports = async (activity) => {
     // return explicit _hash
     activity.Response.Data._hash = md5(JSON.stringify(items));
     activity.Response.Data.items = items;
-    activity.Response.Data.title = T(activity, 'Leads');
+    activity.Response.Data.title = T(activity, 'New Leads');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Leads');
     activity.Response.Data.actionable = items.length > 0;
@@ -52,10 +52,10 @@ module.exports = async (activity) => {
     if (count > 0) {
       activity.Response.Data.value = count;
       activity.Response.Data.date = shared.getHighestDate(items);
-      activity.Response.Data.description = count > 1 ? T(activity, 'You have {0} leads.', count) : T(activity, 'You have 1 lead.');
+      activity.Response.Data.description = count > 1 ? T(activity, 'You have {0} new leads.', count) : T(activity, 'You have 1 new lead.');
       activity.Response.Data.briefing = activity.Response.Data.description + ' The latest is <b>' + activity.Response.Data.items[0].title + '</b>.';
     } else {
-      activity.Response.Data.description = T(activity, 'You have no leads.');
+      activity.Response.Data.description = T(activity, 'You have no new leads.');
     }
   } catch (error) {
     $.handleError(activity, error);
