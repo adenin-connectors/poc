@@ -11,11 +11,7 @@ module.exports = async (activity) => {
     const pagination = $.pagination(activity);
     const numberToGenerate = parseInt(pagination.pageSize) * 2;
 
-    let count = 0;
     let items = [];
-    let readDate = (new Date(new Date().setDate(new Date().getDate() - 30))).toISOString(); // default read date 30 days in the past
-
-    if (activity.Request.Query.readDate) readDate = activity.Request.Query.readDate;
 
     for (let i = 0; i < numberToGenerate; i++) {
       const d = new Date();
@@ -30,11 +26,10 @@ module.exports = async (activity) => {
         date: d.toISOString()
       };
 
-      if (item.date > readDate) count++;
-
       items.push(item);
     }
 
+    const value = items.length;
     const dateRange = $.dateRange(activity);
 
     items = shared.filterItemsByDateRange(items, dateRange);
@@ -49,10 +44,10 @@ module.exports = async (activity) => {
     activity.Response.Data.actionable = items.length > 0;
     activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg';
 
-    if (count > 0) {
-      activity.Response.Data.value = count;
+    if (value > 0) {
+      activity.Response.Data.value = value;
       activity.Response.Data.date = shared.getHighestDate(items);
-      activity.Response.Data.description = count > 1 ? T(activity, 'You have {0} open leads.', count) : T(activity, 'You have 1 open lead.');
+      activity.Response.Data.description = value > 1 ? T(activity, 'You have {0} open leads.', value) : T(activity, 'You have 1 open lead.');
       activity.Response.Data.briefing = activity.Response.Data.description + ' The latest is <b>' + activity.Response.Data.items[0].title + '</b>.';
     } else {
       activity.Response.Data.description = T(activity, 'You have no open leads.');

@@ -59,17 +59,9 @@ module.exports = async (activity) => {
 
     const sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
 
+    const value = sortedItems.length;
     const dateRange = $.dateRange(activity);
     const filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
-
-    let count = 0;
-    let readDate = (new Date(new Date().setDate(new Date().getDate() - 30))).toISOString(); // default read date 30 days in the past
-
-    if (activity.Request.Query.readDate) readDate = activity.Request.Query.readDate;
-
-    for (let i = 0; i < filteredItems.length; i++) {
-      if (filteredItems[i].date > readDate) count++;
-    }
 
     const pagination = $.pagination(activity);
     const paginatedItems = shared.paginateItems(filteredItems, pagination);
@@ -78,14 +70,14 @@ module.exports = async (activity) => {
     response.title = T(activity, 'Open Tickets');
     response.link = generator.detailUrl();
     response.linkLabel = T(activity, 'All tickets');
-    response.actionable = count > 0;
+    response.actionable = value > 0;
 
     response.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshdesk.svg'; // activity.Context.connector.host.connectorLogoUrl;
 
-    if (count > 0) {
-      response.value = count;
+    if (value > 0) {
+      response.value = value;
       response.date = shared.getHighestDate(paginatedItems);
-      response.description = count > 1 ? T(activity, 'You have {0} open tickets assigned.', count) : T(activity, 'You have 1 open ticket assigned.');
+      response.description = value > 1 ? T(activity, 'You have {0} open tickets assigned.', value) : T(activity, 'You have 1 open ticket assigned.');
       response.briefing = response.description + ' The latest is <b>' + response.items[0].title + '</b>';
     } else {
       response.description = T(activity, 'You have no open tickets assigned.');
