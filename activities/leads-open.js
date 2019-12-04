@@ -26,6 +26,9 @@ module.exports = async (activity) => {
         date: d.toISOString()
       };
 
+      item.thumbnail = $.avatarLink(item.title);
+      item.imageIsAvatar = true;
+
       items.push(item);
     }
 

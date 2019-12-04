@@ -24,7 +24,13 @@ module.exports = async function (activity) {
         date: d.toISOString()
       };
 
-      if (item.date > readDate) count++;
+      item.thumbnail = $.avatarLink(item.title);
+      item.imageIsAvatar = true;
+
+      if (item.date > readDate) {
+        item.isNew = true;
+        count++;
+      }
 
       items.push(item);
     }
