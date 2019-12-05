@@ -11,7 +11,7 @@ module.exports = async (activity) => {
 
   try {
     activity.Response.Data = {
-      title: T(activity, 'Tickets By Priority'),
+      title: T(activity, 'Open Tickets By Priority'),
       link: generator.detailUrl(),
       linkLabel: T(activity, 'Open Dashboard'),
       chart: {
@@ -29,7 +29,7 @@ module.exports = async (activity) => {
           options: {
             title: {
               display: true,
-              text: T(activity, 'Tickets By Priority')
+              text: T(activity, 'Open Tickets By Priority')
             }
           }
         },
