@@ -27,7 +27,8 @@ module.exports = async (activity) => {
         title: faker.name.findName(),
         description: faker.company.companyName(),
         link: generator.detailUrl(),
-        date: d.toISOString()
+        date: d.toISOString(),
+        statusText: i % 3 ? "Open" : "Closed"
       };
 
       item.thumbnail = $.avatarLink(item.title);
