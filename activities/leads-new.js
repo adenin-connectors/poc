@@ -31,7 +31,7 @@ module.exports = async (activity) => {
         statusText: i % 3 ? "Open" : "Closed"
       };
 
-      item.thumbnail = $.avatarLink(item.title);
+      item.thumbnail = faker.image.avatar(); // $.avatarLink(item.title);
       item.imageIsAvatar = true;
 
       if (item.date > readDate) {
