@@ -25,8 +25,8 @@ module.exports = async function (activity) {
 
     // N = 3 servers
     const N = servers.length;
-    // d = 12 minutes
-    const d = 720000;
+    // d = 4 minutes
+    const d = 240000;
     // interval for t0 change (2^N)*d
     const interval = (Math.pow(2, N)) * d;
     // current ms since epoch
