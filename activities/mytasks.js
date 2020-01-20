@@ -37,7 +37,7 @@ module.exports = async (activity) => {
       }
     ];
 
-    const sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
+    const sortedItems = sortItemsBasedOnDayOfTheYear(activity, items);
 
     const dateRange = $.dateRange(activity);
     const filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
@@ -73,25 +73,25 @@ const afternoonHour = 12;
 const afternoonMinutes = 56;
 
 //** returns new item[] reordered based on day of the year */
-function getItemsBasedOnDayOfTheYear(activity, items) {
+function sortItemsBasedOnDayOfTheYear(activity, items) {
   const timeslot1 = moment().tz(activity.Context.UserTimezone).hours(morningHour).minutes(morningMinutes);
   const timeslot2 = moment().tz(activity.Context.UserTimezone).hours(afternoonHour).minutes(afternoonMinutes);
 
   const userLocalTime = moment().tz(activity.Context.UserTimezone);
 
-  const d = new Date();
-
   let daysOffset = 0; //number of days to offset current date (now - daysOffset)
-  let isTimeslot2 = null; // keeps track of which time to assign to news next (timeslot1 or timeslot2)
+  let isTimeslot2 = null; // keeps track of which time to assign next (timeslot1 or timeslot2)
 
-  if (userLocalTime.hours() >= (afternoonHour + 1)) {
+  if (userLocalTime.isAfter(timeslot1) && userLocalTime.isBefore(timeslot2)) {
     isTimeslot2 = true;
-  } else if (userLocalTime.hours() >= (morningHour + 1)) {
+  } else if (userLocalTime.isAfter(timeslot2)) {
     isTimeslot2 = false;
+    daysOffset = 1;
   } else {
-    daysOffset = -1;
-    isTimeslot2 = true;
+    isTimeslot2 = false;
   }
+
+  const d = new Date();
 
   const zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
   let startIndex = zeroBasedDayInYear % items.length;
@@ -110,17 +110,17 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
 
     if (isTimeslot2) {
       timeToAssign = timeslot2.clone();
+    } else {
+      timeToAssign = timeslot1.clone();
 
       if (counter >= 2) { // keeps track of number of news and increases days offset when needed
         counter = 0;
-        daysOffset--;
+        daysOffset++;
       }
-    } else {
-      timeToAssign = timeslot1.clone();
     }
 
     timeToAssign.date(timeToAssign.date() + daysOffset);
-    timeToAssign.startOf('minute');
+    timeToAssign.startOf('minutes');
 
     isTimeslot2 = !isTimeslot2; // switch time to assign
 
