@@ -1,50 +1,78 @@
 'use strict';
 
 const md5 = require('md5');
-const faker = require('faker');
 
 const generator = require('./common/generator');
 const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
+    const items = [
+      {
+        id: '32101',
+        title: 'Mr. Marlon Schuppe',
+        description: 'Maggio - Marks',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/ssiskind/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32102',
+        title: 'Cole Kirlin',
+        description: 'Grady Inc',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/herrhaase/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32103',
+        title: 'Myrl Kovacek',
+        description: 'David - Kuhlman',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/vytautas_a/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32104',
+        title: 'Haven Greenfelder',
+        description: 'Williamson, Torp and Koepp',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/macxim/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32105',
+        title: 'Raphaelle Jaskolski',
+        description: 'Hayes Inc',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/aislinnkelly/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32106',
+        title: 'Rebecca Collins',
+        description: 'Stanton - Gusikowski',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/rpatey/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      }
+    ];
+
     const pagination = $.pagination(activity);
-    const numberToGenerate = parseInt(pagination.pageSize) * 2;
-
-    let items = [];
-
-    for (let i = 0; i < numberToGenerate; i++) {
-      const d = new Date();
-
-      d.setMinutes(d.getMinutes() - (i + 1) * (process.env.NODE_ENV === 'development' ? 3 : 25)); // shorter interval to debug readDate
-
-      const item = {
-        id: i.toString(),
-        title: faker.name.findName(),
-        description: faker.company.companyName(),
-        link: generator.detailUrl(),
-        date: d.toISOString()
-      };
-
-      item.thumbnail = faker.image.avatar(); //$.avatarLink(item.title);
-      item.imageIsAvatar = true;
-
-      items.push(item);
-    }
 
     const value = items.length;
     const dateRange = $.dateRange(activity);
 
-    items = shared.filterItemsByDateRange(items, dateRange);
-    items = shared.paginateItems(items, pagination);
+    const filteredItems = shared.filterItemsByDateRange(items, dateRange);
+    const paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     // return explicit _hash
-    activity.Response.Data._hash = md5(JSON.stringify(items));
-    activity.Response.Data.items = items;
+    activity.Response.Data._hash = md5(JSON.stringify(paginatedItems));
+    activity.Response.Data.items = paginatedItems;
     activity.Response.Data.title = T(activity, 'Open Leads');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Leads');
-    activity.Response.Data.actionable = items.length > 0;
+    activity.Response.Data.actionable = value > 0;
     activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg';
 
     if (value > 0) {

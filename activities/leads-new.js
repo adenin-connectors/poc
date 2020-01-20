@@ -1,55 +1,87 @@
 'use strict';
 
 const md5 = require('md5');
-const faker = require('faker');
+const moment = require('moment-timezone');
 
 const generator = require('./common/generator');
 const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
-    const pagination = $.pagination(activity);
-    const numberToGenerate = parseInt(pagination.pageSize) * 2;
+    const items = [
+      {
+        id: '32101',
+        title: 'Mr. Marlon Schuppe',
+        description: 'Maggio - Marks',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/ssiskind/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32102',
+        title: 'Cole Kirlin',
+        description: 'Grady Inc',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/herrhaase/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32103',
+        title: 'Myrl Kovacek',
+        description: 'David - Kuhlman',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/vytautas_a/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32104',
+        title: 'Haven Greenfelder',
+        description: 'Williamson, Torp and Koepp',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/macxim/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32105',
+        title: 'Raphaelle Jaskolski',
+        description: 'Hayes Inc',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/aislinnkelly/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      },
+      {
+        id: '32106',
+        title: 'Rebecca Collins',
+        description: 'Stanton - Gusikowski',
+        thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/rpatey/128.jpg',
+        imageIsAvatar: true,
+        link: generator.detailUrl()
+      }
+    ];
+
+    const sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
+
+    const dateRange = $.dateRange(activity);
+    const filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
 
     let count = 0;
-    let items = [];
     let readDate = (new Date(new Date().setDate(new Date().getDate() - 30))).toISOString(); // default read date 30 days in the past
 
     if (activity.Request.Query.readDate) readDate = activity.Request.Query.readDate;
 
-    for (let i = 0; i < numberToGenerate; i++) {
-      const d = new Date();
-
-      d.setMinutes(d.getMinutes() - (i + 1) * (process.env.NODE_ENV === 'development' ? 3 : 25)); // shorter interval to debug readDate
-
-      const item = {
-        id: i.toString(),
-        title: faker.name.findName(),
-        description: faker.company.companyName(),
-        link: generator.detailUrl(),
-        date: d.toISOString(),
-        statusText: i % 3 ? "Open" : "Closed"
-      };
-
-      item.thumbnail = faker.image.avatar(); // $.avatarLink(item.title);
-      item.imageIsAvatar = true;
-
-      if (item.date > readDate) {
-        item.isNew = true;
+    for (let i = 0; i < filteredItems.length; i++) {
+      if (filteredItems[i].date > readDate) {
+        filteredItems[i].isNew = true;
         count++;
       }
-
-      items.push(item);
     }
 
-    const dateRange = $.dateRange(activity);
-
-    items = shared.filterItemsByDateRange(items, dateRange);
-    items = shared.paginateItems(items, pagination);
+    const pagination = $.pagination(activity);
+    const paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     // return explicit _hash
-    activity.Response.Data._hash = md5(JSON.stringify(items));
-    activity.Response.Data.items = items;
+    activity.Response.Data._hash = md5(JSON.stringify(paginatedItems));
+    activity.Response.Data.items = paginatedItems;
     activity.Response.Data.title = T(activity, 'New Leads');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Leads');
@@ -58,7 +90,7 @@ module.exports = async (activity) => {
 
     if (count > 0) {
       activity.Response.Data.value = count;
-      activity.Response.Data.date = shared.getHighestDate(items);
+      activity.Response.Data.date = paginatedItems[0].date;
       activity.Response.Data.description = count > 1 ? T(activity, 'You have {0} new leads.', count) : T(activity, 'You have 1 new lead.');
       activity.Response.Data.briefing = activity.Response.Data.description + ' The latest is <b>' + activity.Response.Data.items[0].title + '</b>.';
     } else {
@@ -68,3 +100,71 @@ module.exports = async (activity) => {
     $.handleError(activity, error);
   }
 };
+
+const morningHour = 9;
+const morningMinutes = 35;
+const afternoonHour = 13;
+const afternoonMinutes = 5;
+
+//** returns new item[] reordered based on day of the year */
+function getItemsBasedOnDayOfTheYear(activity, items) {
+  const timeslot1 = moment().tz(activity.Context.UserTimezone).hours(morningHour).minutes(morningMinutes);
+  const timeslot2 = moment().tz(activity.Context.UserTimezone).hours(afternoonHour).minutes(afternoonMinutes);
+
+  const userLocalTime = moment().tz(activity.Context.UserTimezone);
+
+  const d = new Date();
+
+  let daysOffset = 0; //number of days to offset current date (now - daysOffset)
+  let isTimeslot2 = null; // keeps track of which time to assign to news next (timeslot1 or timeslot2)
+
+  if (userLocalTime.hours() >= (afternoonHour + 1)) {
+    isTimeslot2 = true;
+  } else if (userLocalTime.hours() >= (morningHour + 1)) {
+    isTimeslot2 = false;
+  } else {
+    daysOffset = -1;
+    isTimeslot2 = true;
+  }
+
+  const zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
+  let startIndex = zeroBasedDayInYear % items.length;
+
+  if (isTimeslot2) startIndex++;
+
+  const sortedItems = [];
+  let counter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
+
+  for (let i = 0; i < items.length; i++) {
+    if (startIndex >= items.length) startIndex = 0;
+    else if (startIndex < 0) startIndex = items.length - 1;
+
+    let timeToAssign = null;
+    counter++;
+
+    if (isTimeslot2) {
+      timeToAssign = timeslot2.clone();
+
+      if (counter >= 2) { // keeps track of number of news and increases days offset when needed
+        counter = 0;
+        daysOffset--;
+      }
+    } else {
+      timeToAssign = timeslot1.clone();
+    }
+
+    timeToAssign.date(timeToAssign.date() + daysOffset);
+    timeToAssign.startOf('minute');
+
+    isTimeslot2 = !isTimeslot2; // switch time to assign
+
+    const date = timeToAssign.clone().utc();
+
+    items[startIndex].date = date.toISOString();
+
+    sortedItems.push(items[startIndex]);
+    startIndex++;
+  }
+
+  return sortedItems;
+}

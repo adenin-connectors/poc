@@ -1,48 +1,50 @@
 'use strict';
-const generator = require('./common/generator');
+
 const moment = require('moment-timezone');
-const faker = require('faker');
+
+const generator = require('./common/generator');
 const shared = require('./common/shared');
 
 const d = new Date();
+
 module.exports = async (activity) => {
   try {
-    let items = [
+    const items = [
       {
-        id: "1054889",
+        id: '1054889',
         title: `Budget Planning ${d.getFullYear() + 1}`,
         link: generator.detailUrl()
       },
       {
-        id: "1054891",
-        title: `Project 'Sunderland' kick off`,
+        id: '1054891',
+        title: 'Project \'Sunderland\' kick off',
         link: generator.detailUrl()
       },
       {
-        id: "1054878",
-        title: `Job Interview ${faker.name.findName()}`,
+        id: '1054878',
+        title: 'Job Interview Hattie Mitchell',
         link: generator.detailUrl()
       },
       {
-        id: "1054880",
-        title: `Job Interview ${faker.name.findName()}`,
+        id: '1054880',
+        title: 'Job Interview Tod Runte',
         link: generator.detailUrl()
       },
       {
-        id: "1054893",
-        title: `Service Status ${new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()).toLocaleString("en", { month: "long" })}`,
+        id: '1054893',
+        title: `Service Status ${new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()).toLocaleString('en', {month: 'long'})}`,
         link: generator.detailUrl()
       }
     ];
 
-    let sortedItems = sortItemsBasedOnDayOfTheYear(activity, items);
+    const sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
 
-    var dateRange = $.dateRange(activity);
-    let filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
-    let value = filteredItems.length;
+    const dateRange = $.dateRange(activity);
+    const filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
+    const value = filteredItems.length;
 
     const pagination = $.pagination(activity);
-    let paginatedItems = shared.paginateItems(filteredItems, pagination);
+    const paginatedItems = shared.paginateItems(filteredItems, pagination);
 
     activity.Response.Data.items = paginatedItems;
     activity.Response.Data.title = T(activity, 'My Tasks');
@@ -50,88 +52,85 @@ module.exports = async (activity) => {
     activity.Response.Data.linkLabel = T(activity, 'All Tasks');
     activity.Response.Data.actionable = value > 0;
 
-    activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/exchange-server.svg";
+    activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/exchange-server.svg';
 
     if (value > 0) {
       activity.Response.Data.value = value;
       activity.Response.Data.date = shared.getHighestDate(paginatedItems);
-      activity.Response.Data.description = value > 1 ? T(activity, "You have {0} tasks.", value) :
-        T(activity, "You have 1 task.");
-      activity.Response.Data.briefing = activity.Response.Data.description + " The latest is <b>" + activity.Response.Data.items[0].title + "</b>.";
+      activity.Response.Data.description = value > 1 ? T(activity, 'You have {0} tasks.', value) : T(activity, 'You have 1 task.');
+      activity.Response.Data.briefing = activity.Response.Data.description + ' The latest is <b>' + activity.Response.Data.items[0].title + '</b>.';
     } else {
-      activity.Response.Data.description = T(activity, `You have no tasks.`);
+      activity.Response.Data.description = T(activity, 'You have no tasks.');
     }
   } catch (error) {
     $.handleError(activity, error);
   }
 };
 
+const morningHour = 10;
+const morningMinutes = 4;
+const afternoonHour = 12;
+const afternoonMinutes = 56;
+
 //** returns new item[] reordered based on day of the year */
-function sortItemsBasedOnDayOfTheYear(activity, items) {
-  let morningHour = 10;
-  let afternoonHour = 14;
-  let timeslot1 = new Date();
-  timeslot1.setHours(morningHour);
-  let timeslot2 = new Date();
-  timeslot2.setHours(afternoonHour);
+function getItemsBasedOnDayOfTheYear(activity, items) {
+  const timeslot1 = moment().tz(activity.Context.UserTimezone).hours(morningHour).minutes(morningMinutes);
+  const timeslot2 = moment().tz(activity.Context.UserTimezone).hours(afternoonHour).minutes(afternoonMinutes);
+
+  const userLocalTime = moment().tz(activity.Context.UserTimezone);
+
+  const d = new Date();
 
   let daysOffset = 0; //number of days to offset current date (now - daysOffset)
-  let isTimeslot2 = null; // keeps track of which time to assign next (timeslot1 or timeslot2)
-  let userLocalTime = moment(d).tz(activity.Context.UserTimezone);
+  let isTimeslot2 = null; // keeps track of which time to assign to news next (timeslot1 or timeslot2)
 
-  if (userLocalTime.hours() >= morningHour && userLocalTime.hours() < afternoonHour) {
+  if (userLocalTime.hours() >= (afternoonHour + 1)) {
     isTimeslot2 = true;
-  } else if (userLocalTime.hours() >= afternoonHour) {
+  } else if (userLocalTime.hours() >= (morningHour + 1)) {
     isTimeslot2 = false;
-    daysOffset = 1;
   } else {
-    isTimeslot2 = false;
+    daysOffset = -1;
+    isTimeslot2 = true;
   }
 
-  let zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
+  const zeroBasedDayInYear = ((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - Date.UTC(d.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000) - 1;
   let startIndex = zeroBasedDayInYear % items.length;
 
-  let sortedItems = [];
-  let newsCounter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
+  if (isTimeslot2) startIndex++;
+
+  const sortedItems = [];
+  let counter = 0; // used to count number of news in a day and help generate (date -1),...,(date -n).
+
   for (let i = 0; i < items.length; i++) {
-    if (startIndex >= items.length) {
-      startIndex = 0;
-    }
+    if (startIndex >= items.length) startIndex = 0;
+    else if (startIndex < 0) startIndex = items.length - 1;
 
     let timeToAssign = null;
-    newsCounter++;
+    counter++;
+
     if (isTimeslot2) {
-      timeToAssign = new Date(timeslot2);
-    } else {
-      timeToAssign = new Date(timeslot1);
-      if (newsCounter >= 2) { // keeps track of number of news and increases days offset when needed
-        newsCounter = 0;
-        daysOffset++;
+      timeToAssign = timeslot2.clone();
+
+      if (counter >= 2) { // keeps track of number of news and increases days offset when needed
+        counter = 0;
+        daysOffset--;
       }
+    } else {
+      timeToAssign = timeslot1.clone();
     }
 
-    timeToAssign.setDate(timeToAssign.getDate() + daysOffset);
-    timeToAssign.setMinutes(roundMinutes(shared.getRandomInt(60)));
+    timeToAssign.date(timeToAssign.date() + daysOffset);
+    timeToAssign.startOf('minute');
+
     isTimeslot2 = !isTimeslot2; // switch time to assign
 
-    let itemDate = moment(timeToAssign).tz(activity.Context.UserTimezone);
+    const date = timeToAssign.clone().utc();
 
-    items[startIndex].date = itemDate.toISOString();
+    items[startIndex].date = date.toISOString();
+
     sortedItems.push(items[startIndex]);
     startIndex++;
   }
 
   return sortedItems;
-}
-
-function roundMinutes(minutes) {
-  let roundMinutes = 0;
-  if (minutes > 7 && minutes <= 22) {
-    roundMinutes = 15;
-  } else if (minutes > 22 && minutes <= 37) {
-    minutes = 30;
-  } else if (minutes > 37 && minutes <= 52) {
-    minutes = 45;
-  }
-  return roundMinutes;
 }
