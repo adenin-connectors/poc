@@ -93,9 +93,9 @@ module.exports = async (activity) => {
 };
 
 const morningHour = 9;
-const morningMinutes = 19;
-const afternoonHour = 15;
-const afternoonMinutes = 9;
+const morningMinutes = 36;
+const afternoonHour = 14;
+const afternoonMinutes = 12;
 
 //** returns new item[] reordered based on day of the year */
 function getItemsBasedOnDayOfTheYear(activity, items) {
