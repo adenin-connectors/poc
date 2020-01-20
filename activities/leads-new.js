@@ -66,13 +66,13 @@ function sortItemsBasedOnTimeOfDay(activity, items) {
 
   if (userLocalTime.isSameOrAfter(slot1) && userLocalTime.isBefore(slot2)) {
     indexShift = 1;
-  } else if (userLocalTime.isBefore(slot3)) {
+  } else if (userLocalTime.isSameOrAfter(slot2) && userLocalTime.isBefore(slot3)) {
     indexShift = 2;
-  } else if (userLocalTime.isBefore(slot4)) {
+  } else if (userLocalTime.isSameOrAfter(slot3) && userLocalTime.isBefore(slot4)) {
     indexShift = 3;
-  } else if (userLocalTime.isBefore(slot5)) {
+  } else if (userLocalTime.isSameOrAfter(slot4) && userLocalTime.isBefore(slot5)) {
     indexShift = 4;
-  } else if (userLocalTime.isBefore(slot6)) {
+  } else if (userLocalTime.isSameOrAfter(slot5) && userLocalTime.isBefore(slot6)) {
     indexShift = 5;
   } else if (userLocalTime.isSameOrAfter(slot6)) {
     indexShift = 6;
