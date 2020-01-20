@@ -64,9 +64,7 @@ function sortItemsBasedOnTimeOfDay(activity, items) {
   let indexShift = 0;
   let daysOffset = 0;
 
-  if (userLocalTime.isBefore(slot1)) {
-    daysOffset = -1;
-  } else if (userLocalTime.isSameOrAfter(slot1) && userLocalTime.isSameOrBefore(slot2)) {
+  if (userLocalTime.isSameOrAfter(slot1) && userLocalTime.isBefore(slot2)) {
     indexShift = 1;
   } else if (userLocalTime.isBefore(slot3)) {
     indexShift = 2;
@@ -76,7 +74,7 @@ function sortItemsBasedOnTimeOfDay(activity, items) {
     indexShift = 4;
   } else if (userLocalTime.isBefore(slot6)) {
     indexShift = 5;
-  } else {
+  } else if (userLocalTime.isSameOrAfter(slot6)) {
     indexShift = 6;
   }
 
