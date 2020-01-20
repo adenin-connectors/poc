@@ -73,6 +73,7 @@ module.exports = async (activity) => {
       activity.Response.Data.value = value;
       activity.Response.Data.date = shared.getHighestDate(paginatedItems);
       activity.Response.Data.description = value > 1 ? T(activity, 'There are {0} open issues.', value) : T(activity, 'There is 1 open issue.');
+      activity.Response.Data.briefing = activity.Response.Data.description + ' The latest is <b>' + activity.Response.Data.items[0].title + '</b>.';
     } else {
       activity.Response.Data.description = T(activity, 'There are no open issues.');
     }
