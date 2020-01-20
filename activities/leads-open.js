@@ -56,17 +56,17 @@ function sortItemsBasedOnTimeOfDay(activity, items) {
   let daysOffset = 0;
 
   if (userLocalTime.isSameOrAfter(slot1) && userLocalTime.isBefore(slot2)) {
-    indexShift = 1;
-  } else if (userLocalTime.isBefore(slot3)) {
-    indexShift = 2;
-  } else if (userLocalTime.isBefore(slot4)) {
-    indexShift = 3;
-  } else if (userLocalTime.isBefore(slot5)) {
-    indexShift = 4;
-  } else if (userLocalTime.isBefore(slot6)) {
-    indexShift = 5;
+    indexShift = -1;
+  } else if (userLocalTime.isSameOrAfter(slot2) && userLocalTime.isBefore(slot3)) {
+    indexShift = -2;
+  } else if (userLocalTime.isSameOrAfter(slot3) && userLocalTime.isBefore(slot4)) {
+    indexShift = -3;
+  } else if (userLocalTime.isSameOrAfter(slot4) && userLocalTime.isBefore(slot5)) {
+    indexShift = -4;
+  } else if (userLocalTime.isSameOrAfter(slot5) && userLocalTime.isBefore(slot6)) {
+    indexShift = -5;
   } else if (userLocalTime.isSameOrAfter(slot6)) {
-    indexShift = 6;
+    indexShift = -6;
   }
 
   const d = new Date();
@@ -83,22 +83,22 @@ function sortItemsBasedOnTimeOfDay(activity, items) {
     let timeToAssign = null;
 
     switch (indexShift) {
-    case 1:
+    case -1:
       timeToAssign = slot1.clone();
       break;
-    case 2:
+    case -2:
       timeToAssign = slot2.clone();
       break;
-    case 3:
+    case -3:
       timeToAssign = slot3.clone();
       break;
-    case 4:
+    case -4:
       timeToAssign = slot4.clone();
       break;
-    case 5:
+    case -5:
       timeToAssign = slot5.clone();
       break;
-    case 6:
+    case -6:
       timeToAssign = slot6.clone();
       break;
     default:
@@ -116,9 +116,9 @@ function sortItemsBasedOnTimeOfDay(activity, items) {
     sortedItems.push(items[startIndex]);
 
     startIndex++;
-    indexShift--;
+    indexShift++;
 
-    if (indexShift < 0) indexShift = 5;
+    if (indexShift > 0) indexShift = -5;
   }
 
   return sortedItems;
