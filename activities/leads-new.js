@@ -52,7 +52,9 @@ module.exports = async (activity) => {
 };
 
 function sortItemsBasedOnTimeOfDay(activity, items) {
-  const userLocalTime = moment().tz(activity.Context.UserTimezone);
+  moment.tz.setDefault(activity.Context.UserTimezone);
+
+  const userLocalTime = moment();
 
   const slot1 = userLocalTime.clone().hours(9).minutes(30).startOf('minute');
   const slot2 = userLocalTime.clone().hours(11).startOf('hour');
