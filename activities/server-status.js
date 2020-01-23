@@ -25,18 +25,25 @@ module.exports = async function (activity) {
 
     // N = 3 servers
     const N = servers.length;
+
     // d = 22 minutes
     const d = 1320000;
+
     // interval for t0 change (2^N)*d
     const interval = (Math.pow(2, N)) * d;
+
     // current ms since epoch
     const now = new Date().getTime();
+
     // t0
     const t0 = now - (now % interval);
+
     // mins since t0
     const diff = new Date(now - t0);
-    // minutes since t0 as N-character binary string e.g. 2 mins -> '010'
-    const statuses = (diff.getUTCMinutes() >>> 0).toString(2).padStart(N, '0');
+
+    // minutes since t0 as N-character or greater binary string e.g. 2 mins -> '010'
+    const statuses = ((diff.getHours() * 60) + diff.getUTCMinutes()).toString(2).padStart(N, '0');
+
     // store down servers here for count and description
     const serversDown = [];
 
