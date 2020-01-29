@@ -18,8 +18,8 @@ module.exports = async (activity) => {
         title: 'Board Meeting',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(9).minutes(30).startOf('minute').utc().toISOString(),
-        endDate: now.clone().hours(10).minutes(30).startOf('minute').utc().toISOString(),
+        date: now.clone().hours(9).minutes(30).startOf('minute').format(),
+        endDate: now.clone().hours(10).minutes(30).startOf('minute').format(),
         isCancelled: false,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -28,7 +28,7 @@ module.exports = async (activity) => {
         imageIsAvatar: true,
         response: {
           status: 'accepted',
-          date: now.clone().date(now.date() - 1).hours(9).startOf('hour').utc().toISOString()
+          date: now.clone().date(now.date() - 1).hours(9).startOf('hour').format()
         },
         organizer: {
           email: '',
@@ -61,8 +61,8 @@ module.exports = async (activity) => {
         title: 'UI/UX Rebrand Briefing',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(14).minutes(0).startOf('minute').utc().toISOString(),
-        endDate: now.clone().hours(16).minutes(0).startOf('minute').utc().toISOString(),
+        date: now.clone().hours(14).minutes(0).startOf('minute').format(),
+        endDate: now.clone().hours(16).minutes(0).startOf('minute').format(),
         isCancelled: false,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -107,8 +107,8 @@ module.exports = async (activity) => {
         title: 'Performance Review',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(16).minutes(30).startOf('minute').utc().toISOString(),
-        endDate: now.clone().hours(17).minutes(0).startOf('minute').utc().toISOString(),
+        date: now.clone().hours(16).minutes(30).startOf('minute').format(),
+        endDate: now.clone().hours(17).minutes(0).startOf('minute').format(),
         isCancelled: true,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -117,7 +117,7 @@ module.exports = async (activity) => {
         imageIsAvatar: true,
         response: {
           status: 'declined',
-          date: now.clone().date(now.date() - 3).hours(9).startOf('hour').utc().toISOString()
+          date: now.clone().date(now.date() - 3).hours(9).startOf('hour').format()
         },
         organizer: {
           email: '',
@@ -185,7 +185,7 @@ module.exports = async (activity) => {
         activity.Response.Data.date = first.date;
         activity.Response.Data.description = paginatedItems.length > 1 ? `You have ${paginatedItems.length} events today.` : 'You have 1 event today.';
 
-        activity.Response.Data.briefing = activity.Response.Data.description + ` The next is '${first.title}' at ${moment(first.date).format('LT')}`;
+        activity.Response.Data.briefing = activity.Response.Data.description + ` The next is <b>'${first.title}'</b> at ${moment(first.date).format('LT')}`;
       } else {
         activity.Response.Data.description = T(activity, 'You have no events today.');
       }
