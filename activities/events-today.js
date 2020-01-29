@@ -154,6 +154,7 @@ module.exports = async (activity) => {
       const overAnHourAgo = now.clone().minutes(now.minutes() - 61);
 
       if (now.isSame(eventDate, 'date') && endDate.isAfter(overAnHourAgo)) {
+        event.duration = moment.duration(eventDate.diff(endDate)).humanize();
         items.push(event);
 
         if (eventDate.isAfter(now)) {
