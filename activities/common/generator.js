@@ -17,6 +17,80 @@ module.exports = {
       name: faker.name.findName()
     };
   },
+  ticketsList: () => [
+    {
+      id: '1054889',
+      title: 'Damaged product, could I have a refund?',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/suribbles/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Open'
+    },
+    {
+      id: '1054891',
+      title: 'When will I receive my order?',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/allfordesign/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Open'
+    },
+    {
+      id: '1054878',
+      title: 'Cannot finish checkout process.',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/benoitboucart/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Closed'
+    },
+    {
+      id: '1054880',
+      title: 'Locked out of my account, no access to email.',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/croakx/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Open'
+    },
+    {
+      id: '1054893',
+      title: 'Request product exchange.',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/sokaniwaal/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Open'
+    },
+    {
+      id: '1054874',
+      title: 'Card has been charged twice.',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/michzen/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Closed'
+    },
+    {
+      id: '1054875',
+      title: 'My coupon does not work.',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/andreas_pr/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Open'
+    },
+    {
+      id: '1054876',
+      title: 'Account is suspended?',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/kaelifa/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Open'
+    },
+    {
+      id: '1054877',
+      title: 'Want more info about this product.',
+      link: detailUrl,
+      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/thaodang17/128.jpg',
+      imageIsAvatar: true,
+      statusText: 'Closed'
+    }
+  ],
   leadsList: () => [
     {
       id: '32101',

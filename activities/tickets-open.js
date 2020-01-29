@@ -7,61 +7,27 @@ const shared = require('./common/shared');
 
 module.exports = async (activity) => {
   try {
-    const items = [
-      {
-        id: '1054889',
-        title: 'Damaged product, could I have a refund?',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054891',
-        title: 'When will I receive my order?',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054878',
-        title: 'Cannot finish checkout process.',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054880',
-        title: 'Locked out of my account, no access to email.',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054893',
-        title: 'Request product exchange.',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054874',
-        title: 'Card has been charged twice.',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054875',
-        title: 'My coupon does not work.',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054876',
-        title: 'Account is suspended?',
-        link: generator.detailUrl()
-      },
-      {
-        id: '1054877',
-        title: 'Want more info about this product.',
-        link: generator.detailUrl()
-      }
-    ];
-
+    const items = generator.ticketsList();
     const response = activity.Response.Data;
 
     const sortedItems = getItemsBasedOnDayOfTheYear(activity, items);
 
-    const value = sortedItems.length;
+    let filteredItems = [];
+
+    for (let i = 0; i < sortedItems.length; i++) {
+      const item = sortedItems[i];
+
+      if (item.statusText !== 'Open') continue;
+
+      delete item.statusText;
+
+      filteredItems.push(item);
+    }
+
+    const value = filteredItems.length;
     const dateRange = $.dateRange(activity);
-    const filteredItems = shared.filterItemsByDateRange(sortedItems, dateRange);
+
+    filteredItems = shared.filterItemsByDateRange(filteredItems, dateRange);
 
     const pagination = $.pagination(activity);
     const paginatedItems = shared.paginateItems(filteredItems, pagination);
