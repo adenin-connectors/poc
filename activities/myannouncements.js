@@ -72,7 +72,7 @@ function sortItemsBasedOnDayOfTheYear(activity, items) {
     isTimeslot2 = true;
   } else if (userLocalTime.isAfter(timeslot2)) {
     isTimeslot2 = false;
-    daysOffset = 1;
+    daysOffset = -1;
   } else {
     isTimeslot2 = false;
   }
