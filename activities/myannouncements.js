@@ -68,13 +68,13 @@ function sortItemsBasedOnDayOfTheYear(activity, items) {
   let daysOffset = 0; //number of days to offset current date (now - daysOffset)
   let isTimeslot2 = null; // keeps track of which time to assign next (timeslot1 or timeslot2)
 
-  if (userLocalTime.isBefore(timeslot1)) {
+  if (userLocalTime.isSameOrAfter(timeslot2)) {
+    isTimeslot2 = true;
+  } else if (userLocalTime.isSameOrAfter(timeslot1)) {
+    isTimeslot2 = false;
+  } else {
     isTimeslot2 = true;
     daysOffset--;
-  } else if (userLocalTime.isAfter(timeslot2)) {
-    isTimeslot2 = true;
-  } else {
-    isTimeslot2 = false;
   }
 
   const d = new Date();
@@ -96,13 +96,13 @@ function sortItemsBasedOnDayOfTheYear(activity, items) {
 
     if (isTimeslot2) {
       timeToAssign = timeslot2.clone();
-    } else {
-      timeToAssign = timeslot1.clone();
 
       if (counter >= 2) { // keeps track of number of news and increases days offset when needed
         counter = 0;
         daysOffset--;
       }
+    } else {
+      timeToAssign = timeslot1.clone();
     }
 
     timeToAssign.date(timeToAssign.date() + daysOffset);

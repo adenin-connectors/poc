@@ -24,7 +24,7 @@ module.exports = async (activity) => {
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
         location: null,
-        thumbnail: $.avatarLink('Nelson Berge'),
+        thumbnail: $.avatarLink('Samanta Jones'),
         imageIsAvatar: true,
         response: {
           status: 'accepted',
@@ -32,26 +32,26 @@ module.exports = async (activity) => {
         },
         organizer: {
           email: '',
-          name: 'Nelson Berge',
-          avatar: $.avatarLink('Nelson Berge')
+          name: 'Samanta Jones',
+          avatar: $.avatarLink('Samanta Jones')
         },
         attendees: [
           {
             email: '',
-            name: 'Nelson Berge',
-            avatar: $.avatarLink('Nelson Berge'),
+            name: 'Samanta Jones',
+            avatar: $.avatarLink('Samanta Jones'),
             response: 'organizer'
           },
           {
             email: '',
-            name: 'Cristina Medhurst',
-            avatar: $.avatarLink('Cristina Medhurst'),
+            name: 'Toney Johnston',
+            avatar: $.avatarLink('Toney Johnston'),
             response: 'accepted'
           },
           {
             email: '',
-            name: 'Hilma Strosin',
-            avatar: $.avatarLink('Hilma Strosin'),
+            name: 'Darion Kemmer',
+            avatar: $.avatarLink('Darion Kemmer'),
             response: null
           }
         ]
@@ -67,37 +67,37 @@ module.exports = async (activity) => {
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
         location: null,
-        thumbnail: $.avatarLink('Randy Kshlerin'),
+        thumbnail: $.avatarLink('Everett Hoppe'),
         imageIsAvatar: true,
         response: null,
         organizer: {
           email: '',
-          name: 'Randy Kshlerin',
-          avatar: $.avatarLink('Randy Kshlerin')
+          name: 'Everett Hoppe',
+          avatar: $.avatarLink('Everett Hoppe')
         },
         attendees: [
           {
             email: '',
-            name: 'Randy Kshlerin',
-            avatar: $.avatarLink('Randy Kshlerin'),
+            name: 'Everett Hoppe',
+            avatar: $.avatarLink('Everett Hoppe'),
             response: 'organizer'
           },
           {
             email: '',
-            name: 'Blaze Hoeger',
-            avatar: $.avatarLink('Blaze Hoeger'),
+            name: 'Dudley Harris',
+            avatar: $.avatarLink('Dudley Harris'),
             response: null
           },
           {
             email: '',
-            name: 'Hilma Strosin',
-            avatar: $.avatarLink('Hilma Strosin'),
+            name: 'Roberta Adams',
+            avatar: $.avatarLink('Roberta Adams'),
             response: 'declined'
           },
           {
             email: '',
-            name: 'Abdul Carroll',
-            avatar: $.avatarLink('Abdul Carroll'),
+            name: 'Ophelia Nienow',
+            avatar: $.avatarLink('Ophelia Nienow'),
             response: 'accepted'
           }
         ]
@@ -113,7 +113,7 @@ module.exports = async (activity) => {
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
         location: null,
-        thumbnail: $.avatarLink('Eriberto White'),
+        thumbnail: $.avatarLink('Abdiel Rice'),
         imageIsAvatar: true,
         response: {
           status: 'declined',
@@ -121,20 +121,20 @@ module.exports = async (activity) => {
         },
         organizer: {
           email: '',
-          name: 'Eriberto White',
-          avatar: $.avatarLink('Eriberto White')
+          name: 'Abdiel Rice',
+          avatar: $.avatarLink('Abdiel Rice')
         },
         attendees: [
           {
             email: '',
-            name: 'Eriberto White',
-            avatar: $.avatarLink('Eriberto White'),
+            name: 'Abdiel Rice',
+            avatar: $.avatarLink('Abdiel Rice'),
             response: 'organizer'
           },
           {
             email: '',
-            name: 'Cristina Medhurst',
-            avatar: $.avatarLink('Cristina Medhurst'),
+            name: 'Charles Lynch',
+            avatar: $.avatarLink('Charles Lynch'),
             response: 'declined'
           }
         ]
