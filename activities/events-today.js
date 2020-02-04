@@ -160,7 +160,7 @@ module.exports = async (activity) => {
         if (eventDate.isAfter(now)) {
           count++;
 
-          if (!firstFutureIndex) firstFutureIndex = items.length - 1;
+          if (firstFutureIndex === null) firstFutureIndex = items.length - 1;
         }
       }
     }
