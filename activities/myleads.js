@@ -53,6 +53,8 @@ module.exports = async function (activity) {
 
     activity.Response.Data.thumbnail = "https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg";
 
+    activity.Response.Data._card = { title: "My Leads", type: "48dc3f74-da4b-432f-bc52-0572063f848f", ztype: "at-card-status-list" };
+
     if (count > 0) {
       activity.Response.Data.value = count;
       activity.Response.Data.date = shared.getHighestDate(items);
