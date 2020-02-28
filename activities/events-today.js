@@ -11,7 +11,7 @@ module.exports = async (activity) => {
   try {
     moment.tz.setDefault(activity.Context.UserTimezone);
 
-    const now = moment();
+    const now = moment().utc();
     const events = [
       {
         id: 1,
@@ -141,29 +141,28 @@ module.exports = async (activity) => {
       }
     ];
 
-    const items = [];
-
-    let count = 0;
-    let firstFutureIndex = null;
+    let items = [];
+    let pastCount = 0;
 
     for (let i = 0; i < events.length; i++) {
-      const event = events[i];
+      const item = events[i];
 
-      const eventDate = moment(event.date).utc();
-      const endDate = moment(event.endDate).utc();
+      const startTime = moment(item.date).utc();
+      const endTime = moment(item.endDate).utc();
       const overAnHourAgo = now.clone().minutes(now.minutes() - 61);
 
-      if (now.isSame(eventDate, 'date') && endDate.isAfter(overAnHourAgo)) {
-        event.duration = moment.duration(eventDate.diff(endDate)).humanize();
-        items.push(event);
-
-        if (eventDate.isAfter(now)) {
-          count++;
-
-          if (firstFutureIndex === null) firstFutureIndex = items.length - 1;
+      if (now.isSame(startTime, 'date') && endTime.isAfter(overAnHourAgo)) {
+        if (endTime.isBefore('now')) {
+          pastCount++;
+          item.isPast = true;
         }
+
+        item.duration = moment.duration(startTime.diff(endTime)).humanize();
+        items.push(item);
       }
     }
+
+    items = items.sort($.compare.dateAscending);
 
     const pagination = $.pagination(activity);
     const paginatedItems = shared.paginateItems(items, pagination);
@@ -171,16 +170,19 @@ module.exports = async (activity) => {
     activity.Response.Data.items = paginatedItems;
     activity.Response.Data._hash = crypto.createHash('md5').update(JSON.stringify(paginatedItems)).digest('hex');
 
+    const value = paginatedItems.length - pastCount;
+
     if (parseInt(pagination.page) === 1) {
       activity.Response.Data.title = T(activity, 'Events Today');
       activity.Response.Data.link = generator.detailUrl();
       activity.Response.Data.linkLabel = T(activity, 'All events');
       activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/office-365.svg';
-      activity.Response.Data.actionable = count > 0;
+      activity.Response.Data.actionable = value > 0;
       activity.Response.Data.integration = 'Outlook';
+      activity.Response.Data.pastCount = pastCount;
 
-      if (count > 0) {
-        const first = activity.Response.Data.items[firstFutureIndex];
+      if (value > 0) {
+        const first = activity.Response.Data.items[pastCount];
 
         activity.Response.Data.value = paginatedItems.length;
         activity.Response.Data.date = first.date;
