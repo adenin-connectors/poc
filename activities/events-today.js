@@ -11,7 +11,7 @@ module.exports = async (activity) => {
   try {
     moment.tz.setDefault(activity.Context.UserTimezone);
 
-    const now = moment().utc();
+    const now = moment();
     const events = [
       {
         id: 1,
@@ -147,8 +147,8 @@ module.exports = async (activity) => {
     for (let i = 0; i < events.length; i++) {
       const item = events[i];
 
-      const startTime = moment(item.date).utc();
-      const endTime = moment(item.endDate).utc();
+      const startTime = moment(item.date);
+      const endTime = moment(item.endDate);
       const overAnHourAgo = now.clone().minutes(now.minutes() - 61);
 
       if (now.isSame(startTime, 'date') && endTime.isAfter(overAnHourAgo)) {
