@@ -152,7 +152,7 @@ module.exports = async (activity) => {
       const overAnHourAgo = now.clone().minutes(now.minutes() - 61);
 
       if (now.isSame(startTime, 'date') && endTime.isAfter(overAnHourAgo)) {
-        if (endTime.isBefore('now')) {
+        if (endTime.isBefore(now)) {
           pastCount++;
           item.isPast = true;
         }
