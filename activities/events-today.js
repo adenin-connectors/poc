@@ -18,8 +18,8 @@ module.exports = async (activity) => {
         title: 'Board Meeting',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(9).minutes(30).startOf('minute').format(),
-        endDate: now.clone().hours(10).minutes(30).startOf('minute').format(),
+        date: now.clone().hours(9).minutes(30).startOf('minute').utc().format(),
+        endDate: now.clone().hours(10).minutes(30).startOf('minute').utc().format(),
         isCancelled: false,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -28,7 +28,7 @@ module.exports = async (activity) => {
         imageIsAvatar: true,
         response: {
           status: 'accepted',
-          date: now.clone().date(now.date() - 1).hours(9).startOf('hour').format()
+          date: now.clone().date(now.date() - 1).hours(9).startOf('hour').utc().format()
         },
         organizer: {
           email: '',
@@ -61,8 +61,8 @@ module.exports = async (activity) => {
         title: 'UI/UX Rebrand Briefing',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(14).minutes(0).startOf('minute').format(),
-        endDate: now.clone().hours(16).minutes(0).startOf('minute').format(),
+        date: now.clone().hours(14).minutes(0).startOf('minute').utc().format(),
+        endDate: now.clone().hours(16).minutes(0).startOf('minute').utc().format(),
         isCancelled: false,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -107,8 +107,8 @@ module.exports = async (activity) => {
         title: 'Performance Review',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(16).minutes(30).startOf('minute').format(),
-        endDate: now.clone().hours(17).minutes(0).startOf('minute').format(),
+        date: now.clone().hours(16).minutes(30).startOf('minute').utc().format(),
+        endDate: now.clone().hours(17).minutes(0).startOf('minute').utc().format(),
         isCancelled: true,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -117,7 +117,7 @@ module.exports = async (activity) => {
         imageIsAvatar: true,
         response: {
           status: 'declined',
-          date: now.clone().date(now.date() - 3).hours(9).startOf('hour').format()
+          date: now.clone().date(now.date() - 3).hours(9).startOf('hour').utc().format()
         },
         organizer: {
           email: '',
@@ -149,7 +149,7 @@ module.exports = async (activity) => {
 
       const startTime = moment(item.date);
       const endTime = moment(item.endDate);
-      const overAnHourAgo = now.clone().minutes(now.minutes() - 61);
+      const overAnHourAgo = now.clone().minutes(now.minutes() - 61).utc();
 
       if (now.isSame(startTime, 'date') && endTime.isAfter(overAnHourAgo)) {
         if (endTime.isBefore(now)) {
