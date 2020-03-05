@@ -18,8 +18,8 @@ module.exports = async (activity) => {
         title: 'Board Meeting',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(9).minutes(30).startOf('minute').format(),
-        endDate: now.clone().hours(10).minutes(30).startOf('minute').format(),
+        date: now.clone().hours(9).minutes(30).startOf('minute').utc().format(),
+        endDate: now.clone().hours(10).minutes(30).startOf('minute').utc().format(),
         isCancelled: false,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -28,7 +28,7 @@ module.exports = async (activity) => {
         imageIsAvatar: true,
         response: {
           status: 'accepted',
-          date: now.clone().date(now.date() - 1).hours(9).startOf('hour').format()
+          date: now.clone().date(now.date() - 1).hours(9).startOf('hour').utc().format()
         },
         organizer: {
           email: '',
@@ -61,8 +61,8 @@ module.exports = async (activity) => {
         title: 'UI/UX Rebrand Briefing',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(14).minutes(0).startOf('minute').format(),
-        endDate: now.clone().hours(16).minutes(0).startOf('minute').format(),
+        date: now.clone().hours(14).minutes(0).startOf('minute').utc().format(),
+        endDate: now.clone().hours(16).minutes(0).startOf('minute').utc().format(),
         isCancelled: false,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -107,8 +107,8 @@ module.exports = async (activity) => {
         title: 'Performance Review',
         description: 'Lorem ipsum',
         link: generator.detailUrl(),
-        date: now.clone().hours(16).minutes(30).startOf('minute').format(),
-        endDate: now.clone().hours(17).minutes(0).startOf('minute').format(),
+        date: now.clone().hours(16).minutes(30).startOf('minute').utc().format(),
+        endDate: now.clone().hours(17).minutes(0).startOf('minute').utc().format(),
         isCancelled: true,
         isRecurring: false,
         onlineMeetingUrl: generator.detailUrl(),
@@ -117,7 +117,7 @@ module.exports = async (activity) => {
         imageIsAvatar: true,
         response: {
           status: 'declined',
-          date: now.clone().date(now.date() - 3).hours(9).startOf('hour').format()
+          date: now.clone().date(now.date() - 3).hours(9).startOf('hour').utc().format()
         },
         organizer: {
           email: '',
@@ -141,29 +141,28 @@ module.exports = async (activity) => {
       }
     ];
 
-    const items = [];
-
-    let count = 0;
-    let firstFutureIndex = null;
+    let items = [];
+    let pastCount = 0;
 
     for (let i = 0; i < events.length; i++) {
-      const event = events[i];
+      const item = events[i];
 
-      const eventDate = moment(event.date).utc();
-      const endDate = moment(event.endDate).utc();
-      const overAnHourAgo = now.clone().minutes(now.minutes() - 61);
+      const startTime = moment(item.date);
+      const endTime = moment(item.endDate);
+      const overAnHourAgo = now.clone().minutes(now.minutes() - 61).utc();
 
-      if (now.isSame(eventDate, 'date') && endDate.isAfter(overAnHourAgo)) {
-        event.duration = moment.duration(eventDate.diff(endDate)).humanize();
-        items.push(event);
-
-        if (eventDate.isAfter(now)) {
-          count++;
-
-          if (firstFutureIndex === null) firstFutureIndex = items.length - 1;
+      if (now.isSame(startTime, 'date') && endTime.isAfter(overAnHourAgo)) {
+        if (endTime.isBefore(now)) {
+          pastCount++;
+          item.isPast = true;
         }
+
+        item.duration = moment.duration(startTime.diff(endTime)).humanize();
+        items.push(item);
       }
     }
+
+    items = items.sort($.compare.dateAscending);
 
     const pagination = $.pagination(activity);
     const paginatedItems = shared.paginateItems(items, pagination);
@@ -171,16 +170,19 @@ module.exports = async (activity) => {
     activity.Response.Data.items = paginatedItems;
     activity.Response.Data._hash = crypto.createHash('md5').update(JSON.stringify(paginatedItems)).digest('hex');
 
+    const value = paginatedItems.length - pastCount;
+
     if (parseInt(pagination.page) === 1) {
       activity.Response.Data.title = T(activity, 'Events Today');
       activity.Response.Data.link = generator.detailUrl();
       activity.Response.Data.linkLabel = T(activity, 'All events');
       activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/office-365.svg';
-      activity.Response.Data.actionable = count > 0;
+      activity.Response.Data.actionable = value > 0;
       activity.Response.Data.integration = 'Outlook';
+      activity.Response.Data.pastCount = pastCount;
 
-      if (count > 0) {
-        const first = activity.Response.Data.items[firstFutureIndex];
+      if (value > 0) {
+        const first = activity.Response.Data.items[pastCount];
 
         activity.Response.Data.value = paginatedItems.length;
         activity.Response.Data.date = first.date;
