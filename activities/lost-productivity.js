@@ -9,7 +9,7 @@ module.exports = async (activity) => {
       description: 'Analyze lost productivity from common business activities.',
       link: generator.detailUrl(),
       linkLabel: 'Open Dashboard',
-      thumbnail: '',
+      thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/new-relic.svg',
       chart: {
         configuration: {
           data: {
