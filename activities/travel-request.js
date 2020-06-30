@@ -58,7 +58,9 @@ module.exports = async (activity) => {
 
     // copy response data
     activity.Response.Data = data;
-
+    activity.Response.Data._card = {
+      type: 'form'
+    };
 
   } catch (error) {
     // handle generic exception

@@ -10,6 +10,9 @@ module.exports = async (activity) => {
       link: generator.detailUrl(),
       linkLabel: 'Open Dashboard',
       thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/new-relic.svg',
+      _card: {
+        type: 'chart'
+      },
       chart: {
         configuration: {
           data: {

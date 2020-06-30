@@ -18,6 +18,9 @@ module.exports = async (activity) => {
       description: 'Currently there are ' +  randomData[0] + ' high priority tickets open.',
       link: generator.detailUrl(),
       linkLabel: T(activity, 'Open Dashboard'),
+      _card: {
+        type: 'chart'
+      },
       chart: {
         configuration: {
           data: {

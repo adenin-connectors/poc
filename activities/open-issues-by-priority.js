@@ -7,6 +7,9 @@ module.exports = async (activity) => {
     activity.Response.Data.title = T(activity, 'Issues');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Issues');
+    activity.Response.Data._card = {
+      type: 'chart'
+    };
   } catch (error) {
     $.handleError(activity, error);
   }
