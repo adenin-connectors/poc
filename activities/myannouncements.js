@@ -33,7 +33,7 @@ module.exports = async (activity) => {
 
     activity.Response.Data.items = paginatedItems;
 
-    if (pagination.page === '1') {
+    if (parseInt(pagination.page) === 1) {
       activity.Response.Data.title = T(activity, 'My Announcements');
       activity.Response.Data.link = generator.detailUrl();
       activity.Response.Data.linkLabel = T(activity, 'All Announcements');
