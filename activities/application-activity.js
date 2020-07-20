@@ -35,6 +35,7 @@ module.exports = async (activity) => {
                 data: [0.8, 0, 15, 0, 10, 11.5, 10, 12.9, 2.6]
               },
               {
+                label: 'Activity Status (%)',
                 data: [52.4, 74.2, 81.2, 87.5, 85.1, 83.5, 85.5, 87.1, 94.4]
               }
             ]
