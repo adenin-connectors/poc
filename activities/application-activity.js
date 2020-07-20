@@ -29,19 +29,26 @@ module.exports = async (activity) => {
             ],
             datasets: [
               {
+                label: '',
                 data: [46.8, 25.8, 3.8, 12.5, 4.9, 5, 4.5, 0, 3]
               },
               {
+                label: '',
                 data: [0.8, 0, 15, 0, 10, 11.5, 10, 12.9, 2.6]
               },
               {
+                label: 'Activity Status (%)',
                 data: [52.4, 74.2, 81.2, 87.5, 85.1, 83.5, 85.5, 87.1, 94.4]
               }
             ]
           },
           options: {
             legend: {
-              display: false
+              display: true,
+              position: 'top',
+              labels: {
+                boxWidth: 0
+              }
             },
             scales: {
               xAxes: [{
@@ -55,10 +62,6 @@ module.exports = async (activity) => {
                 top: 0,
                 bottom: 25
               }
-            },
-            title: {
-              display: true,
-              text: 'Activity Status (%)'
             }
           }
         },
