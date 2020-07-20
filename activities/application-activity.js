@@ -42,7 +42,11 @@ module.exports = async (activity) => {
           },
           options: {
             legend: {
-              display: false
+              display: true,
+              position: 'top',
+              labels: {
+                boxWidth: 0
+              }
             },
             scales: {
               xAxes: [{
