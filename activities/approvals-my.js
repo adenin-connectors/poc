@@ -67,6 +67,8 @@ module.exports = async (activity) => {
       briefing: description + ` The latest is ${items[0].title}`,
       integration: items[0].integration,
       thumbnail: items[0].thumbnail,
+      link: 'https://adenin.com/pocdef',
+      linkLabel: 'Open Approvals app',
       _card: {
         type: 'my-approvals'
       }
