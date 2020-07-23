@@ -65,8 +65,8 @@ module.exports = async (activity) => {
       actionable: items.length > 0,
       description: description,
       briefing: description + ` The latest is ${items[0].title}`,
-      integration: items[0].integration,
-      thumbnail: items[0].thumbnail
+      integration: 'Digital Assistant',
+      thumbnail: 'https://www.adenin.com/assets/images/identity/logo_adenin_round.png'
     };
   } catch (error) {
     $.handleError(activity, error);
