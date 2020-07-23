@@ -66,7 +66,12 @@ module.exports = async (activity) => {
       description: description,
       briefing: description + ` The latest is ${items[0].title}`,
       integration: 'Digital Assistant',
-      thumbnail: 'https://www.adenin.com/assets/images/identity/logo_adenin_round.png'
+      thumbnail: 'https://www.adenin.com/assets/images/identity/logo_adenin_round.png',
+      link: 'https://adenin.com/pocdef',
+      linkLabel: 'Open Approvals app',
+      _card: {
+        type: 'my-approvals'
+      }
     };
   } catch (error) {
     $.handleError(activity, error);
