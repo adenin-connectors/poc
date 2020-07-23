@@ -66,7 +66,10 @@ module.exports = async (activity) => {
       description: description,
       briefing: description + ` The latest is ${items[0].title}`,
       integration: items[0].integration,
-      thumbnail: items[0].thumbnail
+      thumbnail: items[0].thumbnail,
+      _card: {
+        type: 'my-approvals'
+      }
     };
   } catch (error) {
     $.handleError(activity, error);
