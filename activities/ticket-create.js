@@ -19,6 +19,7 @@ module.exports = async (activity) => {
 
     switch (activity.Request.Path) {
 
+      case "/create":      // V2 include slash in path
       case "create":
       case "submit":
 
@@ -45,11 +46,16 @@ module.exports = async (activity) => {
         // return card & form configuration
         data.title = T(activity, "Create Ticket");
         data.formSchema = schema;
+        data.form = {};
 
-        // initialize form subject with query parameter (if provided)
+        // initialize form subject with query parameter (if provided) -- V1 only had one entity in query
         if (activity.Request.Query && activity.Request.Query.query) {
           data.form.subject = activity.Request.Query.query;
         }
+
+        // initialize form subject with product entity -- V2 has named entities 
+        var productEntity = getObjPath(activity.Request,"Data.model._entities.product");
+        if(productEntity) data.form.subject = productEntity;
 
         // initialize action to submit form                 
         data._actionList = [{
@@ -64,6 +70,7 @@ module.exports = async (activity) => {
     }
 
     // copy response data
+    data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/freshdesk.svg'; 
     activity.Response.Data = data;
     activity.Response.Data._card = {
       type: 'form'

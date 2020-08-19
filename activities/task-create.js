@@ -19,6 +19,8 @@ module.exports = async (activity) => {
 
     switch (activity.Request.Path) {
 
+      case "/create":
+      case "/submit":
       case "create":
       case "submit":
         let randomId = faker.random.uuid();
@@ -38,13 +40,28 @@ module.exports = async (activity) => {
 
         data.title = T(activity, "Create Task");
         data.formSchema = schema;
+        data.form = {};
+
+        // initialize form subject with query parameter (if provided) -- V1 only had one entity in query
+        if (activity.Request.Query && activity.Request.Query.query) {
+          data.form.subject = activity.Request.Query.query;
+        }
+
+        // initialize form subject with product entity -- V2 has named entities 
+        var subjectEntity = getObjPath(activity.Request,"Data.model._entities.subject");
+        if(subjectEntity) data.form.subject = subjectEntity;
+        
+        data.formSchema = schema;
 
         // initialize form subject with query parameter (if provided)
         if (activity.Request.Query && activity.Request.Query.query) {
-          data.form = {
-            subject: activity.Request.Query.query
+          data = {
+            form: {
+              subject: activity.Request.Query.query
+            }
           }
         }
+
         data._actionList = [{
           id: "create",
           label: T(activity, "Create Task"),

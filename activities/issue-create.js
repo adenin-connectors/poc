@@ -17,6 +17,8 @@ module.exports = async (activity) => {
     }
 
     switch (activity.Request.Path) {
+      case "/create":
+      case "/submit":
       case "create":
       case "submit":
         let randomId = faker.random.uuid();
@@ -33,8 +35,21 @@ module.exports = async (activity) => {
       default:
         var fname = __dirname + path.sep + "common" + path.sep + "issue-create.form";
         var schema = yaml.safeLoad(fs.readFileSync(fname, 'utf8'));
-
+        
+        // return card & form configuration
         data.title = T(activity, "Create Issue");
+        data.formSchema = schema;
+        data.form = {};
+
+        // initialize form subject with query parameter (if provided) -- V1 only had one entity in query
+        if (activity.Request.Query && activity.Request.Query.query) {
+          data.form.subject = activity.Request.Query.query;
+        }
+
+        // initialize form subject with product entity -- V2 has named entities 
+        var productEntity = getObjPath(activity.Request,"Data.model._entities.product");
+        if(productEntity) data.form.subject = productEntity;
+        
         data.formSchema = schema;
 
         // initialize form subject with query parameter (if provided)
@@ -45,6 +60,7 @@ module.exports = async (activity) => {
             }
           }
         }
+        
         data._actionList = [{
           id: "create",
           label: T(activity, "Create Issue"),
