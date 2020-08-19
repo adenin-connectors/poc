@@ -4,60 +4,12 @@ const moment = require('moment-timezone');
 
 module.exports = async (activity) => {
   try {
-    let items = [
-      {
-        title: 'PTO Request from Jennifer Carrington',
-        description: '8 Days - from 08/01 to 08/08',
-        integration: 'Workday',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/workday.svg'
-      },
-      {
-        title: 'Equipment Request from Stephen Michael',
-        description: 'Laptop renewal - Apple MacBook Pro 15"',
-        integration: 'SAP Fieldglass',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-fieldglass.svg'
-      },
-      {
-        title: 'Expense reimbursement from Tony Henry',
-        description: 'Trip to San Jose, CA - $4,574',
-        integration: 'SAP Concur',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-concur.svg'
-      },
-      {
-        title: 'Document approval from Melissa O\'Ciaran',
-        description: 'Marketing Roadmap 03.docx - Marketing Group',
-        integration: 'SharePoint',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg'
-      },
-      {
-        title: 'PTO Request from Cole Greenfelder',
-        description: '3 days, 10/14 - 10/16',
-        integration: 'SharePoint',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg'
-      },
-      {
-        title: 'Equipment Request from Marlon Greenfelder',
-        description: 'Work from Home - Company PC',
-        integration: 'SAP Concur',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-concur.svg'
-      },
-      {
-        title: 'Sick leave notice from Nelson Medhurst',
-        description: 'Scheduled Doctors appointment on 09/06',
-        integration: 'Workday',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/workday.svg'
-      },
-      {
-        title: 'Expense Reimbursement from Randy White',
-        description: 'Developer\'s conference travel costs - $230',
-        integration: 'SAP Fieldglass',
-        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-fieldglass.svg'
-      }
-    ];
+    const path = activity.Request.Path;
+    let items = getItems(path);
 
     items = getItemsBasedOnDayOfTheYear(activity, items);
 
-    const description = `You have ${items.length} pending approvals.`;
+    const description = `You have ${items.length} pending${path ? path.replace(/-|\//g, ' ') : ''} approvals.`;
 
     activity.Response.Data = {
       items: items,
@@ -144,4 +96,136 @@ function getItemsBasedOnDayOfTheYear(activity, items) {
   }
 
   return sortedItems;
+}
+
+function getItems(path) {
+  switch (path) {
+  case '/sales':
+    return [
+      {
+        title: 'Network Switch LX3, Northwind Inc.',
+        description: 'Standard terms sale - $489',
+        integration: 'Salesforce',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg'
+      },
+      {
+        title: '10x Server CPU Cooler SC1, Cookiecutter Inc.',
+        description: 'Discount sale - $1,790 at 10% discount',
+        integration: 'Salesforce',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg'
+      },
+      {
+        title: '2x rackmount webserver S2, Axe Capital',
+        description: 'Non-standard terms sale, $8,596',
+        integration: 'Salesforce',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg'
+      },
+      {
+        title: '40x IP Conference Phone CF10, Wayne Enterprises',
+        description: 'Non-standard terms sale, $4,580',
+        integration: 'Salesforce',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg'
+      },
+      {
+        title: 'Floorstanding rackmount server cabinet, Duke & Duke',
+        description: 'Discount sale, $1,350 at 5% discount',
+        integration: 'Salesforce',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/salesforce.svg'
+      }
+    ];
+  case '/travel-and-leave':
+    return [
+      {
+        title: 'PTO Request from Jennifer Carrington',
+        description: '8 Days - from 08/01 to 08/08',
+        integration: 'Leave Approval'
+      },
+      {
+        title: 'Expense reimbursement from Tony Henry',
+        description: 'Trip to San Jose, CA - $4,574',
+        integration: 'Travel Approval'
+      },
+      {
+        title: 'PTO Request from Cole Greenfelder',
+        description: '3 days, 10/14 - 10/16',
+        integration: 'Leave Approval'
+      },
+      {
+        title: 'Sick leave notice from Nelson Medhurst',
+        description: 'Scheduled Doctors appointment on 09/06',
+        integration: 'Leave Approval'
+      },
+      {
+        title: 'Expense Reimbursement from Randy White',
+        description: 'Developer\'s conference travel costs - $230',
+        integration: 'Travel Approval'
+      }
+    ];
+  case '/hardware':
+    return [
+      {
+        title: 'Equipment Request from Stephen Michael',
+        description: 'Laptop renewal - Apple MacBook Pro 15"',
+        integration: 'ServiceNow',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
+      },
+      {
+        title: 'Equipment Request from Marlon Greenfelder',
+        description: 'Work from Home - Company PC',
+        integration: 'ServiceNow',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
+      }
+    ];
+  default:
+    return [
+      {
+        title: 'PTO Request from Jennifer Carrington',
+        description: '8 Days - from 08/01 to 08/08',
+        integration: 'Workday',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/workday.svg'
+      },
+      {
+        title: 'Equipment Request from Stephen Michael',
+        description: 'Laptop renewal - Apple MacBook Pro 15"',
+        integration: 'SAP Fieldglass',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-fieldglass.svg'
+      },
+      {
+        title: 'Expense reimbursement from Tony Henry',
+        description: 'Trip to San Jose, CA - $4,574',
+        integration: 'SAP Concur',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-concur.svg'
+      },
+      {
+        title: 'Document approval from Melissa O\'Ciaran',
+        description: 'Marketing Roadmap 03.docx - Marketing Group',
+        integration: 'SharePoint',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg'
+      },
+      {
+        title: 'PTO Request from Cole Greenfelder',
+        description: '3 days, 10/14 - 10/16',
+        integration: 'SharePoint',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sharepoint-online.svg'
+      },
+      {
+        title: 'Equipment Request from Marlon Greenfelder',
+        description: 'Work from Home - Company PC',
+        integration: 'SAP Concur',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-concur.svg'
+      },
+      {
+        title: 'Sick leave notice from Nelson Medhurst',
+        description: 'Scheduled Doctors appointment on 09/06',
+        integration: 'Workday',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/workday.svg'
+      },
+      {
+        title: 'Expense Reimbursement from Randy White',
+        description: 'Developer\'s conference travel costs - $230',
+        integration: 'SAP Fieldglass',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/sap-fieldglass.svg'
+      }
+    ];
+  }
 }
