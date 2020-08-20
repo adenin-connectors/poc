@@ -164,14 +164,34 @@ function getItems(path) {
   case '/hardware':
     return [
       {
-        title: 'Equipment Request from Stephen Michael',
-        description: 'Laptop renewal - Apple MacBook Pro 15"',
+        title: 'Equipment Request from Marlon Greenfelder',
+        description: 'Work from Home - Company PC',
         integration: 'ServiceNow',
         thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
       },
       {
-        title: 'Equipment Request from Marlon Greenfelder',
-        description: 'Work from Home - Company PC',
+        title: 'Equipment Request from Stephen Michael',
+        description: 'Laptop renewal - Apple MacBook Pro 15"',
+        upgrade: 'Low stock. Consider upgrading to iMac 24.5"',
+        integration: 'ServiceNow',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
+      },
+      {
+        title: 'Equipment Request from Nelson Medhurst',
+        description: 'Work from Home - Office chair',
+        integration: 'ServiceNow',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
+      },
+      {
+        title: 'Equipment Request from Amy Lee',
+        description: 'Cisco IP Phone 303',
+        upgrade: 'Low stock. Consider upgrading to Cisco IP Phone 500',
+        integration: 'ServiceNow',
+        thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
+      },
+      {
+        title: 'Equipment Request from Tony Henry',
+        description: 'Laptop renewal - Lenovo ThinkPad',
         integration: 'ServiceNow',
         thumbnail: 'https://www.adenin.com/assets/images/wp-images/logo/servicenow.svg'
       }
