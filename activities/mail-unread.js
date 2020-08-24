@@ -48,6 +48,9 @@ module.exports = async (activity) => {
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Mail');
     activity.Response.Data.actionable = value > 0;
+    activity.Response.Data._card = {
+      type: 'status-list'
+    };
 
     activity.Response.Data.thumbnail = 'https://www.adenin.com/assets/images/wp-images/logo/outlook.svg';
 
