@@ -9,6 +9,7 @@ module.exports = async (activity) => {
     activity.Response.Data.title = T(activity, 'Unique Visitors');
     activity.Response.Data.link = generator.detailUrl();
     activity.Response.Data.linkLabel = T(activity, 'All Data');
+    activity.Response.Data.thumbnail = 'https://adenin.com/assets/images/identity/Icon_Digital_Assistant.svg';
     activity.Response.Data._card = {
       type: 'chart'
     };
