@@ -94,129 +94,129 @@ module.exports = {
   leadsList: () => [
     {
       id: '32101',
-      title: 'Mr. Marlon Schuppe',
+      title: 'Marcus Jones',
       description: 'Maggio - Marks',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/ssiskind/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801a36d3b380006d3c72f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32102',
-      title: 'Cole Kirlin',
+      title: 'Ricky Oliver',
       description: 'Grady Inc',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/herrhaase/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801c46d3b380006d3cedb-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32103',
-      title: 'Myrl Kovacek',
+      title: 'Terry Nguyen',
       description: 'David - Kuhlman',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/vytautas_a/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6887c36d3b380006f1da63-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32104',
-      title: 'Haven Greenfelder',
+      title: 'Arron Long',
       description: 'Williamson, Torp and Koepp',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/macxim/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e68015d6d3b380006d3b6eb-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32105',
-      title: 'Raphaelle Jaskolski',
+      title: 'Misty Larson',
       description: 'Hayes Inc',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/aislinnkelly/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801626d3b380006d3b82f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32106',
-      title: 'Rebecca Collins',
+      title: 'Beverly Thomas',
       description: 'Stanton - Gusikowski',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/rpatey/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6869016d3b380006ead99f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32107',
-      title: 'Rigoberto Okuneva',
+      title: 'April Crawford',
       description: 'Leannon - Roob',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/emmeffess/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6889406d3b380006f23085-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32108',
-      title: 'Daniella Kub',
+      title: 'Ricardo Turner',
       description: 'McLaughlin, Cummerata and Crona',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/maiklam/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f896d365bec830008375f28-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32109',
-      title: 'Sedrick O\'Connell',
+      title: 'Tamara Pearson',
       description: 'Waters Group',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/doronmalki/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f896f545bec830008382c00-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32110',
-      title: 'Nelson Berge',
+      title: 'Ellen Willis',
       description: 'Kutch - Flatley',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/lowie/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f8971ee5bec830008391f96-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32111',
-      title: 'Cristina Medhurst',
+      title: 'Regina Bowman',
       description: 'Haag - Boehm',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/larrybolt/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f8974a45bec8300083a191d-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32112',
-      title: 'Hilma Strosin',
+      title: 'Alexander Hopkins',
       description: 'Gorczany, Koch and Schowalter',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/ddggccaa/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6885ff6d3b380006f17273-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32113',
-      title: 'Randy Kshlerin',
+      title: 'Katrina Lynch',
       description: 'Von, Huel and MacGyver',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/artem_kostenko/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e68014d6d3b380006d3b355-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32114',
-      title: 'Blaze Hoeger',
+      title: 'Connor Bailey',
       description: 'Schmitt - Ratke',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/nsamoylov/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801926d3b380006d3c33b-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32115',
-      title: 'Abdul Carroll',
+      title: 'Danielle Pena',
       description: 'Schowalter LLC',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/jacobbennett/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f8975995bec8300083a6f03-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32116',
-      title: 'Eriberto White',
+      title: 'Darryl Henderson',
       description: 'Littel and Sons',
-      thumbnail: 'https://s3.amazonaws.com/uifaces/faces/twitter/newbrushes/128.jpg',
+      thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f896a9b5bec830008365b3f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     }
