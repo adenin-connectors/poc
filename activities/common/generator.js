@@ -191,7 +191,7 @@ module.exports = {
     {
       id: '32113',
       title: 'Mina Heydari',
-      description: 'Stanca & Alva',
+      description: 'Stanca and Alva',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e68014d6d3b380006d3b355-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
