@@ -94,16 +94,16 @@ module.exports = {
   leadsList: () => [
     {
       id: '32101',
-      title: 'Marcus Jones',
-      description: 'Maggio - Marks',
+      title: 'Dimitrios Vasileiou',
+      description: 'Cogent Data',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801a36d3b380006d3c72f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32102',
-      title: 'Ricky Oliver',
-      description: 'Grady Inc',
+      title: 'Antonio Rossi',
+      description: 'Bravura Inc',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801c46d3b380006d3cedb-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
@@ -111,111 +111,111 @@ module.exports = {
     {
       id: '32103',
       title: 'Terry Nguyen',
-      description: 'David - Kuhlman',
+      description: 'Singapore Logistics',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6887c36d3b380006f1da63-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32104',
-      title: 'Arron Long',
-      description: 'Williamson, Torp and Koepp',
+      title: 'Mohamed Alami',
+      description: 'TreeBase',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e68015d6d3b380006d3b6eb-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32105',
-      title: 'Misty Larson',
-      description: 'Hayes Inc',
+      title: 'Jennifer Miller',
+      description: 'Exact Marketing',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801626d3b380006d3b82f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32106',
-      title: 'Beverly Thomas',
-      description: 'Stanton - Gusikowski',
+      title: 'Inger Olsen',
+      description: 'Nordsk Banking Group',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6869016d3b380006ead99f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32107',
-      title: 'April Crawford',
-      description: 'Leannon - Roob',
+      title: 'Sarah Walker',
+      description: 'RecruitBright',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6889406d3b380006f23085-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32108',
-      title: 'Ricardo Turner',
-      description: 'McLaughlin, Cummerata and Crona',
+      title: 'Yousef Ali',
+      description: 'Support Ventures Ltd.',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f896d365bec830008375f28-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32109',
-      title: 'Tamara Pearson',
-      description: 'Waters Group',
+      title: 'Fatima Khan',
+      description: 'Louisianna - Lafayette',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f896f545bec830008382c00-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32110',
-      title: 'Ellen Willis',
-      description: 'Kutch - Flatley',
+      title: 'Ellen Kim',
+      description: 'Designplus.io',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f8971ee5bec830008391f96-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32111',
-      title: 'Regina Bowman',
-      description: 'Haag - Boehm',
+      title: 'Regina Jones',
+      description: 'ConsultantSpeak',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f8974a45bec8300083a191d-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32112',
-      title: 'Alexander Hopkins',
-      description: 'Gorczany, Koch and Schowalter',
+      title: 'Isaac Cohen',
+      description: 'Purple Security',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6885ff6d3b380006f17273-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32113',
-      title: 'Katrina Lynch',
-      description: 'Von, Huel and MacGyver',
+      title: 'Mina Heydari',
+      description: 'Stanca & Alva',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e68014d6d3b380006d3b355-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32114',
-      title: 'Connor Bailey',
-      description: 'Schmitt - Ratke',
+      title: 'Thomas Müller',
+      description: 'Coffee Craft',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5e6801926d3b380006d3c33b-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32115',
-      title: 'Danielle Pena',
-      description: 'Schowalter LLC',
+      title: 'Gabrielle Williams',
+      description: 'Malake & Huizen',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f8975995bec8300083a6f03-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
     },
     {
       id: '32116',
-      title: 'Darryl Henderson',
-      description: 'Littel and Sons',
+      title: 'Sunil Hussain',
+      description: 'Qatar Charter Air',
       thumbnail: 'https://www.adenin.com/assets/images/generated_photos/5f896a9b5bec830008365b3f-l.jpg',
       imageIsAvatar: true,
       link: detailUrl
